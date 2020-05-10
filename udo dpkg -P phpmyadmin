@@ -1,0 +1,123 @@
+[0;1;32m●[0m homestead
+    State: [0;1;32mrunning[0m
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Mon 2019-12-30 12:20:44 UTC; 15min ago
+   CGroup: /
+           ├─user.slice
+           │ └─user-1000.slice
+           │   ├─user@1000.service
+           │   │ └─init.scope
+           │   │   ├─2921 /lib/systemd/systemd --user
+           │   │   └─2922 (sd-pam)
+           │   └─session-3.scope
+           │     ├─ 2919 sshd: vagrant [priv]
+           │     ├─ 2984 sshd: vagrant@pts/0
+           │     ├─ 2985 -bash
+           │     ├─27013 systemctl status
+           │     └─27014 (pager) status
+           ├─init.scope
+           │ └─1 /sbin/init
+           └─system.slice
+             ├─irqbalance.service
+             │ └─948 /usr/sbin/irqbalance --foreground
+             ├─vboxadd-service.service
+             │ └─2659 /usr/sbin/VBoxService --pidfile /var/run/vboxadd-service.sh
+             ├─systemd-networkd.service
+             │ └─2716 /lib/systemd/systemd-networkd
+             ├─systemd-udevd.service
+             │ └─452 /lib/systemd/systemd-udevd
+             ├─cron.service
+             │ └─975 /usr/sbin/cron -f
+             ├─nginx.service
+             │ ├─1428 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             │ ├─1429 nginx: worker process
+             │ └─1431 nginx: worker process
+             ├─polkit.service
+             │ └─1231 /usr/lib/policykit-1/polkitd --no-debug
+             ├─networkd-dispatcher.service
+             │ └─1169 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+             ├─accounts-daemon.service
+             │ └─960 /usr/lib/accountsservice/accounts-daemon
+             ├─mailhog.service
+             │ └─955 /usr/local/bin/mailhog > /dev/null 2>&1 &
+             ├─systemd-journald.service
+             │ └─427 /lib/systemd/systemd-journald
+             ├─atd.service
+             │ └─1119 /usr/sbin/atd -f
+             ├─php7.3-fpm.service
+             │ ├─ 947 php-fpm: master process (/etc/php/7.3/fpm/php-fpm.conf)
+             │ ├─1983 php-fpm: pool www
+             │ └─1984 php-fpm: pool www
+             ├─unattended-upgrades.service
+             │ └─1118 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+             ├─ssh.service
+             │ └─1401 /usr/sbin/sshd -D
+             ├─php7.1-fpm.service
+             │ ├─ 959 php-fpm: master process (/etc/php/7.1/fpm/php-fpm.conf)
+             │ ├─2012 php-fpm: pool www
+             │ └─2014 php-fpm: pool www
+             ├─supervisor.service
+             │ └─1164 /usr/bin/python /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+             ├─memcached.service
+             │ └─981 /usr/bin/memcached -m 64 -p 11211 -u memcache -l 127.0.0.1 -P /var/run/memcached/memcached.pid
+             ├─system-postgresql.slice
+             │ └─postgresql@11-main.service
+             │   ├─1504 /usr/lib/postgresql/11/bin/postgres -D /var/lib/postgresql/11/main -c config_file=/etc/postgresql/11/main/postgresql.conf
+             │   ├─1976 postgres: 11/main: checkpointer   
+             │   ├─1977 postgres: 11/main: background writer   
+             │   ├─1978 postgres: 11/main: walwriter   
+             │   ├─1979 postgres: 11/main: autovacuum launcher   
+             │   ├─1980 postgres: 11/main: stats collector   
+             │   └─1981 postgres: 11/main: logical replication launcher   
+             ├─mysql.service
+             │ └─1488 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+             ├─rsyslog.service
+             │ └─982 /usr/sbin/rsyslogd -n
+             ├─rpcbind.service
+             │ └─750 /sbin/rpcbind -f -w
+             ├─chrony.service
+             │ └─1157 /usr/sbin/chronyd
+             ├─lxcfs.service
+             │ └─1167 /usr/bin/lxcfs /var/lib/lxcfs/
+             ├─redis-server.service
+             │ └─1150 /usr/bin/redis-server 127.0.0.1:6379
+             ├─lvm2-lvmetad.service
+             │ └─436 /sbin/lvmetad -f
+             ├─system-postfix.slice
+             │ └─postfix@-.service
+             │   ├─1889 /usr/lib/postfix/sbin/master -w
+             │   ├─1892 pickup -l -t unix -u -c
+             │   └─1893 qmgr -l -t unix -u
+             ├─systemd-resolved.service
+             │ └─874 /lib/systemd/systemd-resolved
+             ├─beanstalkd.service
+             │ └─1163 /usr/bin/beanstalkd -l 127.0.0.1 -p 11300
+             ├─php7.4-fpm.service
+             │ ├─ 953 php-fpm: master process (/etc/php/7.4/fpm/php-fpm.conf)
+             │ ├─2127 php-fpm: pool www
+             │ └─2128 php-fpm: pool www
+             ├─php7.2-fpm.service
+             │ ├─ 958 php-fpm: master process (/etc/php/7.2/fpm/php-fpm.conf)
+             │ ├─1957 php-fpm: pool www
+             │ └─1960 php-fpm: pool www
+             ├─dbus.service
+             │ └─1049 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+             ├─system-getty.slice
+             │ └─getty@tty1.service
+             │   └─1410 /sbin/agetty -o -p -- \u --noclear tty1 linux
+             ├─php7.0-fpm.service
+             │ ├─ 962 php-fpm: master process (/etc/php/7.0/fpm/php-fpm.conf)
+             │ ├─2017 php-fpm: pool www
+             │ └─2019 php-fpm: pool www
+             ├─php5.6-fpm.service
+             │ ├─ 952 php-fpm: master process (/etc/php/5.6/fpm/php-fpm.conf)
+             │ ├─1964 php-fpm: pool www
+             │ └─1965 php-fpm: pool www
+             ├─dm-event.service
+             │ └─633 /sbin/dmeventd -f
+             ├─avahi-daemon.service
+             │ ├─ 956 avahi-daemon: running [homestead.local]
+             │ └─1058 avahi-daemon: chroot helper
+             └─systemd-logind.service
+               └─954 /lib/systemd/systemd-logind

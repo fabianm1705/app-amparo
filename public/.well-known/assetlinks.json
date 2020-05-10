@@ -1,0 +1,6 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "app-amparo", "package_name": "ar.com.amparosrl",
+               "sha256_cert_fingerprints": ["99:91:03:0D:F7:2A:F5:EB:29:81:7D:1E:76:D4:41:D7:C1:59:AF:76:70:C8:92:67:07:D4:E1:63:91:BD:88:65"]
+             }
+}]

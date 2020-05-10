@@ -1,0 +1,105 @@
+.radio-inline, .checkbox-inline {
+    max-height: 12px;
+}
+
+
+.bgAzul {
+  background-color: #0000FF;
+}
+
+.bgPurple {
+  background-color: #9c27b0;
+}
+
+.bgDeepPurple {
+  background-color: #673ab7;
+}
+
+.bgOrange {
+  background-color: #ff9800;
+}
+
+/* Amarillo */
+.bgAmber {
+  background-color: #ffc107;
+}
+
+.bgIndigo {
+  background-color: #3f51b5;
+}
+
+.bgCeleste {
+  background-color: #03a9f4;
+}
+
+/* Celeste */
+.bgCyan {
+  background-color: #6cb2eb;
+}
+
+.margenTotal {
+  margin: 1rem;
+}
+
+.centrado {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a:link > div {
+  color: black;
+}
+
+/* visited link */
+a:visited > div {
+  color: black;
+}
+
+/* mouse over link */
+a:hover > div {
+  color: black;
+}
+
+/* selected link */
+a:active > div {
+  color: black;
+}
+
+
+.blanco a:link  {
+  color: white;
+}
+
+/* visited link */
+.blanco a:visited {
+  color: white;
+}
+
+/* mouse over link */
+.blanco a:hover {
+  color: white;
+}
+
+/* selected link */
+.blanco a:active {
+  color: white;
+}
+
+.boxsombra {
+margin: 0px;
+border: none;
+color: #444444;
+cursor: pointer;
+font-size: 16px;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+background-color: #FAFAFA;
+-webkit-transition-duration: 0.4s;
+transition-duration: 0.4s;
+}
+
+.boxsombra:hover {
+box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.16);
+}

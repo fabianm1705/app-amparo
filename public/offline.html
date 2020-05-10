@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <title>Amparo</title>
+
+    <!-- Scripts -->
+    <script src="/js/app.js" defer></script>
+
+    <link rel="manifest" href="/manifest.json" />
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="/css/app.css" rel="stylesheet">
+    <style media="screen">
+        @font-face {
+            font-family: 'iProton';
+            src:
+            url('{{ asset("css/iProton-Bold.otf") }}') format('opentype'),
+            url('{{ asset("css/iProton-Bold.ttf") }}') format('truetype');
+        }
+        .fontAmparo {
+            font-family: 'iProton';
+        }
+   </style>
+</head>
+<body style="background-image: url('/images01.jpg')">
+    <div id="app">
+        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fontAmparo">
+                  <div class="d-flex justify-content-end">
+                    <div class="mr-2">
+                      <img src="/images/logoSinSSSmall.png" height="35">
+                    </div>
+                  </div>
+                </a>
+            </div>
+        </nav>
+
+        <main class="py-4"><br><br>
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="container alert alert-success">
+                  No tienes conexión a Internet
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+    </div>
+</body>
+
+</html>
