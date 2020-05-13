@@ -54,6 +54,13 @@
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->group->direccion }}</td>
                   <td class="text-right d-flex">
+                    @can('users.edit')
+                      <a href="{{ route('receipt.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">
+                        <div class="">
+                          <i class="material-icons">receipt</i>
+                        </div>
+                      </a>&nbsp;
+                    @endcan
                     @can('users.show')
                       <a href="{{ route('users.panel', ['id' => $user->id ]) }}" title="Ver Socio" class="">
                         <div class="">

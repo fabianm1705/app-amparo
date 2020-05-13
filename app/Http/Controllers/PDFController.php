@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Receipt;
 use Auth;
 use PDF;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,15 @@ class PDFController extends Controller
       {
         $order = Order::where('id',$id)->get();
         return $order;
+      }
+
+    public function recibo($id,$num_en_letras)
+      {
+        $receipt = Receipt::find($id);
+        $view =  \View::make('admin.receipt.show', compact('receipt','num_en_letras'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('recibo');
       }
 
 }

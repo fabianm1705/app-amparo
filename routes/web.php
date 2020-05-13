@@ -19,6 +19,10 @@ Route::get('about', function () {
     return view('about');
 })->name('about');
 
+Route::get('frecuentes', function () {
+    return view('admin.frecuentes');
+})->name('preguntas.frecuentes');
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')
@@ -133,6 +137,15 @@ Route::post('activar/odontologia', 'LayerController@activarOdontologia')
 Route::get('pdf/{id}', 'PDFController@invoice')
               ->middleware('auth')
               ->name('pdf');
+Route::get('imprimir/recibo/{id}/letras/{num_en_letras}', 'PDFController@recibo')
+              ->middleware('auth')
+              ->name('recibo');
+Route::get('recibo/crear/{id}', 'ReceiptController@create')
+              ->middleware(['auth'])
+              ->name('receipt.create');
+Route::post('recibo/store', 'ReceiptController@store')
+              ->middleware('auth')
+              ->name('receipt.store');
 
 Route::get('asignar/roles', 'UserController@asignarRoles')
                     ->name('asignar.roles');

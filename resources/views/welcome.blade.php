@@ -142,7 +142,17 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <form action="{{ route('preguntas.frecuentes') }}" method="get">
+            @csrf
+            <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
+              <div class="d-flex justify-content-center">
+                Preguntas Frecuentes
+              </div>
+            </button>
+          </form>
+        </div>
+        <div class="col-md-4">
           <form action="{{ route('contacto.llamadaVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
@@ -152,7 +162,7 @@
             </button>
           </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <form action="{{ route('contacto.promotorVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">

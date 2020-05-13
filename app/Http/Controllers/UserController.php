@@ -276,7 +276,7 @@ class UserController extends Controller
       }
     }
     $usersCount = $users->count();
-    return view('planes',compact("usersCount"));
+    return view('admin.planes',compact("usersCount"));
   }
 
   public function upload(Request $request)
