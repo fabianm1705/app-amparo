@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appClean')
 
 @section('myLinks')
   <script>
@@ -17,7 +17,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-10">
+    <div class="col-sm-12 col-md-12 col-lg-9">
       <div class="card shadow-sm"><br>
         <div class="card-body">
           <div class="row">
@@ -30,13 +30,13 @@
                 </ol>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="{{ asset('images/products/'.$product->image_url) }}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('images/products/'.$product->image_url) }}" class="d-block w-100" alt="{{ $product->modelo }}">
                   </div>
                   <div class="carousel-item">
-                    <img src="{{ asset('images/products/'.$product->image_url2) }}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('images/products/'.$product->image_url2) }}" class="d-block w-100" alt="{{ $product->modelo }}">
                   </div>
                   <div class="carousel-item">
-                    <img src="{{ asset('images/products/'.$product->image_url3) }}" class="d-block w-100" alt="...">
+                    <img src="{{ asset('images/products/'.$product->image_url3) }}" class="d-block w-100" alt="{{ $product->modelo }}">
                   </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="col-md-5 col-sm-12">
-              <header class="centrado">
+              <header>
                 <h4>{{ $product->modelo }}<small> - by {{ $product->empresa }}</small></h4>
               </header>
               <div class="row justify-content-server">

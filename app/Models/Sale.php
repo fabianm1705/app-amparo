@@ -12,7 +12,8 @@ class Sale extends Model
    * @var array
    */
   protected $fillable = [
-      'nroFactura', 'total', 'fechaEmision', 'fechaPago', 'group_id',
+      'puntoContable', 'nroFactura', 'total', 'cae', 'fechaCae', 'fechaEmision',
+      'fechaPago', 'group_id',
   ];
 
   public function group()

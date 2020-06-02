@@ -32,9 +32,9 @@
   <body style="background-image: url({{ asset('images/01.webp' )}})">
 @endif
     <div id="app">
-        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand fontAmparo" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                   <div class="d-flex justify-content-end">
                     <div class="mr-2">
                       <img src="{{ asset('images/logoSinSSSmall.png') }}" height="35" alt="Amparo">

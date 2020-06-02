@@ -23,7 +23,7 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-9 col-lg-6">
         <div class="fresh-table full-color-orange shadow-sm">
           <!--
             Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange

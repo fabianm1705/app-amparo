@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.appClean')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-4 card shadow-sm margenTotal">
+      <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
         <div class="title text-center"><br>
-          <div class="fontAmparo">
-            Formas de Pago<hr>
+          <div>
+            <b>Formas de Pago Amparo</b><hr>
           </div>
           * Débito automático vía CBU (15% de descuento por 6 meses).<br>
           * Transferencia bancaria.<br>
@@ -14,10 +14,31 @@
           <br><br>
         </div>
       </div>
-      <div class="col-md-3 card shadow-sm margenTotal">
+      <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
         <div class="title text-center"><br>
-          <div class="fontAmparo">
-            Administración<hr>
+          <div>
+            <b>Reintegros en Farmacias</b><hr>
+          </div>
+          30% de descuento sobre vademecum<br>
+          En farmacia de su elección, sólo para adherentes del Plan Salud, presentando el ticket en Amparo o por medios electrónicos.<br><br>
+        </div>
+      </div>
+      <div class="col-sm-10 col-md-7 col-lg-8 card shadow-sm m-1">
+        <div class="title text-center"><br>
+          <div>
+            <b>Descuentos en Optica del Sol</b> - 25 de mayo 301, Paraná<hr>
+          </div>
+          20% desc. en MARCAS PROPIAS (cristales y armazones), contado efectivo, tanto lentes de sol como recetados.<br>
+          15% desc. en cristales marca CARL ZEISS, y armazones de todas las marcas, contado efectivo.<br>
+          3 cuotas sin interés con tarjeta de crédito.
+          10% desc. en lentes de contacto (esféricas, tóricas, anuales y de color).
+          5% desc. pagando con tarjeta de débito o crédito en 1 pago.<br><br>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3 card shadow-sm m-1">
+        <div class="title text-center"><br>
+          <div>
+            <b>Administración</b><hr>
           </div>
           Oficina Cura Alvarez 615, Paraná<br>
           Horario: Lun. a Vie. 8:30 a 18:00hs<br>
@@ -25,18 +46,8 @@
           SOS Emerg.: 4222322 / 4233333<br><br>
         </div>
       </div>
-      <div class="col-md-3 card shadow-sm margenTotal">
-        <div class="title text-center"><br>
-          <div class="fontAmparo">
-            Farmacia<hr>
-          </div>
-          Farmacia Nueva Farma<br>
-          30% de descuento sobre vademecum<br>
-          Provincias Unidas 589<br>
-          Tel.: 4344451<br><br>
-        </div>
-      </div>
-    </div><br>
+    </div>
+    <br>
     <div class="fresh-table full-color-orange d-flex shadow-sm" style="height: 45px;">
       <div class=" mt-2 ml-4">
         <ul class="nav nav-tabs card-header-tabs">

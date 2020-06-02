@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Concept' => $baseDir . '/app/Concept.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -27,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\ProductController' => $baseDir . '/app/Http/Controllers/ProductController.php',
     'App\\Http\\Controllers\\ProductInShoppingCartsController' => $baseDir . '/app/Http/Controllers/ProductInShoppingCartsController.php',
     'App\\Http\\Controllers\\ProfitController' => $baseDir . '/app/Http/Controllers/ProfitController.php',
+    'App\\Http\\Controllers\\ReceiptController' => $baseDir . '/app/Http/Controllers/ReceiptController.php',
     'App\\Http\\Controllers\\RoleController' => $baseDir . '/app/Http/Controllers/RoleController.php',
     'App\\Http\\Controllers\\ShoppingCartController' => $baseDir . '/app/Http/Controllers/ShoppingCartController.php',
     'App\\Http\\Controllers\\SpecialtyController' => $baseDir . '/app/Http/Controllers/SpecialtyController.php',
@@ -66,6 +68,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Providers\\ValidatorServiceProvider' => $baseDir . '/app/Providers/ValidatorServiceProvider.php',
+    'App\\Receipt' => $baseDir . '/app/Receipt.php',
     'App\\ShoppingCart' => $baseDir . '/app/ShoppingCart.php',
     'App\\Subscription' => $baseDir . '/app/Subscription.php',
     'App\\Ticket' => $baseDir . '/app/Ticket.php',

@@ -550,6 +550,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
     );
 
     public static $classMap = array (
+        'App\\Concept' => __DIR__ . '/../..' . '/app/Concept.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -571,6 +572,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\ProductInShoppingCartsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductInShoppingCartsController.php',
         'App\\Http\\Controllers\\ProfitController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfitController.php',
+        'App\\Http\\Controllers\\ReceiptController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReceiptController.php',
         'App\\Http\\Controllers\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/RoleController.php',
         'App\\Http\\Controllers\\ShoppingCartController' => __DIR__ . '/../..' . '/app/Http/Controllers/ShoppingCartController.php',
         'App\\Http\\Controllers\\SpecialtyController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecialtyController.php',
@@ -610,6 +612,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Providers\\ValidatorServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ValidatorServiceProvider.php',
+        'App\\Receipt' => __DIR__ . '/../..' . '/app/Receipt.php',
         'App\\ShoppingCart' => __DIR__ . '/../..' . '/app/ShoppingCart.php',
         'App\\Subscription' => __DIR__ . '/../..' . '/app/Subscription.php',
         'App\\Ticket' => __DIR__ . '/../..' . '/app/Ticket.php',

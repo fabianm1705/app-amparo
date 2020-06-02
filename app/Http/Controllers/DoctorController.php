@@ -132,7 +132,7 @@ class DoctorController extends Controller
 
     public function mostrar(Request $request)
     {
-      $this->registroAcceso(3,'');
+      $this->registroAcceso(4,'');
       $specialties = Cache::remember('specialties', now()->addMonths(1), function () {
            return Specialty::orderBy('descripcion','asc')
                                 ->where('vigente','=',1)

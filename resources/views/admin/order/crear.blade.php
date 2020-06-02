@@ -98,7 +98,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-9 col-lg-6">
       <form action="{{ route('orders.store') }}" method="post">
           @csrf
           <div class="fresh-table full-color-orange shadow-sm">
@@ -166,7 +166,7 @@
       </form>
     </div>
   </div>
-  <div id="divNecesitaSalud" class="col-md-8 container alert alert-warning text-justify">
+  <div id="divNecesitaSalud" class="col-md-9 container alert alert-warning text-justify">
     <h5>Debes activar el Plan Salud para poder utilizar nuestra red de consultorios, puedes hacerlo ahora mismo y a un precio preferencial por ser socio, y comenzar a utilizarlo de inmediato!</h5>
   </div>
   <div class="row justify-content-center">

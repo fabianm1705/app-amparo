@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Sale;
 use App\Receipt;
 use Auth;
 use PDF;
@@ -37,6 +38,15 @@ class PDFController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo');
+      }
+
+    public function factura($id)
+      {
+        $sale = Sale::find($id);
+        $view =  \View::make('admin.sale.show', compact('sale'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download('factura');
       }
 
 }

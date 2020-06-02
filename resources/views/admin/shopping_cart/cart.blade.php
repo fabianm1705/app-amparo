@@ -17,7 +17,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-9">
+      <div class="col-lg-9 col-md-12 col-sm-12 mt-2">
         <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Carrito de Compras</h5>
         </div>
@@ -39,7 +39,7 @@
                   <tr id="{{ $product->id }}">
                     <td>
                       <div class="">
-                        <img class="card-img-top" style="width:100px;" src="{{ asset('images/'.$product->image_url) }}" alt="{{ $product->modelo }}">
+                        <img class="card-img-top" style="width:100px;" src="{{ asset('images/products/'.$product->image_url) }}" alt="{{ $product->modelo }}">
                       </div>
                     </td>
                     <td class="align-middle">
@@ -84,7 +84,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-3">
+      <div class="col-lg-3 col-md-6 col-sm-9 mt-2">
         <h5>Seleccione su medio de pago:</h5>
 
         <div class="">
@@ -114,7 +114,7 @@
               </div>
             @endforeach
             <div class="text-right">
-              <button class="btn btn-success btn-block" type="submit" name="button">Finalizar Compra</button>
+              <button class="btn btn-success btn-block btn-lg" type="submit" name="button">Finalizar Compra</button>
             </div>
           </form>
         </div>

@@ -21,4 +21,9 @@ class Product extends Model
     return $this->belongsTo('App\Models\Category');
   }
 
+  public function precio($costo,$porce,$cantCuotas)
+  {
+    return round($costo * (1+($porce/100)) / $cantCuotas / 10) * 10;
+  }
+
 }

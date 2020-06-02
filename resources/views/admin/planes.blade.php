@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-      <div id="divNecesitaSalud2" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
+      <div id="divNecesitaSalud2" class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Salud</h5>
           <h1 class="card-title">
@@ -30,7 +30,7 @@
           @endif
         </div>
       </div>
-      <div id="divNecesitaOdontologia" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
+      <div id="divNecesitaOdontologia" class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Odontológico</h5>
           <h1 class="card-title">
@@ -51,7 +51,7 @@
       <h2>Preguntas Frecuentes</h2>
     </div>
     <center>
-      <div class="accordion col-md-6" id="accordionExample">
+      <div class="accordion col-lg-6 col-md-9 col-sm-12" id="accordionExample">
       <div class="card">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
