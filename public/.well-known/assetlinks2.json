@@ -1,0 +1,7 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "app-amparo", "package_name": "ar.com.amparosrl",
+               "MD5": ["14: E5: 58: FD: 80: 4C: 38: 6A: 27: 20: 6C: 66: 54: 3A: B9: FF"],
+               "SHA1": ["00: A2: 32: AA: B4: 1F: 8A: 71: 6E: AF: 69: 50: 8E: 61: F2: 5A: 4E: 87: F2: A5"]
+             }
+}]

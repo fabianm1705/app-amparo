@@ -5,9 +5,8 @@
   <meta charset="utf-8" />
   <meta http-equiv="Cache-Control" content="max-age=31536000, public">
   <meta name="theme-color" content="#ff8c00">
-  <meta
-    name="description"
-    content="Amparo es una empresa de servicios sociales nacida en 2003,
+  <meta name="description"
+        content="Amparo es una empresa de servicios sociales nacida en 2003,
              dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
@@ -17,6 +16,7 @@
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <link rel="manifest" href="/manifest.json" />
+  <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
   <!--     Fonts and icons     -->
   <link rel="preload, stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -44,7 +44,7 @@
           <ul class="navbar-nav ml-auto">
             <!-- navbar-nav ml-auto -->
               <li class="nav-item">
-                  <a class="nav-link" rel="noopener" href="https://play.google.com/store/apps/details?id=ar.com.amparosrl" target="_blank">
+                  <a class="nav-link" rel="noopener" href="{{ route('installApp') }}">
                       <img src="{{ asset('images/disponible_google_play.png') }}" height="40" alt="Disponible en Google Play">
                   </a>
               </li>

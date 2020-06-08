@@ -23,6 +23,10 @@ Route::get('frecuentes', function () {
     return view('admin.frecuentes');
 })->name('preguntas.frecuentes');
 
+Route::get('installApp', function () {
+    return view('installApp');
+})->name('installApp');
+
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')

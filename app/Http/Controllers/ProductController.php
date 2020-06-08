@@ -156,9 +156,9 @@ class ProductController extends Controller
     public function shopping()
     {
       $this->registroAcceso(5,'');
-      $products = DB::table('products')->where('vigente', '=', 1)->orderBy('costo')->get();
-      $categories = Category::orderBy('nombre','asc')->get();
-      return view('admin.product.shopping', compact("categories","products"));
+      // $products = DB::table('products')->where('vigente', '=', 1)->orderBy('costo')->get();
+      $categories = Category::inRandomOrder()->get();
+      return view('admin.product.shopping', compact("categories"));
     }
 
     public function getProductsXCategory($id)
