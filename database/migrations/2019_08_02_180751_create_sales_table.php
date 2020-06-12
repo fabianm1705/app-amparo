@@ -15,11 +15,8 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('puntoContable');
             $table->bigInteger('nroFactura');
             $table->bigInteger('total');
-            $table->bigInteger('cae');
-            $table->date('fechaCae');
             $table->date('fechaEmision');
             $table->date('fechaPago')->nullable();
             $table->timestamps();

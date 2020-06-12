@@ -9,7 +9,7 @@
               </div>
               <div class="card shadow-sm mt-1">
                   <div class="card-body">
-                      <form method="POST" action="{{ route('users.updatedb') }}">
+                      <form method="POST" action="{{ route('users.updatedb') }}" enctype="multipart/form-data">
                           @csrf
 
                           <div class="form-group row">

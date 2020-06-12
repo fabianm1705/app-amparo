@@ -36,6 +36,7 @@
         <div class="card-body">
           <table class="table table-hover table-sm table-responsive">
             <thead>
+              <th>ID / ID Grupo</th>
               <th>Nro. Socio</th>
               <th>Nombre</th>
               <th>Documento</th>
@@ -47,6 +48,7 @@
             <tbody>
               @foreach($users as $user)
                 <tr>
+                  <td>{{ $user->id }}/{{ $user->group->id }}</td>
                   <td>{{ $user->group->nroSocio }}/{{ $user->nroAdh }}</td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->nroDoc }}</td>

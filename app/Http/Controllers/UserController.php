@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class UserController extends Controller
 {
@@ -279,174 +281,210 @@ class UserController extends Controller
     return view('admin.planes',compact("usersCount"));
   }
 
+  public function uploadFiles($request, array $archivos)
+  {
+    foreach ($archivos as $archivo) {
+      if($request->hasFile($archivo)){
+        $file=$request->file($archivo);
+        $name=$file->getClientOriginalName();
+        $path = $request->file($archivo)->storeAs('public',$name);
+        $lineas = file(storage_path().'/app/'.$path);
+
+        if($name=='grupos.txt'){
+          $this->updateGroups($lineas);
+        }elseif ($name=='socios.txt') {
+          $this->updateUsers($lineas);
+        }elseif ($name=='planes.txt') {
+          $this->truncateTable('plans');
+          $this->updatePlans($lineas);
+        }elseif ($name=='iplanes.txt') {
+          $this->truncateTable('layers');
+          $this->updateLayers($lineas);
+        }elseif ($name=='facturas.txt') {
+          $this->updateSales($lineas);
+        }
+      }
+    }
+  }
+
+  public function updateSales($lineas)
+  {
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[4])))
+                                  ->get()->first();
+        if(isset($group)){
+          $sale = Sale::where([['puntoContable', '=', intval(trim($datos[7]))],
+                               ['nroFactura', '=', intval(trim($datos[0]))],])
+                        ->get()->first();
+          if (is_null($sale)) {
+            $sale = new Sale();
+            $sale->puntoContable = intval(trim($datos[7]));
+            $sale->nroFactura = intval(trim($datos[0]));
+            $sale->group_id=$group->id;
+            $sale->total = intval(trim($datos[1]));
+            $sale->cae = utf8_encode(trim($datos[5]));
+            $time = strtotime($datos[6]);
+            $sale->fechaCae = date('Y-m-d',$time);
+            $time = strtotime($datos[2]);
+            $sale->fechaEmision = date('Y-m-d',$time);
+          }
+          if($datos[3]<>""){
+            $time = strtotime($datos[3]);
+            $sale->fechaPago = date('Y-m-d',$time);
+          }
+          $sale->save();
+        }
+      }
+    }
+  }
+
+  public function updatePlans($lineas)
+  {
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[0])))
+                                  ->get()->first();
+        if(isset($group)){
+          $plan = new Plan();
+          $plan->group_id=$group->id;
+          $plan->nombre = Str::title(utf8_encode(trim($datos[1])));
+          $plan->monto = intval(trim($datos[2]));
+          $plan->emiteOrden = intval(trim($datos[3]));
+
+          $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[1])))
+                        ->get()->first();
+          if (isset($subscription)) {
+            $plan->subscription_id=$subscription->id;
+          }
+
+          $plan->save();
+        }
+      }
+    }
+  }
+
+  public function updateLayers($lineas)
+  {
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $layer = new Layer();
+        $layer->nombre = Str::title(utf8_encode(trim($datos[2])));
+        $layer->monto = intval(trim($datos[3]));
+        $layer->emiteOrden = intval(trim($datos[5]));
+
+        $user = User::where('name', '=', utf8_encode(trim($datos[4])))
+                      ->get()->first();
+        if (isset($user)) {
+          if($user->group->nroSocio==utf8_encode(trim($datos[0]))){
+            $layer->user_id=$user->id;
+          }
+        }
+
+        $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[2])))
+                      ->get()->first();
+        if (isset($subscription)) {
+          $layer->subscription_id=$subscription->id;
+        }
+
+        $layer->save();
+      }
+    }
+  }
+
+  public function updateGroups($lineas)
+  {
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[0])))
+                                  ->get()->first();
+        if (is_null($group)) {
+          $group = new Group();
+          $group->nroSocio = utf8_encode(trim($datos[0]));
+        }
+        $group->fechaAlta = utf8_encode(trim($datos[1]));
+        $group->email=utf8_encode(trim($datos[2]));
+        $group->telefono=utf8_encode(trim($datos[3]));
+        $group->direccion = Str::title(utf8_encode(trim($datos[4])));
+        $group->direccionCobro = Str::title(utf8_encode(trim($datos[5])));
+        $group->diaCobro = Str::lower(utf8_encode(trim($datos[6])));
+        $group->horaCobro = Str::lower(utf8_encode(trim($datos[7])));
+        $group->total = intval(trim($datos[8]));
+        $group->activo=intval(trim($datos[9]));
+        $group->save();
+      }
+    }
+  }
+
+  public function updateUsers($lineas)
+  {
+    $confRoleAdmin = array(["role_id" => "1"]);
+    $confRoleSocio = array(["role_id" => "2"]);
+    $confRoleDev = array(["role_id" => "3"]);
+    $confPerSocio = array(["0" => "10","1" => "27","2" => "33","3" => "34",
+                  "4" => "38","5" => "39"]);
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $user = User::where('name', '=', Str::title(utf8_encode(trim($datos[1]))))
+                                  ->get()->first();
+        if (is_null($user)) {
+          $user = new User();
+          $user->password = Hash::make('amparo');
+        }
+        $user->nroAdh = utf8_encode(trim($datos[0]));
+        $user->name = Str::title(utf8_encode(trim($datos[1])));
+        $user->nroDoc = str_replace(".","",utf8_encode(trim($datos[2])));
+        $user->tipoDoc=1;
+        $time = strtotime($datos[3]);
+        $user->fechaNac = date('Y-m-d',$time);
+        $user->sexo=utf8_encode(trim($datos[4]));
+        $user->vigenteOrden=intval(trim($datos[5]));
+        $user->activo=intval(trim($datos[6]));
+
+        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[7])))
+                                  ->get()->first();
+        if (isset($group)) {
+          $user->group_id=$group->id;
+        }
+
+        $user->save();
+        if((utf8_encode(trim($datos[7]))=='1232') or (utf8_encode(trim($datos[7]))=='1231')){
+          $user->roles()->sync($confRoleDev);
+        }else{
+          $user->roles()->sync($confRoleSocio);
+        }
+      }
+    }
+  }
+
   public function upload(Request $request)
   {
-    dd($request->hasFile('fileToUpload'));
-    if($request->hasFile('fileToUpload')){
-      $file=$request->file('fileToUpload');
-      $file->move(public_path().'/app-amparo/storage/app/public',$file->getClientOriginalName());
-    }
+    $this->uploadFiles($request, [
+      'fileToUpload',
+      'fileToUpload2',
+      'fileToUpload3',
+      'fileToUpload4',
+      'fileToUpload5',
+    ]);
 
-    // $user->name = $request->input('name');
-    //
-    // $target_dir = "/home/fabianm/public_html/app-amparo/storage/app/public/";
-    // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    // $target_file2 = $target_dir . basename($_FILES["fileToUpload2"]["name"]);
-    // $target_file3 = $target_dir . basename($_FILES["fileToUpload3"]["name"]);
-    // $target_file4 = $target_dir . basename($_FILES["fileToUpload4"]["name"]);
-    // $target_file5 = $target_dir . basename($_FILES["fileToUpload5"]["name"]);
-    // $uploadOk = 1;
-    // $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    // $imageFileType2 = strtolower(pathinfo($target_file2,PATHINFO_EXTENSION));
-    // $imageFileType3 = strtolower(pathinfo($target_file3,PATHINFO_EXTENSION));
-    // $imageFileType4 = strtolower(pathinfo($target_file4,PATHINFO_EXTENSION));
-    // $imageFileType5 = strtolower(pathinfo($target_file5,PATHINFO_EXTENSION));
-    // // Allow certain file formats
-    // if($imageFileType != "txt" || $imageFileType2 != "txt" || $imageFileType3 != "txt" || $imageFileType4 != "txt" || $imageFileType5 != "txt") {
-    //     echo "Lo siento, solo archivos TXT son permitidos.";
-    //     $uploadOk = 0;
-    // }
-    // // Check if $uploadOk is set to 0 by an error
-    // if ($uploadOk == 0) {
-    //     echo "Lo siento, sus archivos no fueron subidos.";
-    // // if everything is ok, try to upload file
-    // } else {
-    //     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)
-    //         && move_uploaded_file($_FILES["fileToUpload2"]["tmp_name"], $target_file2)
-    //         && move_uploaded_file($_FILES["fileToUpload3"]["tmp_name"], $target_file3)
-    //         && move_uploaded_file($_FILES["fileToUpload4"]["tmp_name"], $target_file4)
-    //         && move_uploaded_file($_FILES["fileToUpload5"]["tmp_name"], $target_file5)) {
-    //         echo "Los archivos han sido subidos!<br><br>";
-    //
-    //         require_once './utilidades/factura.php';
-    //         $factura = new Factura();
-    //         $factura->vaciar();
-    //         $lineas = file('facturasweb.txt');
-    //         $j=0;
-    //         $h=0;
-    //         foreach ($lineas as $linea_num => $linea)
-    //         {
-    //             $datos = explode("|", $linea);
-    //             $factura->nrocomp = intval(trim($datos[0]));
-    //             $factura->total = intval(trim($datos[1]));
-    //             $time = strtotime($datos[2]);
-    //             $factura->f_emis = date('Y-m-d',$time);
-    //             if (empty($datos[3])){
-    //               $time = strtotime("0000-00-00");
-    //               $factura->f_pago = date('Y-m-d',$time);
-    //             }else{
-    //               $time = strtotime($datos[3]);
-    //               $factura->f_pago = date('Y-m-d',$time);
-    //               // if ($datos[4]=="491"){
-    //               //   echo "pasa por cargado: ".$datos[3].", f_pago: ".$factura->f_pago;
-    //               // }
-    //             }
-    //             $factura->nrosocio = intval(trim($datos[4]));
-    //             if ($factura->facturaExiste(intval(trim($datos[0])),intval(trim($datos[4])))>0){
-    //               $factura->update();
-    //               $h++;
-    //             }else{
-    //               $factura->create();
-    //                $j++;
-    //             }
-    //         }
-    //         echo "ACTUALIZACION BD <br><br>";
-    //         echo "Facturas Nuevas: ".$j." Actualizadas: ".$h."<br>";
-    //         fclose($file);
-    //
-    //         require_once './utilidades/Sepelio.php';
-    //         $sepelio = new Sepelio();
-    //         $sepelio->vaciar();
-    //         $j=0;
-    //         $lineas = file('sepelio.txt');
-    //         foreach ($lineas as $linea_num => $linea)
-    //         {
-    //           $datos = explode("|", $linea);
-    //           $sepelio->nrosocio = intval(trim($datos[0]));
-    //           $sepelio->apeynom = utf8_encode(trim($datos[1]));
-    //           $time = strtotime($datos[2]);
-    //           $sepelio->fechaalta = date('Y-m-d',$time);
-    //           $time = strtotime($datos[3]);
-    //           $sepelio->fechames = date('Y-m-d',$time);
-    //           $sepelio->domicilio = utf8_encode(trim($datos[4]));
-    //           $sepelio->telefono = utf8_encode(trim($datos[5]));
-    //           $j++;
-    //           $sepelio->create();
-    //         }
-    //         echo "Sepelio: ".$j." socios<br>";
-    //         fclose($file);
-    //
-    //         require_once './utilidades/plan.php';
-    //         $plan = new Plan();
-    //         $plan->vaciar();
-    //         $lineas = file('planesweb.txt');
-    //         $j=0;
-    //         $h=0;
-    //         foreach ($lineas as $linea_num => $linea)
-    //         {
-    //             $datos = explode("|", $linea);
-    //             $plan->nrosocio = intval(trim($datos[0]));
-    //             $plan->nroadh = intval(trim($datos[1]));
-    //             $plan->codplan = intval(trim($datos[2]));
-    //             $plan->descripcion = utf8_encode(trim($datos[3]));
-    //             $plan->monto = intval(trim($datos[4]));
-    //             $plan->vigente = "S";
-    //             if ($plan->planExiste(intval(trim($datos[0])),intval(trim($datos[1])),intval(trim($datos[2])))>0){
-    //               $plan->update();
-    //               $h++;
-    //             }else{
-    //               $plan->create();
-    //               $j++;
-    //             }
-    //         }
-    //         echo "Planes Nuevos: ".$j." Actualizados: ".$h."<br>";
-    //         fclose($file);
-    //
-    //         require_once './utilidades/Socio.php';
-    //         $socio = new Socio();
-    //         $lineas = file('sociosweb.txt');
-    //         $j=0;
-    //         $h=0;
-    //         foreach ($lineas as $linea_num => $linea)
-    //         {
-    //           $datos = explode("|", $linea);
-    //           $socio->numerosocio = intval(trim($datos[0]));
-    //           $socio->numeroadherente = intval(trim($datos[1]));
-    //           $socio->direccionsocio = utf8_encode(trim($datos[2]));
-    //           $socio->diacobro = utf8_encode(trim($datos[3]));
-    //           $socio->descripcionsocio = utf8_encode(trim($datos[4]));
-    //           $socio->horacobro = utf8_encode(trim($datos[5]));
-    //           $socio->numerodocumento = utf8_encode(trim($datos[6]));
-    //           $socio->tipodocumento=1;
-    //           $time = strtotime($datos[7]);
-    //           $socio->fechaalta = date('Y-m-d',$time);
-    //           $time2 = strtotime($datos[8]);
-    //           $socio->fechanacimiento = date('Y-m-d',$time2);
-    //           $socio->direccioncobro = utf8_encode(trim($datos[9]));
-    //           $socio->sexo='2';
-    //           $socio->tiposocio=0;
-    //           $socio->telefonosocio = utf8_encode(trim($datos[10]));
-    //           $socio->vigenteordenweb=utf8_encode(trim($datos[11]));
-    //           $socio->vigente=utf8_encode(trim($datos[12]));
-    //           $socio->total=intval(trim($datos[13]));
-    //           if ($socio->socioExiste(intval(trim($datos[0])),intval(trim($datos[1])))>0){
-    //             $socio->update();
-    //             $h++;
-    //           }else{
-    //              $socio->create();
-    //              $j++;
-    //           }
-    //
-    //         }
-    //         echo "Socios Nuevos: ".$j." Actualizados: ".$h."<br>";
-    //         fclose($file);
-    //
-    //     } else {
-    //         echo "Lo siento, hubo un error subiendo los archivos.";
-    //     }
-    // }
-    //
-    // return redirect()->route('home')->with('message','Padrón Actualizado');
+    return redirect()->route('home')->with('message','Padrón Actualizado');
+  }
+
+  public function truncateTable($table)
+  {
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    DB::table($table)->truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
   }
 
 }

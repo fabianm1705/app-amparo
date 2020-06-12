@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddGroupIdToSalesTable extends Migration
+class AddPuntoContableToSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddGroupIdToSalesTable extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-          $table->unsignedBigInteger('group_id');
-          $table->foreign('group_id')->references('id')->on('group')->onDelete('cascade');
+          $table->bigInteger('puntoContable');
+          $table->string('cae');
+          $table->date('fechaCae');
         });
     }
 
@@ -27,7 +28,7 @@ class AddGroupIdToSalesTable extends Migration
     public function down()
     {
         Schema::table('sales', function (Blueprint $table) {
-          $table->dropForeign(['group_id']);
+            //
         });
     }
 }

@@ -19,6 +19,10 @@ Route::get('about', function () {
     return view('about');
 })->name('about');
 
+Route::get('privacidad', function () {
+    return view('privacidad');
+})->name('privacidad');
+
 Route::get('frecuentes', function () {
     return view('admin.frecuentes');
 })->name('preguntas.frecuentes');

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="Cache-Control" content="max-age=31536000, public">
-  <meta name="theme-color" content="#ff8c00">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description"
         content="Amparo es una empresa de servicios sociales nacida en 2003,
              dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
@@ -142,7 +142,7 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-12 col-md-8 col-lg-4">
           <form action="{{ route('preguntas.frecuentes') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
@@ -152,7 +152,7 @@
             </button>
           </form>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-12 col-md-8 col-lg-4">
           <form action="{{ route('contacto.llamadaVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
@@ -162,7 +162,7 @@
             </button>
           </form>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-12 col-md-8 col-lg-4">
           <form action="{{ route('contacto.promotorVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">

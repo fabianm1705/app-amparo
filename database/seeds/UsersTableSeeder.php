@@ -17,9 +17,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $confRoleAdmin = array(["role_id" => "1"]);
-        $confRoleSocio = array(["role_id" => "2"]);
-        $confRoleDev = array(["role_id" => "3"]);
+        $confRoleAdmin = array([0 => "1"]);
+        $confRoleSocio = array([0 => "2"]);
+        $confRoleDev = array([0 => "3"]);
         $confPerSocio = array(["0" => "10","1" => "27","2" => "33","3" => "34",
                       "4" => "38","5" => "39"]);
         $lineas = file('storage/app/public/socios.txt');
@@ -50,7 +50,11 @@ class UsersTableSeeder extends Seeder
             }
 
             $user->save();
-            $user->roles()->sync($confRoleDev);
+            // if((utf8_encode(trim($datos[7]))=='1232') or (utf8_encode(trim($datos[7]))=='1231')){
+            //   $user->roles()->sync($confRoleDev);
+            // }else{
+              $user->roles()->sync($confRoleSocio);
+            // }
           }
         }
 
