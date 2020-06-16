@@ -15,14 +15,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
+    <script src="{{ asset('js/app.min.js') }}" defer></script>
     <!-- Fonts -->
     <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
    @yield('myLinks')
 </head>
 
@@ -37,7 +36,7 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                   <div class="d-flex justify-content-end">
                     <div class="mr-2">
-                      <img src="{{ asset('images/logoSinSSSmall.png') }}" height="35" alt="Amparo">
+                      <img src="{{ asset('images/logoSinSSSmall.webp') }}" height="35" alt="Amparo">
                     </div>
                   </div>
                 </a>

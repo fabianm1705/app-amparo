@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="Cache-Control" content="max-age=31536000, public">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#fff">
   <meta name="description"
         content="Amparo es una empresa de servicios sociales nacida en 2003,
              dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
@@ -18,10 +18,9 @@
   <link rel="manifest" href="/manifest.json" />
   <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
   <!--     Fonts and icons     -->
-  <link rel="preload, stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <!-- CSS Files -->
-  <link href="{{ asset('material/material-kit.min.css?v=2.1.0') }}" rel="stylesheet">
+  <link href="{{ asset('material/material-kit-amparo.min.css?v=2.1.0') }}" rel="stylesheet">
   <!-- jquery library -->
   <script src="https://code.jquery.com/jquery-3.5.0.min.js" crossorigin="anonymous"></script>
 </head>
@@ -31,7 +30,7 @@
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand" href="{{ route('welcome') }}">
-          <img src="{{ asset('images/logoSinSSSmall.png') }}" height="35" alt="Logo Amparo">
+          <img src="{{ asset('images/logoSinSSSmall.webp') }}" height="35" alt="Logo Amparo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation" data-target=".navbar-ex1-collapse">
           <span class="sr-only">Toggle navigation</span>
@@ -295,6 +294,12 @@
     $(document).ready(function() {
       $("#fecha").text( ano );
     });
+  </script>
+  <script>
+    var span = document.getElementsByTagName('span')[0];
+    span.textContent = ''; // change DOM text content
+    span.style.display = 'inline';  // change CSSOM property
+    // create a new element, style it, and append it to the DOM
   </script>
   <script>
     // Nos aseguramos que el navegador implementa la api 'serviceWorker'

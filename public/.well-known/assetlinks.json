@@ -1,25 +1,5 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "arr.com.amparosrl",
-    "sha256_cert_fingerprints":
-    ["37:67:26:8A:FB:35:BD:2D:80:B1:A9:CC:AF:88:88:9A:87:3B:CD:83:EA:2E:55:88:0F:BC:8B:4E:2D:70:04:DF"]
-  }
-},
-{
-  "relation": ["delegate_permission/common.get_login_creds"],
-  "target": {
-    "namespace": "web",
-    "site": "https://amparosrl.com.ar"
-  }
-},
-{
-  "relation": ["delegate_permission/common.get_login_creds"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "arr.com.amparosrl",
-    "sha256_cert_fingerprints":
-    ["37:67:26:8A:FB:35:BD:2D:80:B1:A9:CC:AF:88:88:9A:87:3B:CD:83:EA:2E:55:88:0F:BC:8B:4E:2D:70:04:DF"]
-  }
+  "target" : { "namespace": "android_app", "package_name": "ar.com.amparosrl",
+               "sha256_cert_fingerprints": ["14:30:16:43:A7:3F:D1:EE:D5:43:A6:DC:E6:18:87:41:D0:57:78:50:17:C0:02:36:F4:59:7F:EC:1D:4E:6A:52"] }
 }]

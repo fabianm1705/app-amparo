@@ -18,7 +18,7 @@
     @if (\Request::is('products/shopping'))
       <link rel="stylesheet" href="{{ asset('swiper/css/swiper.min.css') }}">
     @else
-      <script src="{{ asset('js/app.js') }}" defer></script>
+      <script src="{{ asset('js/app.min.js') }}" defer></script>
     @endif
     <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
     <!-- Fonts -->
@@ -26,7 +26,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app-amparo.css') }}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.0.min.js" crossorigin="anonymous"></script>
    @yield('myLinks')

@@ -255,7 +255,3 @@ Route::post('contacto/promotor','ContactUsController@contactoPromotor')
 
 Route::post('/','ContactUsController@contactoWelcome')
   ->name('contacto.welcome');
-// Route::post('/',[
-//               'as'=>'contacto.welcome',
-//               'uses'=>'ContactUsController@contactUsWelcome'
-//               ]);
