@@ -1,5 +1,18 @@
 @extends('layouts.app')
 
+@section('myLinks')
+<script>
+  function darkModeHome(valor){
+    var el31 = document.getElementById("textoHome");
+    if(valor){
+      el31.classList.add('text-secondary');
+    }else{
+      el31.classList.remove('text-secondary');
+    }
+  };
+</script>
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -9,7 +22,7 @@
           <div class="row justify-content-center">
             @can('orders.crear')
               <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
+                <button id="btnEmitir" class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
                   @foreach (Auth::user()->roles as $role)
                     @if(($role->slug=='dev') or ($role->slug=='admin'))
                       <a style="text-decoration:none;" href="{{ route('usersSearch') }}">Emitir Orden</a>
@@ -49,7 +62,7 @@
               </div>
             @endcan
             @if(Auth::user()->password_changed_at)
-              @can('otros')
+              @can('planes')
                 <div class="col-sm-6 col-md-4 col-lg-2 blanco">
                   <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
                     <a style="text-decoration:none;" href="{{ route('planes') }}">Planes</a>
@@ -78,7 +91,7 @@
   </div>
 </div>
 <div class="container mt-2">
-    <div class="text-center">
+    <div id="textoHome" class="text-center">
       Oficina Cura Alvarez 615, Paraná, Entre Ríos<br>
       Horario: Lunes a Viernes 8:30 a 18:00hs<br>
       Teléfonos Útiles<br>
@@ -87,7 +100,6 @@
       SOS Emergencias: 4222322 / 4233333<br>
       www.amparosrl.com.ar
     </div>
+    <img onload="darkModeHome({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
-
-
 @endsection

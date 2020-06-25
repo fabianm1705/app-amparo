@@ -2,6 +2,19 @@
 
 @section('myLinks')
   <script>
+    function darkModeProfesionales(valor){
+      var el41 = document.getElementById("tabla");
+      var el42 = document.getElementById("tarjeta");
+      if(valor){
+        el41.classList.add('table-dark');
+        el42.classList.add('bg-dark');
+      }else{
+        el41.classList.remove('table-dark');
+        el42.classList.remove('bg-dark');
+      }
+    };
+  </script>
+  <script>
     function cargarProfesionales(){
       var id = document.getElementById('specialty').value;
       axios.post('/getDoctors/'+id)
@@ -43,9 +56,9 @@
             </select>
           </div>
         </div>
-        <div class="card mt-1">
+        <div id="tarjeta" class="card mt-1">
           <div class="card-body">
-            <table class="table table-hover table-sm table-responsive">
+            <table id="tabla" class="table table-hover table-sm table-responsive">
               <thead>
                 <th>Nombre</th>
                 <th>Consultorio</th>
@@ -59,5 +72,6 @@
         </div>
       </div>
     </div>
+    <img onload="darkModeProfesionales({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
   </div>
 @endsection

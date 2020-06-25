@@ -2145,6 +2145,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['count'],
   created: function created() {
@@ -38955,12 +38958,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "d-flex" }, [
+  return _c("div", { staticClass: "d-flex", attrs: { id: "carrito" } }, [
     _c("div", { staticStyle: { "vertical-align": "top" } }, [
       _vm._v("Carrito")
     ]),
-    _c("i", { staticClass: "material-icons" }, [_vm._v("shopping_cart")]),
-    _vm._v(_vm._s(_vm.productsCount))
+    _vm._v(" "),
+    _c("i", { staticClass: "material-icons", attrs: { id: "iconCarrito" } }, [
+      _vm._v("shopping_cart")
+    ]),
+    _vm._v(_vm._s(_vm.productsCount) + "\n")
   ])
 }
 var staticRenderFns = []

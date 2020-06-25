@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#fff">
     <meta
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,
@@ -16,6 +16,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
     <script src="{{ asset('js/app.min.js') }}" defer></script>
+    @auth
+      @foreach (Auth::user()->roles as $role)
+        @if($role->slug=='dev')
+          <script src="{{ asset('js/darkModeDev.js') }}" defer></script>
+        @elseif($role->slug=='admin')
+          <script src="{{ asset('js/darkModeAdmin.js') }}" defer></script>
+        @elseif($role->slug=='socio')
+          <script src="{{ asset('js/darkModeSocio.js') }}" defer></script>
+        @elseif(($role->slug=='aop.aop') or ($role->slug=='SOS.sos'))
+          <script src="{{ asset('js/darkModeAOPSOS.js') }}" defer></script>
+        @endif
+      @endforeach
+    @endauth
     <!-- Fonts -->
     <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -25,13 +38,14 @@
    @yield('myLinks')
 </head>
 
-@if (\Request::is('orders/crear'))
-  <body onLoad="iniciaEmision()" style="background-image: url({{ asset('images/01.webp' )}})">
-@else
-  <body style="background-image: url({{ asset('images/01.webp' )}})">
-@endif
+@auth
+  <body id="cuerpo" onLoad="darkMode({{ Auth::user()->darkMode }})">
+@endauth
+@guest
+  <body id="cuerpo">
+@endguest
     <div id="app">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow-sm">
+        <nav id="navAmparo" class="navbar navbar-expand-xl fixed-top navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                   <div class="d-flex justify-content-end">
@@ -50,49 +64,48 @@
                       @auth
                         @can('orders.index')
                           <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn dropdown-toggle text-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Admin
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              {{-- <a class="dropdown-item" href="{{ route('orders.index') }}">Orders</a> --}}
+                            <div id="menuAdmin" class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                               @can('interests.index')
-                                <a class="dropdown-item" href="{{ route('interests.visor') }}">Visor de Accesos</a>
+                                <a id="visorAccesos" class="dropdown-item" href="{{ route('interests.visor') }}">Visor de Accesos</a>
                               @endcan
                               <div class="dropdown-divider"></div>
                               @can('users.index')
-                                <a class="dropdown-item" href="{{ route('users.index') }}">Búsqueda Socios</a>
+                                <a id="busquedaSocios" class="dropdown-item" href="{{ route('users.index') }}">Búsqueda Socios</a>
                               @endcan
                               @can('users.upload')
-                                <a class="dropdown-item" href="{{ route('users.uploadfiles') }}">Actualización Padrón</a>
+                                <a id="actualizacionPadron" class="dropdown-item" href="{{ route('users.uploadfiles') }}">Actualización Padrón</a>
                               @endcan
                               <div class="dropdown-divider"></div>
                               @can('products.index')
-                                <a class="dropdown-item" href="{{ route('products.index') }}">Productos</a>
+                                <a id="productos" class="dropdown-item" href="{{ route('products.index') }}">Productos</a>
                               @endcan
                               @can('shopping_cart.index')
-                                <a class="dropdown-item" href="{{ route('shopping_cart.index') }}">Shopping Carts</a>
+                                <a id="shoppingCarts" class="dropdown-item" href="{{ route('shopping_cart.index') }}">Shopping Carts</a>
                               @endcan
                               <div class="dropdown-divider"></div>
                               @can('specialties.index')
-                                <a class="dropdown-item" href="{{ route('specialties.index') }}">Especialidades</a>
+                                <a id="especialidades" class="dropdown-item" href="{{ route('specialties.index') }}">Especialidades</a>
                               @endcan
                               @can('doctors.index')
-                                <a class="dropdown-item" href="{{ route('doctors.index') }}">Profesionales</a>
+                                <a id="profesionales" class="dropdown-item" href="{{ route('doctors.index') }}">Profesionales</a>
                               @endcan
                               @can('categories.index')
-                                <a class="dropdown-item" href="{{ route('categories.index') }}">Categorías</a>
+                                <a id="categorias" class="dropdown-item" href="{{ route('categories.index') }}">Categorías</a>
                               @endcan
                               @can('roles.index')
-                                <a class="dropdown-item" href="{{ route('roles.index') }}">Roles</a>
+                                <a id="roles" class="dropdown-item" href="{{ route('roles.index') }}">Roles</a>
                               @endcan
                               @can('payment_methods.index')
-                                <a class="dropdown-item" href="{{ route('payment_methods.index') }}">Métodos de Pago</a>
+                                <a id="metodosPago" class="dropdown-item" href="{{ route('payment_methods.index') }}">Métodos de Pago</a>
                               @endcan
                               @can('interests.index')
-                                <a class="dropdown-item" href="{{ route('interests.index') }}">Zonas de Interés</a>
+                                <a id="zonasInteres" class="dropdown-item" href="{{ route('interests.index') }}">Zonas de Interés</a>
                               @endcan
                               @can('subscriptions.index')
-                                <a class="dropdown-item" href="{{ route('subscriptions.index') }}">Planes/Subscriptions</a>
+                                <a id="planes" class="dropdown-item" href="{{ route('subscriptions.index') }}">Planes/Subscriptions</a>
                               @endcan
                             </div>
                           </div>
@@ -129,15 +142,11 @@
                             <a class="nav-link"
                               href="{{ route('shopping_cart.cart') }}"
                               title="Carrito de Compras">
-                              <cart-counter-component :count="{{ $productsCount }}"></cart-counter-component>
+                              <cart-counter-component :count="{{ $productsCount }}">
+                              </cart-counter-component>
                             </a>
                           </li>
                         @endcan
-                        {{-- @can('otros')
-                          <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('otros') }}">+Servicios</a>
-                          </li>
-                        @endcan --}}
                         @can('aop')
                         <li class="nav-item active">
                           <a class="nav-link" href="{{ route('odontologia') }}">Odontológico</a>
@@ -148,7 +157,7 @@
                           <a class="nav-link" href="{{ route('emergencia') }}">Padrón</a>
                         </li>
                         @endcan
-                        @can('otros')
+                        @can('planes')
                           <li class="nav-item active">
                             <a class="nav-link" href="{{ route('planes') }}">Planes</a>
                           </li>
@@ -158,19 +167,6 @@
                             <a class="nav-link" href="{{ route('contacto.appVista') }}">Contacto</a>
                           </li>
                         @endcan
-                        @can('users.panel')
-                          <li class="nav-item active">
-                            <a class="nav-link" href="{{ route('users.panel', ['id' => Auth::user()->id ]) }}">Mis Datos</a>
-                          </li>
-                        @endcan
-                        {{-- @can('instalar.app')
-                        <li class="nav-item active">
-                            <a href="#" onclick="addToHomeScreen()" class="nav-link">
-                               <span class="uk-margin-small-right" data-uk-icon="icon: plus"></span>
-                               Instalar
-                            </a>
-                        </li>
-                        @endcan --}}
                       @endauth
                         <!-- Authentication Links -->
                         @guest
@@ -188,11 +184,25 @@
                                     {{ Str::before(Str::after(Auth::user()->name,' '),' ') }} <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div id="menuLogin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('users.darkMode') }}"
+                                       onclick="event.preventDefault();
+                                                      document.getElementById('darkmode-form').submit();">
+                                      <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="switchDarkMode">
+                                        <label id="labelDarkMode" class="custom-control-label" for="switchDarkMode">Modo Oscuro</label>
+                                      </div>
+                                    </a>
+                                    <form id="darkmode-form" action="{{ route('users.darkMode') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    @can('users.panel')
+                                        <a id="misDatos" class="dropdown-item" href="{{ route('users.panel', ['id' => Auth::user()->id ]) }}">Mis Datos</a>
+                                    @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <div class="">
+                                        <div id="divLogout" class="">
                                           @lang('messages.logout')
                                         </div>
                                     </a>

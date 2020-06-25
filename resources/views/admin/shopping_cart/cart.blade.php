@@ -2,6 +2,16 @@
 
 @section('myLinks')
   <script>
+    function darkModeCarrito(valor){
+      var el41 = document.getElementById("textoPago");
+      if(valor){
+        el41.classList.add('text-white');
+      }else{
+        el41.classList.remove('text-white');
+      }
+    };
+  </script>
+  <script>
     function cargarPrecio(cuotas,percentage,costo){
       var precio;
       precio = Math.round(costo / 10 * (1+(percentage/100)) / cuotas) * 10;
@@ -85,7 +95,7 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-9 mt-2">
-        <h5>Seleccione su medio de pago:</h5>
+        <h5 id="textoPago">Seleccione su medio de pago:</h5>
 
         <div class="">
           <form action="{{ route('shopping_cart.store') }}" method="post" enctype="multipart/form-data">
@@ -121,5 +131,6 @@
 
       </div>
     </div>
+    <img onload="darkModeCarrito({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
   </div>
 @endsection

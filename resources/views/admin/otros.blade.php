@@ -1,10 +1,49 @@
-@extends('layouts.appClean')
+@extends('layouts.app')
+
+@section('myLinks')
+  <script>
+    function darkModeOtros(valor){
+      var el41 = document.getElementById("texto1");
+      var el42 = document.getElementById("tarjeta1");
+      var el43 = document.getElementById("texto2");
+      var el44 = document.getElementById("tarjeta2");
+      var el45 = document.getElementById("texto3");
+      var el46 = document.getElementById("tarjeta3");
+      var el47 = document.getElementById("texto4");
+      var el48 = document.getElementById("tarjeta4");
+      var el49 = document.getElementById("tarjetas");
+      if(valor){
+        el41.classList.add('text-white');
+        el42.classList.add('bg-secondary');
+        el43.classList.add('text-white');
+        el44.classList.add('bg-secondary');
+        el45.classList.add('text-white');
+        el46.classList.add('bg-secondary');
+        el47.classList.add('text-white');
+        el48.classList.add('bg-secondary');
+        el49.classList.add('bg-secondary');
+        el49.classList.add('text-white');
+      }else{
+        el41.classList.remove('text-white');
+        el42.classList.remove('bg-secondary');
+        el43.classList.remove('text-white');
+        el44.classList.remove('bg-secondary');
+        el45.classList.remove('text-white');
+        el46.classList.remove('bg-secondary');
+        el47.classList.remove('text-white');
+        el48.classList.remove('bg-secondary');
+        el49.classList.remove('bg-secondary');
+        el49.classList.remove('text-white');
+      }
+    };
+  </script>
+@endsection
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-      <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
-        <div class="title text-center"><br>
+      <div id="tarjeta1" class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
+        <div id="texto1" class="title text-center"><br>
           <div>
             <b>Formas de Pago Amparo</b><hr>
           </div>
@@ -14,8 +53,8 @@
           <br><br>
         </div>
       </div>
-      <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
-        <div class="title text-center"><br>
+      <div id="tarjeta2" class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
+        <div id="texto2" class="title text-center"><br>
           <div>
             <b>Reintegros en Farmacias</b><hr>
           </div>
@@ -23,8 +62,8 @@
           En farmacia de su elección, sólo para adherentes del Plan Salud, presentando el ticket en Amparo o por medios electrónicos.<br><br>
         </div>
       </div>
-      <div class="col-sm-10 col-md-7 col-lg-8 card shadow-sm m-1">
-        <div class="title text-center"><br>
+      <div id="tarjeta3" class="col-sm-10 col-md-7 col-lg-8 card shadow-sm m-1">
+        <div id="texto3" class="title text-center"><br>
           <div>
             <b>Descuentos en Optica del Sol</b> - 25 de mayo 301, Paraná<hr>
           </div>
@@ -35,8 +74,8 @@
           5% desc. pagando con tarjeta de débito o crédito en 1 pago.<br><br>
         </div>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 card shadow-sm m-1">
-        <div class="title text-center"><br>
+      <div id="tarjeta4" class="col-sm-6 col-md-4 col-lg-3 card shadow-sm m-1">
+        <div id="texto4" class="title text-center"><br>
           <div>
             <b>Administración</b><hr>
           </div>
@@ -63,7 +102,7 @@
         </ul>
       </div>
     </div>
-    <div class="card text-center shadow-sm">
+    <div id="tarjetas" class="card text-center shadow-sm">
       <div class="card-body">
         <div class="tab-content text-justify">
             <div class="tab-pane active" id="sos">
@@ -103,5 +142,6 @@
         </div>
       </div>
     </div>
+    <img onload="darkModeOtros({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
 @endsection

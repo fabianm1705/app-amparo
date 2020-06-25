@@ -224,6 +224,9 @@ Route::get('otros', function () {return view('admin.otros');})
 Route::get('planes', 'UserController@planes')
               ->middleware(['auth','can:planes'])
               ->name('planes');
+Route::post('darkmode', 'UserController@darkMode')
+              ->middleware(['auth'])
+              ->name('users.darkMode');
 Route::get('users/afiliar', function () {
   return view('admin.user.afiliar');
 })->name('users.afiliar');
@@ -234,23 +237,20 @@ Route::get('users/promotor', function () {
 // Contactos
 Route::get('contacto/app', function () {
   return view('admin.contacto.app');
-})->name('contacto.appVista');
+})->middleware('auth')->name('contacto.appVista');
 Route::post('contacto/app','ContactUsController@contactoApp')
-  ->middleware('auth')
-  ->name('contacto.app');
+  ->middleware('auth')->name('contacto.app');
 
 Route::get('contacto/llamada', function () {
   return view('admin.contacto.llamada');
 })->name('contacto.llamadaVista');
 Route::post('contacto/llamada','ContactUsController@contactoLlamada')
-  ->middleware('auth')
   ->name('contacto.llamada');
 
 Route::get('contacto/promotor', function () {
   return view('admin.contacto.promotor');
 })->name('contacto.promotorVista');
 Route::post('contacto/promotor','ContactUsController@contactoPromotor')
-  ->middleware('auth')
   ->name('contacto.promotor');
 
 Route::post('/','ContactUsController@contactoWelcome')

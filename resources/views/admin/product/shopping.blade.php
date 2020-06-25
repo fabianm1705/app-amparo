@@ -64,7 +64,11 @@
   <div class="container">
     <div class="justify-content-center">
       @foreach($categories as $category)
-        <h3>{{ $category->nombre }}</h3>
+        @if(Auth::user()->darkMode)
+          <h3 class="text-white">{{ $category->nombre }}</h3>
+        @else
+          <h3>{{ $category->nombre }}</h3>
+        @endif
         <div class="swiper-container">
           <div class="swiper-wrapper">
             @foreach ($category->products->where('vigente', 1) as $product)

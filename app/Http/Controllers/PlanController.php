@@ -97,13 +97,13 @@ class PlanController extends Controller
     public function activarPlan()
     {
       $this->registroAcceso(11,'Plan Salud Grupal');
-      Mail::send('admin.contacto.emailActivaPlan', array(
-              'name' => 'email activa plan'
-           ), function($message){
-                $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
-              ->subject('Un socio activó plan salud!');
-      });
+      // Mail::send('admin.contacto.emailActivaPlan', array(
+      //         'name' => 'email activa plan'
+      //      ), function($message){
+      //           $message->from('admin@amparosrl.com.ar');
+      //           $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+      //         ->subject('Un socio activó plan salud!');
+      // });
       Plan::create([
                     'nombre' => 'AMPARO SALUD PLUS',
                     'monto' => 900,

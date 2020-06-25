@@ -347,6 +347,31 @@ class PermissionsTableSeeder extends Seeder
           'slug' => 'users.panel',
           'description' => 'Ver en detalle los datos del grupo familiar'
         ]);
+        Permission::create([
+          'name' => 'Actualización Padrón Socios',
+          'slug' => 'users.upload',
+          'description' => 'Subir archivos con datos actualizados del padrón'
+        ]);
+        Permission::create([
+          'name' => 'Autocarga nueva afiliación',
+          'slug' => 'users.afiliar',
+          'description' => 'Visitante que se afilia directo desde la web'
+        ]);
+        Permission::create([
+          'name' => 'Visitante solicita llamada para informarse',
+          'slug' => 'users.llamada',
+          'description' => 'Formulario de carga: Nombre y Teléfono'
+        ]);
+        Permission::create([
+          'name' => 'Visitante solicita promotor para informarse',
+          'slug' => 'users.promotor',
+          'description' => 'Formulario de carga: Nombre, Dirección y Teléfono'
+        ]);
+        Permission::create([
+          'name' => 'Visualización de los planes de Amparo',
+          'slug' => 'planes',
+          'description' => 'Mostramos cada plan con detalles y precios'
+        ]);
         Role::create([
           'name' => 'Admin',
           'slug' => 'admin',

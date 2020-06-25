@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
@@ -485,6 +486,18 @@ class UserController extends Controller
     DB::statement('SET FOREIGN_KEY_CHECKS=0;');
     DB::table($table)->truncate();
     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+  }
+
+  public function darkMode()
+  {
+    $user = Auth::user();
+    if($user->darkMode){
+      $user->darkMode = false;
+    }else{
+      $user->darkMode = true;
+    }
+    $user->save();
+    return redirect()->back();
   }
 
 }

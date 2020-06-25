@@ -2,12 +2,12 @@
 
 @section('myLinks')
   <script>
-    function iniciaEmision(){
-        document.getElementById("divNecesitaSalud").style.display = "none";
-        document.getElementById("divNecesitaSalud2").style.display = "none";
-        document.getElementById("divNecesitaOdontologia").style.display = "none";
-        document.getElementById("divBtnGenerarOrden").style.display = "none";
-      }
+    document.onload = function(){
+      document.getElementById("divNecesitaSalud").style.display = "none";
+      document.getElementById("divNecesitaSalud2").style.display = "none";
+      document.getElementById("divNecesitaOdontologia").style.display = "none";
+      document.getElementById("divBtnGenerarOrden").style.display = "none";
+    };
   </script>
   <script>
     function getDoctors(){

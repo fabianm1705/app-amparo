@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddObsAndPlanIdToConceptsTable extends Migration
+class AddDarkModeToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddObsAndPlanIdToConceptsTable extends Migration
      */
     public function up()
     {
-        Schema::table('concepts', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+          $table->boolean('darkMode')->default(false);
         });
     }
 
@@ -25,7 +25,7 @@ class AddObsAndPlanIdToConceptsTable extends Migration
      */
     public function down()
     {
-        Schema::table('concepts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

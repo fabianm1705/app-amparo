@@ -1,5 +1,8 @@
 <template>
-  <div class="d-flex"><div style="vertical-align: top">Carrito</div><i class="material-icons">shopping_cart</i>{{ productsCount }}</div>
+  <div id="carrito" class="d-flex">
+    <div style="vertical-align: top">Carrito</div>
+    <i class="material-icons" id="iconCarrito">shopping_cart</i>{{ productsCount }}
+  </div>
 </template>
 
 <script>

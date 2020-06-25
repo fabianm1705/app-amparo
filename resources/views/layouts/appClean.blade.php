@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#fff">
     <meta
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,
@@ -20,6 +20,9 @@
     @else
       <script src="{{ asset('js/app.min.js') }}" defer></script>
     @endif
+    @auth
+        <script src="{{ asset('js/darkModeClean.js') }}" defer></script>
+    @endauth
     <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
     <!-- Fonts -->
     <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
@@ -32,17 +35,17 @@
    @yield('myLinks')
 </head>
 
-<body style="background-image: url({{ asset('images/01.webp' )}})">
+<body id="cuerpo" onLoad="darkMode({{ Auth::user()->darkMode }})">
     <div id="app">
       <nav class="navbar navbar-light fixed-top">
         <div class="row ml-1">
           <a class="navbar-brand" href="{{ URL::previous() }}">
-            <span class="material-icons">
+            <span id="iconBack" class="material-icons">
               arrow_back
             </span>
           </a>
           <a class="navbar-brand" href="{{ url('/home') }}">
-            <span class="material-icons">
+            <span id="iconHome" class="material-icons">
               home
             </span>
           </a>

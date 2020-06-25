@@ -14,6 +14,8 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
       'costo' => $faker->numberBetween(1200,2900),
       'cantidadCuotas' => 6,
       'image_url' => 'imagen.jpg',
+      'image_url2' => 'imagen.jpg',
+      'image_url3' => 'imagen.jpg',
       'vigente' => true
     ];
 });

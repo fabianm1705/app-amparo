@@ -1,5 +1,60 @@
 @extends('layouts.app')
 
+@section('myLinks')
+<script>
+  function darkModePanel(valor){
+    var el41 = document.getElementById("tabla1");
+    var el42 = document.getElementById("tarjeta1");
+    var el43 = document.getElementById("tarjeta2");
+    var el431 = document.getElementById("texto21");
+    var el432 = document.getElementById("texto22");
+    var el433 = document.getElementById("texto23");
+    var el434 = document.getElementById("texto24");
+    var el435 = document.getElementById("texto25");
+    var el436 = document.getElementById("texto26");
+    var el44 = document.getElementById("tabla3");
+    var el45 = document.getElementById("tarjeta3");
+    var el46 = document.getElementById("tabla4");
+    var el47 = document.getElementById("tarjeta4");
+    var el48 = document.getElementById("tabla5");
+    var el49 = document.getElementById("tarjeta5");
+    if(valor){
+      el41.classList.add('table-dark');
+      el42.classList.add('bg-dark');
+      el43.classList.add('bg-dark');
+      el431.classList.add('text-white');
+      el432.classList.add('text-white');
+      el433.classList.add('text-white');
+      el434.classList.add('text-white');
+      el435.classList.add('text-white');
+      el436.classList.add('text-white');
+      el44.classList.add('table-dark');
+      el45.classList.add('bg-dark');
+      el46.classList.add('table-dark');
+      el47.classList.add('bg-dark');
+      el48.classList.add('table-dark');
+      el49.classList.add('bg-dark');
+    }else{
+      el41.classList.remove('table-dark');
+      el42.classList.remove('bg-dark');
+      el43.classList.remove('bg-dark');
+      el431.classList.remove('text-white');
+      el432.classList.remove('text-white');
+      el433.classList.remove('text-white');
+      el434.classList.remove('text-white');
+      el435.classList.remove('text-white');
+      el436.classList.remove('text-white');
+      el44.classList.remove('table-dark');
+      el45.classList.remove('bg-dark');
+      el46.classList.remove('table-dark');
+      el47.classList.remove('bg-dark');
+      el48.classList.remove('table-dark');
+      el49.classList.remove('bg-dark');
+    }
+  };
+</script>
+@endsection
+
 @section('content')
 <div class="container">
   <div class="row">
@@ -20,9 +75,9 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
         <h5 class="card-title text-white mt-3 mb-3 ml-3">Afiliados</h5>
       </div>
-      <div class="card shadow-sm mt-1">
+      <div id="tarjeta1" class="card shadow-sm mt-1">
         <div class="card-body centrado">
-          <table class="table table-hover table-sm table-responsive">
+          <table id="tabla1" class="table table-hover table-sm table-responsive">
             <thead>
               <tr>
                 <th class="text-center">Apellido y Nombres</th>
@@ -47,33 +102,33 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
         <h5 class="card-title text-white mt-3 mb-3 ml-3">Info General</h5>
       </div>
-      <div class="card shadow-sm mt-1">
+      <div id="tarjeta2" class="card shadow-sm mt-1">
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <label class="direccion">Domicilio</label>
+              <label id="texto21" class="direccion">Domicilio</label>
               <input type="text" class="form-control" value="{{ $group->direccion }}" readonly id="direccion">
             </div>
             <div class="col-md-3">
-              <label for="fechaAlta">Afiliación</label>
+              <label id="texto22" for="fechaAlta">Afiliación</label>
               <input type="text" class="form-control text-center" value="{{ \Carbon\Carbon::parse($group->fechaAlta)->format('d/m/Y') }}" readonly id="fechaAlta">
             </div>
             <div class="col-md-3">
-              <label for="telefono">Teléfonos</label>
+              <label id="texto23" for="telefono">Teléfonos</label>
               <input type="text" class="form-control text-center" value="{{ $group->telefono }}" readonly id="telefono">
             </div>
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label for="direccionCobro">Domicilio de Cobro</label>
+              <label id="texto24" for="direccionCobro">Domicilio de Cobro</label>
               <input type="text" class="form-control" value="{{ $group->direccionCobro }}" readonly id="direccionCobro">
             </div>
             <div class="col-md-3">
-              <label for="diaCobro">Día de Cobro</label>
+              <label id="texto25" for="diaCobro">Día de Cobro</label>
               <input type="text" class="form-control text-center" value="{{ $group->diaCobro }}" readonly id="diaCobro">
             </div>
             <div class="col-md-3">
-              <label for="horaCobro">Horario</label>
+              <label id="texto26" for="horaCobro">Horario</label>
               <input type="text" class="form-control text-center" value="{{ $group->horaCobro }}" readonly id="horaCobro">
             </div>
           </div>
@@ -86,9 +141,9 @@
         <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Estado de Cuenta</h5>
         </div>
-        <div class="card shadow-sm mt-1">
+        <div id="tarjeta3" class="card shadow-sm mt-1">
             <div class="card-body centrado">
-                <table class="table table-hover table-sm table-responsive">
+                <table id="tabla3" class="table table-hover table-sm table-responsive">
                   <thead>
                     <tr>
                       <th>Mes</th>
@@ -117,9 +172,9 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
         <h5 class="card-title text-white mt-3 mb-3 ml-3">Planes Suscriptos</h5>
       </div>
-      <div class="card shadow-sm mt-1">
+      <div id="tarjeta4" class="card shadow-sm mt-1">
         <div class="card-body centrado">
-            <table class="table table-hover table-sm table-responsive">
+            <table id="tabla4" class="table table-hover table-sm table-responsive">
               <thead>
                 <tr>
                   <th class="">Planes</th>
@@ -148,9 +203,9 @@
         <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Órdenes</h5>
         </div>
-        <div class="card shadow-sm mt-1">
+        <div id="tarjeta5" class="card shadow-sm mt-1">
             <div class="card-body centrado">
-                <table class="table table-hover table-sm table-responsive">
+                <table id="tabla5" class="table table-hover table-sm table-responsive">
                   <thead>
                     <tr>
                       <th>Fecha</th>
@@ -172,5 +227,6 @@
       </div>
     </div>
   </div>
+  <img onload="darkModePanel({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
 @endsection

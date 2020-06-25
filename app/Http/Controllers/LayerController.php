@@ -96,13 +96,13 @@ class LayerController extends Controller
     public function activarSalud()
     {
       $this->registroAcceso(11,'Plan Salud Individual');
-      Mail::send('admin.contacto.emailActivaPlan', array(
-              'name' => 'email activa plan'
-           ), function($message){
-                $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
-              ->subject('Un socio activó plan salud individual!');
-      });
+      // Mail::send('admin.contacto.emailActivaPlan', array(
+      //         'name' => 'email activa plan'
+      //      ), function($message){
+      //           $message->from('admin@amparosrl.com.ar');
+      //           $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+      //         ->subject('Un socio activó plan salud individual!');
+      // });
       Layer::create([
                     'nombre' => 'Amparo Salud',
                     'monto' => 600,
@@ -116,13 +116,13 @@ class LayerController extends Controller
     public function activarOdontologia()
     {
       $this->registroAcceso(11,'Plan Odontológico');
-      Mail::send('admin.contacto.emailActivaPlan', array(
-              'name' => 'email activa plan'
-           ), function($message){
-                $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
-              ->subject('Un socio activó plan odontológico!');
-      });
+      // Mail::send('admin.contacto.emailActivaPlan', array(
+      //         'name' => 'email activa plan'
+      //      ), function($message){
+      //           $message->from('admin@amparosrl.com.ar');
+      //           $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+      //         ->subject('Un socio activó plan odontológico!');
+      // });
       Layer::create([
                     'nombre' => 'Amparo Odontológico',
                     'monto' => 200,
