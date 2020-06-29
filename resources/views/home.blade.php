@@ -5,9 +5,9 @@
   function darkModeHome(valor){
     var el31 = document.getElementById("textoHome");
     if(valor){
-      el31.classList.add('text-secondary');
+      el31.classList.add('text-white');
     }else{
-      el31.classList.remove('text-secondary');
+      el31.classList.remove('text-white');
     }
   };
 </script>
@@ -82,6 +82,14 @@
             <div class="container alert alert-danger mt-1 col-sm-12 col-md-6">
               <ul>
                 <li>Por seguridad modifique una vez su contraseña de acceso</li>
+              </ul>
+            </div>
+          @endif
+
+          @if(Auth::user()->darkMode_verified_at==null)
+            <div class="container alert alert-danger mt-1 col-sm-12 col-md-6">
+              <ul>
+                <li>Hemos implementado una función "modo oscuro" para hacer más agradable la visualización y consumir menos batería de su dispositivo, claro es optativo, para probarlo deben ir al menú superior donde encuentran su nombre personal, ahí disponen de un submenú donde pueden activar/desactivar el modo oscuro.</li>
               </ul>
             </div>
           @endif

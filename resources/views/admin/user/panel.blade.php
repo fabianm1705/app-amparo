@@ -154,7 +154,7 @@
                   <tbody>
                     @foreach($sales as $sale)
                       <tr>
-                        <td>{{ \Carbon\Carbon::parse($sale->fechaEmision)->format('M') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($sale->fechaEmision)->formatLocalized('%B') }}</td>
                         <td class="text-right">${{ $sale->total }}</td>
                         @if($sale->fechaPago)
                           <td>{{ \Carbon\Carbon::parse($sale->fechaPago)->format('d/m/y') }}</td>

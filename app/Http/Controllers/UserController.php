@@ -496,6 +496,7 @@ class UserController extends Controller
     }else{
       $user->darkMode = true;
     }
+    $user->darkMode_verified_at = Carbon::now();
     $user->save();
     return redirect()->back();
   }

@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+<script>
+  function darkModeUser(valor){
+    var el41 = document.getElementById("tabla");
+    var el42 = document.getElementById("tarjeta");
+    if(valor){
+      el41.classList.add('table-dark');
+      el42.classList.add('bg-dark');
+    }else{
+      el41.classList.remove('table-dark');
+      el42.classList.remove('bg-dark');
+    }
+  };
+</script>
+
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -32,9 +46,9 @@
             </div>
           </div>
       </div>
-      <div class="card shadow-sm mt-1">
+      <div id="tarjeta" class="card shadow-sm mt-1">
         <div class="card-body">
-          <table class="table table-hover table-sm table-responsive">
+          <table id="tabla" class="table table-hover table-sm table-responsive">
             <thead>
               <th>ID / ID Grupo</th>
               <th>Nro. Socio</th>
@@ -59,21 +73,33 @@
                     @can('users.edit')
                       <a href="{{ route('receipt.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">
                         <div class="">
-                          <i class="material-icons">receipt</i>
+                          @if(Auth::user()->darkMode)
+                            <i class="material-icons" style="color:white">receipt</i>
+                          @else
+                            <i class="material-icons">receipt</i>
+                          @endif
                         </div>
                       </a>&nbsp;
                     @endcan
                     @can('users.show')
                       <a href="{{ route('users.panel', ['id' => $user->id ]) }}" title="Ver Socio" class="">
                         <div class="">
-                          <i class="material-icons">search</i>
+                          @if(Auth::user()->darkMode)
+                            <i class="material-icons" style="color:white">search</i>
+                          @else
+                            <i class="material-icons">search</i>
+                          @endif
                         </div>
                       </a>&nbsp;
                     @endcan
                     @can('users.edit')
                       <a href="{{ route('users.edit', ['user' => $user ]) }}" title="Editar Socio" class="">
                         <div class="">
-                          <i class="material-icons">edit</i>
+                          @if(Auth::user()->darkMode)
+                            <i class="material-icons" style="color:white">edit</i>
+                          @else
+                            <i class="material-icons">edit</i>
+                          @endif
                         </div>
                       </a>&nbsp;
                     @endcan
@@ -82,7 +108,11 @@
                         @method('DELETE')
                         @csrf
                         <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
-                          Borrar
+                          @if(Auth::user()->darkMode)
+                            <div class="text-white">X</div>
+                          @else
+                            <div>X</div>
+                          @endif
                         </button>
                       </form>
                     @endcan
@@ -96,6 +126,6 @@
       </div>
     </div>
   </div>
+  <img onload="darkModeUser({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
-
 @endsection
