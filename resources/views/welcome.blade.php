@@ -112,10 +112,10 @@
                   <div class="card-body">
                     <h5 class="" style="color:#FFFFFF"><strong>ODONTOLOGIA</strong></h5>
                     <h1 class="card-title">
-                      <small>$</small>200
+                      <small>$</small>220
                       <small>/mes</small>
                     </h1>
-                    + $150 por Adherente<hr>
+                    + $180 por Adherente<hr>
                     Cobertura Odontológica Integral<hr>
                     Odontólogos distribuidos por la ciudad<hr>
                     Turnos rápidos, coseguros muy económicos<br><br>

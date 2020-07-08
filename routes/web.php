@@ -165,12 +165,12 @@ Route::get('doctors/mostrar', 'DoctorController@mostrar')
 Route::post('/getDoctors/{id}', 'DoctorController@getDoctors')
               ->middleware('auth')
               ->name('getDoctors');
-Route::post('/checkSocio/{id}', 'UserController@checkSocio')
-              ->middleware('auth')
-              ->name('checkSocio');
 Route::post('/getCoseguro/{id}', 'SpecialtyController@getCoseguro')
               ->middleware('auth')
               ->name('getCoseguro');
+Route::post('/getSpecialtiesByUserCheck/{id}', 'SpecialtyController@getSpecialtiesByUserCheck')
+              ->middleware('auth')
+              ->name('getSpecialtiesByUserCheck');
 
 
 //Shopping y productos
@@ -188,9 +188,6 @@ Route::post('getProductsXCategory/{id}', 'ProductController@getProductsXCategory
               ->name('getProductsXCategory');
 
 //Ordenes
-Route::get('orders/crear', 'OrderController@crear')
-              ->middleware(['auth','can:orders.crear'])
-              ->name('orders.crear');
 Route::get('orders/indice', 'OrderController@indice')
               ->middleware(['auth','can:orders.indice'])
               ->name('orders.indice');

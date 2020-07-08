@@ -60,6 +60,7 @@ class DoctorController extends Controller
       $doctor->email = $request->input('email');
       $doctor->telefono = $request->input('telefono');
       $doctor->vigente = $request->input('vigente');
+      $doctor->ordenWeb = $request->input('ordenWeb');
       $doctor->coseguroConsultorio = $request->input('coseguroConsultorio');
       $doctor->specialty_id = $request->input('specialty_id');
 
@@ -108,13 +109,14 @@ class DoctorController extends Controller
       $doctor->email = $request->input('email');
       $doctor->telefono = $request->input('telefono');
       $doctor->vigente = $request->input('vigente');
+      $doctor->ordenWeb = $request->input('ordenWeb');
       $doctor->coseguroConsultorio = $request->input('coseguroConsultorio');
       $doctor->specialty_id = $request->input('specialty_id');
 
       $doctor->save();
 
       return redirect()
-        ->route('doctors.edit',['doctor' => $doctor])
+        ->route('doctors.index')
         ->with('message','Datos del Profesional Actualizados');
     }
 
@@ -143,7 +145,9 @@ class DoctorController extends Controller
 
     public function getDoctors($id)
     {
-      $doctors = DB::table('doctors')->where('specialty_id', '=', $id)->get();
+      $doctors = DB::table('doctors')->where([['specialty_id', '=', $id],
+                                              ['vigente', '=', 1],
+                                              ['ordenWeb', '=', 1]])->get();
       return $doctors;
     }
 

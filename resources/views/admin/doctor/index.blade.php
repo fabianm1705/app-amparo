@@ -24,6 +24,7 @@
               <th>Email</th>
               <th>Especialidad</th>
               <th>Activo</th>
+              <th>Orden Web</th>
               <th>Coseguro</th>
               <th>Acciones</th>
             </thead>
@@ -37,6 +38,9 @@
                   <td>{{ $doctor->specialty->descripcion }}</td>
                   <td class="text-center">
                     <input type="checkbox" class="form-check-input" id="vigente" name="vigente" disabled value="1" {{ $doctor->vigente ? 'checked="checked"' : '' }}>
+                  </td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" id="ordenWeb" name="ordenWeb" disabled value="1" {{ $doctor->ordenWeb ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-center">
                     <input type="checkbox" class="form-check-input" id="coseguroConsultorio" name="coseguroConsultorio" disabled value="1" {{ $doctor->coseguroConsultorio ? 'checked="checked"' : '' }}>

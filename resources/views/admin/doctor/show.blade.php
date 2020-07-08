@@ -44,6 +44,13 @@
                   <input type="hidden" class="form-check-input" name="vigente" value="0">
                   <input type="checkbox" class="form-check-input" id="vigente" name="vigente" value="1" {{ $doctor->vigente ? 'checked="checked"' : '' }}>
                   <label class="form-check-label" for="vigente">Activo</label>
+                </div>
+                <div class="form-check">
+                  <input type="hidden" class="form-check-input" name="ordenWeb" value="0">
+                  <input type="checkbox" class="form-check-input" id="ordenWeb" name="ordenWeb" value="1" {{ $doctor->ordenWeb ? 'checked="checked"' : '' }}>
+                  <label class="form-check-label" for="ordenWeb">Activo</label>
+                </div>
+                <div class="form-check">
                   <input type="hidden" class="form-check-input" name="coseguroConsultorio" value="0">
                   <input type="checkbox" class="form-check-input" id="coseguroConsultorio" name="coseguroConsultorio" value="1" {{ $doctor->coseguroConsultorio ? 'checked="checked"' : '' }}>
                   <label class="form-check-label" for="vigente">Cobra coseguro en consultorio</label>

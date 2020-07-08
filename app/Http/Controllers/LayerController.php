@@ -125,7 +125,7 @@ class LayerController extends Controller
       // });
       Layer::create([
                     'nombre' => 'Amparo Odontológico',
-                    'monto' => 200,
+                    'monto' => 220,
                     'user_id' => Auth::user()->id,
                     'subscription_id' => 9
                   ]);

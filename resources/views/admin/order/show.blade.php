@@ -11,13 +11,13 @@
   <div class="centrado">
     <table class="Estilo1">
       <tr>
-        <td><img src="{{ public_path('/images/logo.png') }}"></td>
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td>
+        <td><img src="{{ public_path('/images/logo.png') }}" width="200px"></td>
+        <td></td>
+        <td><center>
           <span>Lugar de Emisión: Sede Amparo</span><br>
           <span>Emisión: {{ \Carbon\Carbon::parse($order->fecha)->format('d/m/Y') }}</span><br>
           <span>Impresión: {{ \Carbon\Carbon::parse($order->fechaImpresion)->format('d/m/Y') }}</span><br>
-          <span>Número de Orden: {{ $order->id+5000 }}</span>
+          <span>N° Orden: {{ $order->id+5000 }}</span></center>
         </td>
       </tr>
     	<tr>
@@ -76,7 +76,9 @@
       	<td class="alignLeft">{{ $order->obs }}</td>
     	</tr>
       <tr>
-      	<td align="center" colspan="3" style="font-size:14;">Coseguro único a abonar en consultorio: ${{ $order->monto_s }}</td>
+      	<td align="center" colspan="3" style="font-size:14;">
+         {{ $coseguro }}
+        </td>
     	</tr>
     	<tr>
       	<td height="38" colspan="3">

@@ -33,7 +33,6 @@
           <table id="tabla" class="table table-hover table-sm table-responsive">
             <thead>
               <th>Orden</th>
-              <th>Emisión</th>
               <th>Impresión</th>
               <th>Socio</th>
               <th>Nombre</th>
@@ -49,7 +48,6 @@
               @foreach($orders as $order)
                 <tr>
                   <td>{{ $order->id+5000 }}</td>
-                  <td>{{ \Carbon\Carbon::parse($order->fecha)->format('d/m/Y') }}</td>
                   <td>{{ \Carbon\Carbon::parse($order->fechaImpresion)->format('d/m/Y') }}</td>
                   <td>{{ $order->user->group->nroSocio }}</td>
                   <td>{{ $order->user->name }}</td>
@@ -63,16 +61,33 @@
                     @can('orders.edit')
                     <a href="{{ route('orders.edit', ['order' => $order ]) }}" title="Editar" class="">
                       <div class="">
-                        <i class="material-icons">edit</i>
+                        @if(Auth::user()->darkMode)
+                          <i class="material-icons" style="color:white">edit</i>
+                        @else
+                          <i class="material-icons">edit</i>
+                        @endif
                       </div>
                     </a>&nbsp;
                     @endcan
+                    <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
+                      <div class="">
+                        @if(Auth::user()->darkMode)
+                          <i class="material-icons" style="color:white">get_app</i>
+                        @else
+                          <i class="material-icons">get_app</i>
+                        @endif
+                      </div>
+                    </a>
                     @can('orders.destroy')
                       <form action="{{ route('orders.destroy', ['order' => $order ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf
                         <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
-                          Borrar
+                          @if(Auth::user()->darkMode)
+                            <i class="material-icons" style="color:white">delete</i>
+                          @else
+                            <i class="material-icons">delete</i>
+                          @endif
                         </button>
                       </form>
                     @endcan

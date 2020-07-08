@@ -27,7 +27,7 @@
                     @if(($role->slug=='dev') or ($role->slug=='admin'))
                       <a style="text-decoration:none;" href="{{ route('usersSearch') }}">Emitir Orden</a>
                     @else
-                      <a style="text-decoration:none;" href="{{ route('orders.crear') }}">Emitir Orden</a>
+                      <a style="text-decoration:none;" href="{{ route('orders.create',['id' => 0]) }}">Emitir Orden</a>
                     @endif
                   @endforeach
                 </button>

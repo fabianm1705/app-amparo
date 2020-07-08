@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class SpecialtyController extends Controller
 {
@@ -121,6 +122,81 @@ class SpecialtyController extends Controller
       $specialty->delete();
       return redirect()
         ->route('specialties.index');
+    }
+
+    public function necesitaOdontologia($user)
+    {
+      $odontologia = true;
+      foreach ($user->subscriptions as $subscription) {
+        if($subscription->odontologia==1){
+          $odontologia = false;
+        }
+      }
+      return $odontologia;
+    }
+
+    public function necesitaSalud($user)
+    {
+      $salud = true;
+      foreach ($user->subscriptions as $subscription) {
+        if($subscription->salud==1){
+          $salud = false;
+        }
+      }
+      foreach ($user->group->subscriptions as $subscription) {
+        if($subscription->salud==1){
+          $salud = false;
+        }
+      }
+      return $salud;
+    }
+
+    public function getSpecialtiesByUserCheck(Request $request, $id)
+    {
+      foreach (Auth::user()->roles as $role){
+        if(($role->slug=='dev') or ($role->slug=='admin')){
+          $specialties = DB::table('specialties')
+                                ->where('vigente', '=', 1)
+                                ->orderBy('descripcion','asc')
+                                ->get();
+        }else{
+          $user = User::find($id);
+          if($this->necesitaOdontologia($user) and $this->necesitaSalud($user)){
+            $specialties = DB::table('specialties')->where('id', '=', 0)
+                                                   ->orderBy('descripcion','asc')->get();
+          }elseif($this->necesitaOdontologia($user)==false and $this->necesitaSalud($user)){
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                            ['vigenteOrden', '=', 1],
+                                                            ['id', '=', 19]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }elseif($this->necesitaOdontologia($user) and $this->necesitaSalud($user)==false){
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                            ['vigenteOrden', '=', 1],
+                                                            ['id', '<>', 19]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }else{
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],['vigenteOrden', '=', 1]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }
+        }
+      }
+      $user = User::find($id);
+      $cantOrders = DB::table('orders')
+                     ->select(DB::raw('count(*) as order_count'))
+                     ->where('pacient_id', '=', $user->id)
+                     ->whereMonth('fecha','=',now()->month)
+                     ->whereYear('fecha','=',now()->year)
+                     ->get();
+      foreach ($cantOrders as $order) {
+        $order_count = $order->order_count;
+      }
+      $dataSocio = collect([
+        'salud' => $this->necesitaSalud($user),
+        'odontologia' => $this->necesitaOdontologia($user),
+        'cant_orders' => $order_count,
+        'specialties' => $specialties
+      ]);
+      return $dataSocio;
     }
 
     public function getCoseguro($id)

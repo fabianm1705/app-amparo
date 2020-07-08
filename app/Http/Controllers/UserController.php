@@ -215,26 +215,6 @@ class UserController extends Controller
     return $odontologia;
   }
 
-  public function checkSocio($id)
-  {
-    $user = User::find($id);
-    $cantOrders = DB::table('orders')
-                   ->select(DB::raw('count(*) as order_count'))
-                   ->where('pacient_id', '=', $id)
-                   ->whereMonth('fecha','=',now()->month)
-                   ->whereYear('fecha','=',now()->year)
-                   ->get();
-    foreach ($cantOrders as $order) {
-      $order_count = $order->order_count;
-    }
-    $dataSocio = collect([
-      'salud' => $this->necesitaSalud($user),
-      'odontologia' => $this->necesitaOdontologia($user),
-      'cant_orders' => $order_count
-    ]);
-    return $dataSocio;
-  }
-
   public function registroAcceso($interest_id,$obs)
   {
     foreach (Auth::user()->roles as $role){
@@ -255,7 +235,7 @@ class UserController extends Controller
     $orders = Order::whereIn('pacient_id',$usersId)->orderBy('id', 'desc')->take(6)->get();
     $users = User::where('group_id',$user->group_id)->get();
     $plans = Plan::where('group_id',$user->group_id)->get();
-    $sales = Sale::where('group_id',$user->group_id)->orderBy('id','desc')->get();
+    $sales = Sale::where('group_id',$user->group_id)->orderBy('fechaEmision','desc')->take(4)->get();
     $group = Group::find($user->group_id);
     return view('admin.user.panel',[
       'users' => $users,
@@ -282,6 +262,19 @@ class UserController extends Controller
     return view('admin.planes',compact("usersCount"));
   }
 
+  public function upload(Request $request)
+  {
+    $this->uploadFiles($request, [
+      'fileToUpload',
+      'fileToUpload2',
+      'fileToUpload3',
+      'fileToUpload4',
+      'fileToUpload5',
+    ]);
+
+    return redirect()->route('home')->with('message','Padrón Actualizado');
+  }
+
   public function uploadFiles($request, array $archivos)
   {
     foreach ($archivos as $archivo) {
@@ -291,17 +284,17 @@ class UserController extends Controller
         $path = $request->file($archivo)->storeAs('public',$name);
         $lineas = file(storage_path().'/app/'.$path);
 
-        if($name=='grupos.txt'){
+        if($archivo=='fileToUpload2'){
           $this->updateGroups($lineas);
-        }elseif ($name=='socios.txt') {
+        }elseif ($archivo=='fileToUpload5') {
           $this->updateUsers($lineas);
-        }elseif ($name=='planes.txt') {
+        }elseif ($archivo=='fileToUpload4') {
           $this->truncateTable('plans');
           $this->updatePlans($lineas);
-        }elseif ($name=='iplanes.txt') {
+        }elseif ($archivo=='fileToUpload3') {
           $this->truncateTable('layers');
           $this->updateLayers($lineas);
-        }elseif ($name=='facturas.txt') {
+        }elseif ($archivo=='fileToUpload') {
           $this->updateSales($lineas);
         }
       }
@@ -466,19 +459,6 @@ class UserController extends Controller
         }
       }
     }
-  }
-
-  public function upload(Request $request)
-  {
-    $this->uploadFiles($request, [
-      'fileToUpload',
-      'fileToUpload2',
-      'fileToUpload3',
-      'fileToUpload4',
-      'fileToUpload5',
-    ]);
-
-    return redirect()->route('home')->with('message','Padrón Actualizado');
   }
 
   public function truncateTable($table)

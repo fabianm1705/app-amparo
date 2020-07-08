@@ -111,7 +111,7 @@ class InterestController extends Controller
 
    public function visor()
    {
-     $user_interests = UserInterest::orderBy('id','desc')->get();
+     $user_interests = UserInterest::orderBy('id','desc')->paginate();
      return view('admin.interest.visor',compact("user_interests"));
    }
 

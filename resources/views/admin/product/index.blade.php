@@ -69,9 +69,9 @@
                         @csrf
                         <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
                           @if(Auth::user()->darkMode)
-                            <div class="text-white">Borrar</div>
+                            <i class="material-icons" style="color:white">delete</i>
                           @else
-                            <div>Borrar</div>
+                            <i class="material-icons">delete</i>
                           @endif
                         </button>
                       </form>

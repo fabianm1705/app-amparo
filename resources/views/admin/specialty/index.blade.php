@@ -1,5 +1,21 @@
 @extends('layouts.app')
 
+@section('myLinks')
+<script>
+  function darkModeSpecialty(valor){
+    var el51 = document.getElementById("tabla");
+    var el52 = document.getElementById("tarjeta");
+    if(valor){
+      el51.classList.add('table-dark');
+      el52.classList.add('bg-dark');
+    }else{
+      el51.classList.remove('table-dark');
+      el52.classList.remove('bg-dark');
+    }
+  };
+</script>
+@endsection
+
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -14,10 +30,11 @@
             @endcan
            </div>
        </div>
-       <div class="card shadow-sm mt-1">
+       <div id="tarjeta" class="card shadow-sm mt-1">
         <div class="card-body centrado">
-          <table class="table table-hover table-sm table-responsive">
+          <table id="tabla" class="table table-hover table-sm table-responsive">
             <thead>
+              <th>Id</th>
               <th>Descripción</th>
               <th>Monto S</th>
               <th>Monto A</th>
@@ -28,6 +45,7 @@
             <tbody>
               @foreach($specialties as $specialty)
                 <tr>
+                  <td>{{ $specialty->id }}</td>
                   <td>{{ $specialty->descripcion }}</td>
                   <td class="text-center">${{ $specialty->monto_s }}</td>
                   <td class="text-center">${{ $specialty->monto_a }}</td>
@@ -70,6 +88,6 @@
       </div>
     </div>
   </div>
+  <img onload="darkModeSpecialty({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
-
 @endsection

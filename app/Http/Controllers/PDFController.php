@@ -17,8 +17,12 @@ class PDFController extends Controller
         $orden = $this->getData($id);
         foreach ($orden as $order)
         {
-
-          $view =  \View::make('admin.order.show', compact('order'))->render();
+          if($order->doctor->specialty->id === 19){
+            $coseguro = "";
+          }else{
+            $coseguro = "Coseguro único a abonar en consultorio: $".$order->monto_s;
+          }
+          $view =  \View::make('admin.order.show', compact('order','coseguro'))->render();
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
         }

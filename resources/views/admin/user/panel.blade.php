@@ -211,6 +211,7 @@
                       <th>Fecha</th>
                       <th>Paciente</th>
                       <th>Profesional</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -219,6 +220,17 @@
                         <td>{{ \Carbon\Carbon::parse($order->fecha)->format('d/m/Y') }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->doctor->apeynom }}</td>
+                        <td>
+                          <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
+                            <div class="">
+                              @if(Auth::user()->darkMode)
+                                <i class="material-icons" style="color:white">get_app</i>
+                              @else
+                                <i class="material-icons">get_app</i>
+                              @endif
+                            </div>
+                          </a>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>

@@ -50,14 +50,28 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-      $specialties = DB::table('specialties')
-                            ->where([
-                                        ['vigente', '=', 1],
-                                    ])
-                            ->orderBy('descripcion','asc')
-                            ->get();
-      $users = User::where('id',$request->input('id'))->get();
-      return view('admin.order.create',compact("users","specialties"));
+      $emiteOficina = true;
+      foreach (Auth::user()->roles as $role){
+        if(($role->slug=='dev') or ($role->slug=='admin')){
+          $users = User::where('id', $request->input('id'))->get();
+        }else{
+          UserInterest::create(['user_id' => Auth::user()->id,'interest_id' => 3]);
+          $emiteOficina = false;
+          $group_id = Auth::user()->group_id;
+          $users = User::where('group_id',$group_id)->get();
+        }
+      }
+      $usersCount = $users->count();
+      $specialties = DB::table('specialties')->where('id', '=', 0)->get();
+      $doctors = DB::table('doctors')->where('id', '=', 0)->get();
+
+      return view('admin.order.create',compact(
+        "users",
+        "usersCount",
+        "specialties",
+        "doctors",
+        "emiteOficina"
+      ));
     }
 
     /**
@@ -75,13 +89,13 @@ class OrderController extends Controller
       $order->monto_a = $request->input('monto_a');
       $order->obs = $request->input('obs');;
       $order->estado = 'Impresa';
-      $order->pacient_id = $request->input('pacient_id');
+      $order->pacient_id = $request->input('user_id');
       $order->doctor_id = $request->input('doctor_id');
       foreach (Auth::user()->roles as $role){
         if(($role->slug=='dev') or ($role->slug=='admin')){
           $order->lugarEmision = 'Sede Amparo';
         }else{
-          $order->lugarEmision = 'Autogestión Web';
+          $order->lugarEmision = 'Autogestión';
         }
       }
 
@@ -130,7 +144,7 @@ class OrderController extends Controller
       $order->obs = $request->input('obs');
       $order->estado = $request->input('estado');
       $order->lugarEmision = $request->input('lugarEmision');
-      $order->pacient_id = $request->input('pacient_id');
+      $order->pacient_id = $request->input('user_id');
       $order->doctor_id = $request->input('doctor_id');
 
       $order->save();
@@ -153,38 +167,15 @@ class OrderController extends Controller
         ->route('orders.index');
     }
 
-    public function crear(Request $request)
+    public function necesitaOdontologia($user)
     {
-      $emiteOficina = true;
-      foreach (Auth::user()->roles as $role){
-        if(($role->slug=='dev') or ($role->slug=='admin')){
-          $users = User::where('id',$request->input('id'))->get();
-          $specialties = DB::table('specialties')
-                                ->where('vigente', '=', 1)
-                                ->orderBy('descripcion','asc')
-                                ->get();
-        }else{
-          UserInterest::create(['user_id' => Auth::user()->id,'interest_id' => 3]);
-          $emiteOficina = false;
-          $group_id = Auth::user()->group_id;
-          $users = User::where('group_id',$group_id)->get();
-          $specialties = DB::table('specialties')
-                                ->where([['vigenteOrden', '=', 1],['vigente', '=', 1],])
-                                ->orderBy('descripcion','asc')
-                                ->get();
+      $odontologia = true;
+      foreach ($user->subscriptions as $subscription) {
+        if($subscription->odontologia==1){
+          $odontologia = false;
         }
       }
-
-      $usersCount = $users->count();
-      $doctors = DB::table('doctors')->where('id', '=', 0)->get();
-
-      return view('admin.order.crear',compact(
-        "users",
-        "specialties",
-        "usersCount",
-        "doctors",
-        "emiteOficina"
-      ));
+      return $odontologia;
     }
 
     public function search(Request $request)
