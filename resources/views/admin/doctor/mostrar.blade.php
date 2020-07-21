@@ -17,7 +17,7 @@
   <script>
     function cargarProfesionales(){
       var id = document.getElementById('specialty').value;
-      axios.post('/getDoctors/'+id)
+      axios.post('/getProfesionales/'+id)
         .then((resp)=>{
             var cont = document.getElementById("tablaprofesionales").rows.length;
             for (i = 0; i < (cont); i++) {

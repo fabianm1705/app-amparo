@@ -151,6 +151,13 @@ class DoctorController extends Controller
       return $doctors;
     }
 
+    public function getProfesionales($id)
+    {
+      $doctors = DB::table('doctors')->where([['specialty_id', '=', $id],
+                                              ['vigente', '=', 1]])->get();
+      return $doctors;
+    }
+
     public function registroAcceso($interest_id,$obs)
     {
       foreach (Auth::user()->roles as $role){

@@ -6,6 +6,7 @@
     document.getElementById("divNecesitaSalud").style.display = "none";
     document.getElementById("divNecesitaSalud2").style.display = "none";
     document.getElementById("divNecesitaOdontologia").style.display = "none";
+    document.getElementById("divNecesitaOdontologia2").style.display = "none";
   }
   </script>
   <script>
@@ -13,27 +14,35 @@
             var id = document.getElementById('specialty_id').value;
             axios.post('/getCoseguro/'+id)
               .then((resp)=>{
-                document.getElementById("msgCoseguro").innerText = "Coseguro único a abonar en consultorio $";
-                if(document.getElementById("cant_orders").value<2){
-                  document.getElementById('coseguro').style.color = '#000000';
-                  document.getElementById("coseguro").innerText = resp.data.monto_s;
-                  document.getElementById("monto_s").value = resp.data.monto_s;
-                  document.getElementById("monto_a").value = resp.data.monto_a;
+                if(resp.data.id == 19){
+                  if(document.getElementById("cant_orders_odonto").value>1){
+                    btnGenerarOrden.style.display = "none";
+                    alert("El límite odontológico es de 2 órdenes mensuales");
+                  }else{
+                    document.getElementById("msgCoseguro").innerText = "Coseguro variable en consultorio de acuerdo al arreglo";
+                    document.getElementById("monto_s").value = "";
+                  }
                 }else{
-                  document.getElementById('coseguro').style.color = '#FF0000';
-                  document.getElementById("coseguro").innerText = resp.data.monto_s+(resp.data.monto_a/2);
-                  document.getElementById("monto_s").value = resp.data.monto_s+(resp.data.monto_a/2);
-                  document.getElementById("monto_a").value = resp.data.monto_a/2;
+                  document.getElementById("msgCoseguro").innerText = "Coseguro único a abonar en consultorio $";
+                  if(document.getElementById("cant_orders_salud").value<2){
+                    document.getElementById('coseguro').style.color = '#000000';
+                    document.getElementById("coseguro").innerText = resp.data.monto_s;
+                    document.getElementById("monto_s").value = resp.data.monto_s;
+                    document.getElementById("monto_a").value = resp.data.monto_a;
+                  }else{
+                    document.getElementById('coseguro').style.color = '#FF0000';
+                    document.getElementById("coseguro").innerText = resp.data.monto_s+(resp.data.monto_a/2);
+                    document.getElementById("monto_s").value = resp.data.monto_s+(resp.data.monto_a/2);
+                    document.getElementById("monto_a").value = resp.data.monto_a/2;
+                  }
                 }
                 var doctors = document.getElementById("doctor_id");
                 for (let i = doctors.options.length; i >= 0; i--) {
                   doctors.remove(i);
                 }
-                var id = document.getElementById('specialty_id').value;
                 axios.post('/getDoctors/'+id)
                   .then((resp)=>{
                     var doctors = document.getElementById("doctor_id");
-                    console.log(resp.data);
                     for (i = 0; i < Object.keys(resp.data).length; i++) {
                       var option = document.createElement('option');
                       option.value = resp.data[i].id;
@@ -51,10 +60,12 @@
       var id = document.getElementById('user_id').value;
       axios.post('/getSpecialtiesByUserCheck/'+id)
         .then((resp)=>{
-          document.getElementById("cant_orders").value = resp.data.cant_orders;
+          document.getElementById("cant_orders_salud").value = resp.data.cant_orders_salud;
+          document.getElementById("cant_orders_odonto").value = resp.data.cant_orders_odonto;
           needSalud = document.getElementById("divNecesitaSalud");
           needSalud2 = document.getElementById("divNecesitaSalud2");
           needOdontologia = document.getElementById("divNecesitaOdontologia");
+          needOdontologia2 = document.getElementById("divNecesitaOdontologia2");
           btnGenerarOrden = document.getElementById("divBtnGenerarOrden");
           obs = document.getElementById("obs");
           monto_a = document.getElementById("monto_a");
@@ -62,28 +73,53 @@
           msg_monto_s = document.getElementById("msg_monto_s");
           monto_s = document.getElementById("monto_s");
           coseguro = document.getElementById("coseguro");
-          if(resp.data.odontologia && resp.data.salud){
-            btnGenerarOrden.style.display = "none";
-            obs.style.display = "none";
-            monto_s.style.display = "none";
-            monto_a.style.display = "none";
-            msg_monto_s.style.display = "none";
-            msg_monto_a.style.display = "none";
-          }else{
-            btnGenerarOrden.style.display = "block";
-          }
-          if(resp.data.salud){
-            needSalud.style.display = "block";
-            needSalud2.style.display = "block";
-          }else{
-            needSalud.style.display = "none";
-            needSalud2.style.display = "none";
-          }
-          if(resp.data.odontologia){
-            needOdontologia.style.display = "block";
-          }else{
-            needOdontologia.style.display = "none";
-          }
+          @auth
+            @foreach (Auth::user()->roles as $role)
+              @if($role->slug=='dev')
+                btnGenerarOrden.style.display = "block";
+                if(resp.data.odontologia){
+                  needOdontologia.style.display = "block";
+                }
+                if(resp.data.salud){
+                  needSalud.style.display = "block";
+                }
+              @elseif($role->slug=='admin')
+                btnGenerarOrden.style.display = "block";
+                if(resp.data.odontologia){
+                  needOdontologia.style.display = "block";
+                }
+                if(resp.data.salud){
+                  needSalud.style.display = "block";
+                }
+              @elseif($role->slug=='socio')
+                obs.style.display = "none";
+                monto_s.style.display = "none";
+                monto_a.style.display = "none";
+                // msg_monto_s.style.display = "none";
+                // msg_monto_a.style.display = "none";
+                if(resp.data.odontologia && resp.data.salud){
+                  btnGenerarOrden.style.display = "none";
+                  needOdontologia.style.display = "block";
+                  needOdontologia2.style.display = "block";
+                  needSalud.style.display = "block";
+                  needSalud2.style.display = "block";
+                }else if(resp.data.odontologia){
+                  needOdontologia.style.display = "block";
+                  needOdontologia2.style.display = "block";
+                }else if(resp.data.salud){
+                  needSalud.style.display = "block";
+                  needSalud2.style.display = "block";
+                  if(document.getElementById("cant_orders_odonto").value<2){
+                    btnGenerarOrden.style.display = "block";
+                  }else{
+                    btnGenerarOrden.style.display = "none";
+                  }
+                }else{
+                  btnGenerarOrden.style.display = "block";
+                }
+              @endif
+            @endforeach
+          @endauth
 
           var specialties = document.getElementById("specialty_id");
           for (let i = specialties.options.length; i >= 0; i--) {
@@ -92,11 +128,15 @@
           var option = document.createElement('option');
           option.value = "0";
           option.text = "Seleccione Especialidad";
+          option.dataset.limitOrders = "0";
+          option.dataset.cantlimitorders = "2";
           specialties.appendChild(option);
           for (i = 0; i < Object.keys(resp.data.specialties).length; i++) {
             var option = document.createElement('option');
             option.value = resp.data.specialties[i].id;
             option.text = resp.data.specialties[i].descripcion;
+            option.dataset.limitOrders = resp.data.specialties[i].limitOrders;
+            option.dataset.cantlimitorders = resp.data.specialties[i].cantLimitOrders;
             specialties.appendChild(option);
           }
 
@@ -130,7 +170,9 @@
               <select class="custom-select mb-1" name="specialty_id" id="specialty_id" onchange="getDoctors()">
                 <option value="0" selected>Seleccione Especialidad</option>
                 @foreach($specialties as $specialty)
-                  <option value="{{ $specialty->id }}">
+                  <option value="{{ $specialty->id }}"
+                          data-limit-orders="{{ $specialty->limitOrders }}"
+                          data-cantlimitorders="{{ $specialty->cantLimitOrders }}">
                       {{ $specialty->descripcion }}
                   </option>
                 @endforeach
@@ -168,10 +210,11 @@
             </div>
           @endif
           <div class="mt-4">
-            <input type="hidden" name="cant_orders" id="cant_orders">
-              <h5 class="card-title d-flex justify-content-center">
-                <small><label id="msgCoseguro"></label></small><label id="coseguro"></label>
-              </h5>
+            <input type="hidden" name="cant_orders_salud" id="cant_orders_salud">
+            <input type="hidden" name="cant_orders_odonto" id="cant_orders_odonto">
+            <h5 class="card-title d-flex justify-content-center">
+              <small><label id="msgCoseguro"></label></small><label id="coseguro"></label>
+            </h5>
           </div>
           <div class="text-center" id="divBtnGenerarOrden">
             <input class="btn btn-success btn-block" id="btnGenerarOrden" type="submit" value="Generar Orden" />
@@ -179,8 +222,11 @@
       </form>
     </div>
   </div>
-  <div id="divNecesitaSalud" class="col-md-9 container alert alert-warning text-justify">
-    <h5>Debes activar el Plan Salud para poder utilizar nuestra red de consultorios, puedes hacerlo ahora mismo y a un precio preferencial por ser socio, y comenzar a utilizarlo de inmediato!</h5>
+  <div id="divNecesitaSalud" class="col-md-9 container alert alert-warning text-justify mt-2">
+    <h5>Puedes activar el Plan Salud para poder utilizar nuestra red de consultorios, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!</h5>
+  </div>
+  <div id="divNecesitaOdontologia" class="col-md-9 container alert alert-warning text-justify mt-2">
+    <h5>Puedes activar el Plan Odontológico para atenderte con nuestros profesionales, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!</h5>
   </div>
   <div class="row justify-content-center">
       <div id="divNecesitaSalud2" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
@@ -210,7 +256,7 @@
           @endif
         </div>
       </div>
-      <div id="divNecesitaOdontologia" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
+      <div id="divNecesitaOdontologia2" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Odontológico</h5>
           <h1 class="card-title">

@@ -165,6 +165,9 @@ Route::get('doctors/mostrar', 'DoctorController@mostrar')
 Route::post('/getDoctors/{id}', 'DoctorController@getDoctors')
               ->middleware('auth')
               ->name('getDoctors');
+Route::post('/getProfesionales/{id}', 'DoctorController@getProfesionales')
+              ->middleware('auth')
+              ->name('getProfesionales');
 Route::post('/getCoseguro/{id}', 'SpecialtyController@getCoseguro')
               ->middleware('auth')
               ->name('getCoseguro');

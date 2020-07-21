@@ -19,7 +19,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Especialidades</h5>
           <div class="ml-auto blanco mr-2 mt-2">
@@ -40,6 +40,8 @@
               <th>Monto A</th>
               <th>Activa</th>
               <th>Orden Web</th>
+              <th>Límite Ordenes</th>
+              <th>Cant. Límite</th>
               <th>Acciones</th>
             </thead>
             <tbody>
@@ -55,6 +57,10 @@
                   <td class="text-center">
                     <input type="checkbox" class="form-check-input" id="vigenteOrden" name="vigenteOrden" disabled value="1" {{ $specialty->vigenteOrden ? 'checked="checked"' : '' }}>
                   </td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" id="limitOrders" name="limitOrders" disabled value="1" {{ $specialty->limitOrders ? 'checked="checked"' : '' }}>
+                  </td>
+                  <td class="text-center">{{ $specialty->cantLimitOrders }}</td>
                   <td class="text-right d-flex">
                     @can('specialties.show')
                       <a href="{{ route('specialties.show', ['specialty' => $specialty ]) }}" title="Ver" class="">

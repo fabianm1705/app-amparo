@@ -64,6 +64,13 @@
                       <label class="form-check-label" for="vigente">Restablecer Contraseña</label>
                     </div>
                   </div>
+                  <div class="col-lg-4">
+                    <div class="form-check">
+                      <input type="hidden" class="form-check-input" name="no_aop" value="0">
+                      <input type="checkbox" class="form-check-input" id="no_aop" name="no_aop" value="1" {{ $user->no_aop ? 'checked="checked"' : '' }}>
+                      <label class="form-check-label" for="no_aop">No AOP</label>
+                    </div>
+                  </div>
                   <hr>
                   <h5>Lista de Roles</h5>
                   <div class="form-group">

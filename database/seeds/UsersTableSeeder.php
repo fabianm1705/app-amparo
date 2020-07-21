@@ -32,6 +32,7 @@ class UsersTableSeeder extends Seeder
             if (is_null($user)) {
               $user = new User();
               $user->password = Hash::make('amparo');
+              $user->no_aop=0;
             }
             $user->nroAdh = utf8_encode(trim($datos[0]));
             $user->name = Str::title(utf8_encode(trim($datos[1])));

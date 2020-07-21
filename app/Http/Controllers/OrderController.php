@@ -85,9 +85,15 @@ class OrderController extends Controller
       $order = new Order();
       $order->fecha = Carbon::now();
       $order->fechaImpresion = Carbon::now();
-      $order->monto_s = $request->input('monto_s');
-      $order->monto_a = $request->input('monto_a');
-      $order->obs = $request->input('obs');;
+      if($request->input('monto_s')){
+        $order->monto_s = $request->input('monto_s');
+        $order->monto_a = $request->input('monto_a');
+        $order->obs = $request->input('obs');
+      }else{
+        $order->monto_s = 0;
+        $order->monto_a = 0;
+        $order->obs = "";
+      }
       $order->estado = 'Impresa';
       $order->pacient_id = $request->input('user_id');
       $order->doctor_id = $request->input('doctor_id');

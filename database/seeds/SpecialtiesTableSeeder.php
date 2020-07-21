@@ -86,7 +86,7 @@ class SpecialtiesTableSeeder extends Seeder
         ]);
         Specialty::create([
           "descripcion" => "Odontología", "monto_s" => 0,
-          "monto_a" => 0, "vigente" => true, "vigenteOrden" => false
+          "monto_a" => 0, "vigente" => true, "vigenteOrden" => true
         ]);
       }
 }

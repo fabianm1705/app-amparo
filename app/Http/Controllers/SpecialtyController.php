@@ -59,6 +59,8 @@ class SpecialtyController extends Controller
       $specialty->monto_a = $request->input('monto_a');
       $specialty->vigente = $request->input('vigente');
       $specialty->vigenteOrden = $request->input('vigenteOrden');
+      $specialty->limitOrders = $request->input('limitOrders');
+      $specialty->cantLimitOrders = $request->input('cantLimitOrders');
 
       $specialty->save();
 
@@ -103,6 +105,8 @@ class SpecialtyController extends Controller
       $specialty->monto_a = $request->input('monto_a');
       $specialty->vigente = $request->input('vigente');
       $specialty->vigenteOrden = $request->input('vigenteOrden');
+      $specialty->limitOrders = $request->input('limitOrders');
+      $specialty->cantLimitOrders = $request->input('cantLimitOrders');
 
       $specialty->save();
 
@@ -181,19 +185,31 @@ class SpecialtyController extends Controller
         }
       }
       $user = User::find($id);
-      $cantOrders = DB::table('orders')
+      $cantOrdersSalud = DB::table('orders')
                      ->select(DB::raw('count(*) as order_count'))
                      ->where('pacient_id', '=', $user->id)
+                     ->where('doctor_id', '<>', 44)
                      ->whereMonth('fecha','=',now()->month)
                      ->whereYear('fecha','=',now()->year)
                      ->get();
-      foreach ($cantOrders as $order) {
-        $order_count = $order->order_count;
+      foreach ($cantOrdersSalud as $order) {
+        $order_salud_count = $order->order_count;
+      }
+      $cantOrdersOdonto = DB::table('orders')
+                     ->select(DB::raw('count(*) as order_count'))
+                     ->where('pacient_id', '=', $user->id)
+                     ->where('doctor_id', '=', 44)
+                     ->whereMonth('fecha','=',now()->month)
+                     ->whereYear('fecha','=',now()->year)
+                     ->get();
+      foreach ($cantOrdersOdonto as $order) {
+        $order_odonto_count = $order->order_count;
       }
       $dataSocio = collect([
         'salud' => $this->necesitaSalud($user),
         'odontologia' => $this->necesitaOdontologia($user),
-        'cant_orders' => $order_count,
+        'cant_orders_salud' => $order_salud_count,
+        'cant_orders_odonto' => $order_odonto_count,
         'specialties' => $specialties
       ]);
       return $dataSocio;

@@ -14,6 +14,7 @@ $factory->define(App\Models\Doctor::class, function (Faker $faker) {
       'email' => $faker->email,
       'telefono' => $faker->phoneNumber,
       'vigente' => true,
+      'ordenWeb' => true,
       'coseguroConsultorio' => false,
       'specialty_id' => $faker->numberBetween(1,$count)
     ];

@@ -57,6 +57,7 @@
               <th>Fecha Nac.</th>
               <th>Email</th>
               <th>Domicilio</th>
+              <th>No AOP</th>
               <th class="text-center">Acciones</th>
             </thead>
             <tbody>
@@ -69,6 +70,9 @@
                   <td>{{ \Carbon\Carbon::parse($user->fechaNac)->format('d/m/Y') }}</td>
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->group->direccion }}</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" id="no_aop" name="no_aop" disabled value="1" {{ $user->no_aop ? 'checked="checked"' : '' }}>
+                  </td>
                   <td class="text-right d-flex">
                     @can('users.edit')
                       <a href="{{ route('receipt.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">

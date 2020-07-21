@@ -18,6 +18,7 @@
         <div class="card-body">
           <table class="table table-hover table-sm table-responsive">
             <thead>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Consultorio</th>
               <th>Teléfono</th>
@@ -31,6 +32,7 @@
             <tbody id="tableDoctors">
               @foreach($doctors as $doctor)
                 <tr>
+                  <td>{{ $doctor->id }}</td>
                   <td>{{ $doctor->apeynom }}</td>
                   <td>{{ $doctor->direccion }}</td>
                   <td class="text-center">{{ $doctor->telefono }}</td>

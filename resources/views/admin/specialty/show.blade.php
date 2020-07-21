@@ -16,6 +16,18 @@
                 <input type="text" class="form-control" name="descripcion" id="descripcion" value="{{ $specialty->descripcion }}">
               </div>
               <div class="row d-flex">
+                <div class="col-lg-6">
+                  <div class="form-check">
+                    <input type="hidden" class="form-check-input" name="vigente" value="0">
+                    <input type="checkbox" class="form-check-input" id="vigente" name="vigente" value="1" {{ $specialty->vigente ? 'checked="checked"' : '' }}>
+                    <label class="form-check-label" for="vigente">Activa</label>
+                  </div>
+                  <div class="form-check">
+                    <input type="hidden" class="form-check-input" name="vigenteOrden" value="0">
+                    <input type="checkbox" class="form-check-input" id="vigenteOrden" name="vigenteOrden" value="1" {{ $specialty->vigenteOrden ? 'checked="checked"' : '' }}>
+                    <label class="form-check-label" for="vigente">Permitir órdenes online</label>
+                  </div>
+                </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label for="content">Monto Socio</label>
@@ -28,16 +40,19 @@
                     <input type="text" class="form-control" name="monto_a" id="monto_a" value="{{ $specialty->monto_a }}">
                   </div>
                 </div>
+              </div><hr>
+              <div class="row">
                 <div class="col-lg-6">
                   <div class="form-check">
-                    <input type="hidden" class="form-check-input" name="vigente" value="0">
-                    <input type="checkbox" class="form-check-input" id="vigente" name="vigente" value="1" {{ $specialty->vigente ? 'checked="checked"' : '' }}>
-                    <label class="form-check-label" for="vigente">Activa</label>
+                    <input type="hidden" class="form-check-input" name="limitOrders" value="0">
+                    <input type="checkbox" class="form-check-input" id="limitOrders" name="limitOrders" value="1" {{ $specialty->limitOrders ? 'checked="checked"' : '' }}>
+                    <label class="form-check-label" for="limitOrders">Establecer límite de órdenes</label>
                   </div>
-                  <div class="form-check">
-                    <input type="hidden" class="form-check-input" name="vigenteOrden" value="0">
-                    <input type="checkbox" class="form-check-input" id="vigenteOrden" name="vigenteOrden" value="1" {{ $specialty->vigenteOrden ? 'checked="checked"' : '' }}>
-                    <label class="form-check-label" for="vigente">Permitir órdenes online</label>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label for="cantLimitOrders">Cantidad límite</label>
+                    <input type="text" class="form-control" name="cantLimitOrders" id="cantLimitOrders" value="{{ $specialty->cantLimitOrders }}">
                   </div>
                 </div>
               </div>

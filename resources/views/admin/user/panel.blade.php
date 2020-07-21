@@ -204,14 +204,14 @@
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Órdenes</h5>
         </div>
         <div id="tarjeta5" class="card shadow-sm mt-1">
-            <div class="card-body centrado">
+            <div class="card-body">
                 <table id="tabla5" class="table table-hover table-sm table-responsive">
                   <thead>
                     <tr>
                       <th>Fecha</th>
                       <th>Paciente</th>
                       <th>Profesional</th>
-                      <th></th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -221,15 +221,26 @@
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->doctor->apeynom }}</td>
                         <td>
-                          <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
-                            <div class="">
-                              @if(Auth::user()->darkMode)
-                                <i class="material-icons" style="color:white">get_app</i>
-                              @else
-                                <i class="material-icons">get_app</i>
-                              @endif
-                            </div>
-                          </a>
+                          <div class="row justify-content-center">
+                            <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
+                              <div class="">
+                                @if(Auth::user()->darkMode)
+                                  <i class="material-icons" style="color:white">get_app</i>
+                                @else
+                                  <i class="material-icons">get_app</i>
+                                @endif
+                              </div>
+                            </a>
+                            <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Imprimir">
+                              <div class="">
+                                @if(Auth::user()->darkMode)
+                                  <i class="material-icons" style="color:white">print</i>
+                                @else
+                                  <i class="material-icons">print</i>
+                                @endif
+                              </div>
+                            </a>
+                          </div>
                         </td>
                       </tr>
                     @endforeach

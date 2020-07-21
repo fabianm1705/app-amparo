@@ -63,6 +63,15 @@
                         @endif
                       </div>
                     </a>
+                    <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Imprimir">
+                      <div class="">
+                        @if(Auth::user()->darkMode)
+                          <i class="material-icons" style="color:white">print</i>
+                        @else
+                          <i class="material-icons">print</i>
+                        @endif
+                      </div>
+                    </a>
                   </td>
                 </tr>
               @endforeach

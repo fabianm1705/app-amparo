@@ -37,6 +37,17 @@ class UserController extends Controller
 
   public function index()
   {
+    // Ver sólo los dev o admin
+    // $usuarios = User::orderBy('name')->where('activo','=',1)->get();
+    // $users = collect([]);
+    // foreach ($usuarios as $user) {
+    //   foreach ($user->roles as $role){
+    //     if(($role->slug=='dev') or ($role->slug=='admin')){
+    //       $users->push($user);
+    //     }
+    //   }
+    // }
+
     $users = User::orderBy('name')->where('activo','=',1)->paginate();
     return view('admin.user.index',compact("users"));
   }
@@ -78,6 +89,7 @@ class UserController extends Controller
     $user->nroDoc = $request->input('nroDoc');
     $user->fechaNac = $request->input('fechaNac');
     $user->email = $request->input('email');
+    $user->no_aop = $request->input('no_aop');
     if($request->input('restablecerPassword')){
       $user->password = Hash::make('amparo');
       $user->password_changed_at = null;
@@ -156,8 +168,8 @@ class UserController extends Controller
   {
     $this->registroAcceso(12,'Odontología');
     $subscriptions = Subscription::where('odontologia',1)->get();
-    $users = $subscriptions->flatMap->users->sortBy('name');
-    $usersCount = $subscriptions->flatMap->users->count();
+    $users = $subscriptions->flatMap->users->where('no_aop',0)->sortBy('name');
+    $usersCount = $subscriptions->flatMap->users->where('no_aop',0)->count();
     return view('admin.user.odontologia',[
       'users' => $users,
       'usersCount' => $usersCount
@@ -434,6 +446,7 @@ class UserController extends Controller
         if (is_null($user)) {
           $user = new User();
           $user->password = Hash::make('amparo');
+          $user->no_aop=0;
         }
         $user->nroAdh = utf8_encode(trim($datos[0]));
         $user->name = Str::title(utf8_encode(trim($datos[1])));

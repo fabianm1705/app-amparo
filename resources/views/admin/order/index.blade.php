@@ -78,6 +78,15 @@
                         @endif
                       </div>
                     </a>
+                    <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Imprimir">
+                      <div class="">
+                        @if(Auth::user()->darkMode)
+                          <i class="material-icons" style="color:white">print</i>
+                        @else
+                          <i class="material-icons">print</i>
+                        @endif
+                      </div>
+                    </a>
                     @can('orders.destroy')
                       <form action="{{ route('orders.destroy', ['order' => $order ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
