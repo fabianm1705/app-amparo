@@ -5,6 +5,7 @@
     function darkModeUpload(valor){
       var el41 = document.getElementById("tarjeta");
       var el42 = document.getElementById("lblFacturas");
+      var el48 = document.getElementById("lblConceptos");
       var el43 = document.getElementById("lblGrupos");
       var el44 = document.getElementById("lblIPlaness");
       var el45 = document.getElementById("lblPlanes");
@@ -13,6 +14,7 @@
       if(valor){
         el41.classList.add('bg-dark');
         el42.classList.add('text-white');
+        el48.classList.add('text-white');
         el43.classList.add('text-white');
         el44.classList.add('text-white');
         el45.classList.add('text-white');
@@ -22,6 +24,7 @@
       }else{
         el41.classList.remove('bg-dark');
         el42.classList.remove('text-white');
+        el48.classList.remove('text-white');
         el43.classList.remove('text-white');
         el44.classList.remove('text-white');
         el45.classList.remove('text-white');
@@ -46,37 +49,44 @@
                           @csrf
 
                           <div class="form-group row">
-                              <label id="lblFacturas" for="fileToUpload" class="col-md-2 col-form-label text-md-right">Facturas</label>
+                              <label id="lblFacturas" for="fileFacturas" class="col-md-2 col-form-label text-md-right">Facturas</label>
                               <div class="col-md-10">
-                                <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+                                <input type="file" name="fileFacturas" id="fileFacturas" class="form-control">
                               </div>
                           </div>
 
                           <div class="form-group row">
-                              <label id="lblGrupos" for="fileToUpload2" class="col-md-2 col-form-label text-md-right">Grupos</label>
+                              <label id="lblConceptos" for="fileConceptos" class="col-md-2 col-form-label text-md-right">Conceptos</label>
                               <div class="col-md-10">
-                                <input type="file" name="fileToUpload2" id="fileToUpload2" class="form-control">
+                                <input type="file" name="fileConceptos" id="fileConceptos" class="form-control">
                               </div>
                           </div>
 
                           <div class="form-group row">
-                              <label id="lblIPlaness" for="fileToUpload3" class="col-md-2 col-form-label text-md-right">IPlanes</label>
+                              <label id="lblGrupos" for="fileGrupos" class="col-md-2 col-form-label text-md-right">Grupos</label>
                               <div class="col-md-10">
-                                <input type="file" name="fileToUpload3" id="fileToUpload3" class="form-control">
+                                <input type="file" name="fileGrupos" id="fileGrupos" class="form-control">
                               </div>
                           </div>
 
                           <div class="form-group row">
-                              <label id="lblPlanes" for="fileToUpload4" class="col-md-2 col-form-label text-md-right">Planes</label>
+                              <label id="lblIPlaness" for="fileIPlanes" class="col-md-2 col-form-label text-md-right">IPlanes</label>
                               <div class="col-md-10">
-                                <input type="file" name="fileToUpload4" id="fileToUpload4" class="form-control">
+                                <input type="file" name="fileIPlanes" id="fileIPlanes" class="form-control">
                               </div>
                           </div>
 
                           <div class="form-group row">
-                              <label id="lblSocios" for="fileToUpload5" class="col-md-2 col-form-label text-md-right">Socios</label>
+                              <label id="lblPlanes" for="filePlanes" class="col-md-2 col-form-label text-md-right">Planes</label>
                               <div class="col-md-10">
-                                <input type="file" name="fileToUpload5" id="fileToUpload5" class="form-control">
+                                <input type="file" name="filePlanes" id="filePlanes" class="form-control">
+                              </div>
+                          </div>
+
+                          <div class="form-group row">
+                              <label id="lblSocios" for="fileSocios" class="col-md-2 col-form-label text-md-right">Socios</label>
+                              <div class="col-md-10">
+                                <input type="file" name="fileSocios" id="fileSocios" class="form-control">
                               </div>
                           </div>
 

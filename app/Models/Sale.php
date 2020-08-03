@@ -13,11 +13,16 @@ class Sale extends Model
    */
   protected $fillable = [
       'puntoContable', 'nroFactura', 'total', 'cae', 'fechaCae', 'fechaEmision',
-      'fechaPago', 'group_id',
+      'fechaPago', 'group_id','comprob_id',
   ];
 
   public function group()
   {
     return $this->belongsTo('App\Models\Group');
+  }
+
+  public function concepts()
+  {
+    return $this->hasMany('App\Concept');
   }
 }

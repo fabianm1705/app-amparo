@@ -149,6 +149,7 @@
                       <th>Mes</th>
                       <th>Monto</th>
                       <th>F. Pago</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -161,6 +162,19 @@
                         @else
                           <td></td>
                         @endif
+                        <td>
+                          <div class="row justify-content-center">
+                            <a href="{{ route('factura', ['id' => $sale->id ]) }}" title="Descargar">
+                              <div class="">
+                                @if(Auth::user()->darkMode)
+                                  <i class="material-icons" style="color:white">get_app</i>
+                                @else
+                                  <i class="material-icons">get_app</i>
+                                @endif
+                              </div>
+                            </a>
+                          </div>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>

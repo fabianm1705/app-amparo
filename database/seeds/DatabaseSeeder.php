@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
           'specialties',
           'doctors',
           'interests',
-          'subscriptions'
+          'subscriptions',
+          'sales',
+          'concepts'
         ]);
         $this->call(PermissionsTableSeeder::class);
         $this->call(InterestsSeeder::class);
@@ -32,12 +34,13 @@ class DatabaseSeeder extends Seeder
         $this->call(GroupsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(SubscriptionsTableSeeder::class);
+        $this->call(SalesTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->call(ProductsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PlansTableSeeder::class);
         $this->call(LayersTableSeeder::class);
-        //$this->call(OrdersTableSeeder::class);
+        $this->call(ConceptsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 

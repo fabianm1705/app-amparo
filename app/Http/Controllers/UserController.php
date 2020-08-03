@@ -9,6 +9,7 @@ use App\Models\Plan;
 use App\Models\Layer;
 use App\Models\Order;
 use App\Models\Sale;
+use App\Concept;
 use App\UserInterest;
 use App\Subscription;
 use Caffeinated\Shinobi\Models\Role;
@@ -277,11 +278,12 @@ class UserController extends Controller
   public function upload(Request $request)
   {
     $this->uploadFiles($request, [
-      'fileToUpload',
-      'fileToUpload2',
-      'fileToUpload3',
-      'fileToUpload4',
-      'fileToUpload5',
+      'fileFacturas',
+      'fileConceptos',
+      'fileGrupos',
+      'fileIPlanes',
+      'filePlanes',
+      'fileSocios',
     ]);
 
     return redirect()->route('home')->with('message','Padrón Actualizado');
@@ -296,18 +298,20 @@ class UserController extends Controller
         $path = $request->file($archivo)->storeAs('public',$name);
         $lineas = file(storage_path().'/app/'.$path);
 
-        if($archivo=='fileToUpload2'){
+        if($archivo=='fileGrupos'){
           $this->updateGroups($lineas);
-        }elseif ($archivo=='fileToUpload5') {
+        }elseif ($archivo=='fileSocios') {
           $this->updateUsers($lineas);
-        }elseif ($archivo=='fileToUpload4') {
+        }elseif ($archivo=='filePlanes') {
           $this->truncateTable('plans');
           $this->updatePlans($lineas);
-        }elseif ($archivo=='fileToUpload3') {
+        }elseif ($archivo=='fileIPlanes') {
           $this->truncateTable('layers');
           $this->updateLayers($lineas);
-        }elseif ($archivo=='fileToUpload') {
+        }elseif ($archivo=='fileFacturas') {
           $this->updateSales($lineas);
+        }elseif ($archivo=='fileConceptos') {
+          $this->updateConcepts($lineas);
         }
       }
     }
@@ -336,12 +340,32 @@ class UserController extends Controller
             $sale->fechaCae = date('Y-m-d',$time);
             $time = strtotime($datos[2]);
             $sale->fechaEmision = date('Y-m-d',$time);
+            $sale->comprob_id = utf8_encode(trim($datos[8]));
           }
           if($datos[3]<>""){
             $time = strtotime($datos[3]);
             $sale->fechaPago = date('Y-m-d',$time);
           }
           $sale->save();
+        }
+      }
+    }
+  }
+
+  public function updateConcepts($lineas)
+  {
+    foreach ($lineas as $linea)
+    {
+      $datos = explode("|", $linea);
+      if($datos<>""){
+        $sale = Sale::where('comprob_id', '=', intval(trim($datos[0])))->get()->first();
+        if(isset($sale)){
+          $concept = new Concept();
+          $concept->sale_id=$sale->id;
+          $concept->monto = intval(trim($datos[1]));
+          $concept->descripcion = utf8_encode(trim($datos[2]));
+          $concept->obs = ' ';
+          $concept->save();
         }
       }
     }

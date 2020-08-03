@@ -159,10 +159,22 @@ class SpecialtyController extends Controller
     {
       foreach (Auth::user()->roles as $role){
         if(($role->slug=='dev') or ($role->slug=='admin')){
-          $specialties = DB::table('specialties')
-                                ->where('vigente', '=', 1)
-                                ->orderBy('descripcion','asc')
-                                ->get();
+          $user = User::find($id);
+          if($this->necesitaOdontologia($user) and $this->necesitaSalud($user)){
+            $specialties = DB::table('specialties')->where('id', '=', 0)
+                                                   ->orderBy('descripcion','asc')->get();
+          }elseif($this->necesitaOdontologia($user)==false and $this->necesitaSalud($user)){
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                            ['id', '=', 19]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }elseif($this->necesitaOdontologia($user) and $this->necesitaSalud($user)==false){
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                            ['id', '<>', 19]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }else{
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1]])
+                                                   ->orderBy('descripcion','asc')->get();
+          }
         }else{
           $user = User::find($id);
           if($this->necesitaOdontologia($user) and $this->necesitaSalud($user)){
@@ -179,7 +191,8 @@ class SpecialtyController extends Controller
                                                             ['id', '<>', 19]])
                                                    ->orderBy('descripcion','asc')->get();
           }else{
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],['vigenteOrden', '=', 1]])
+            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                            ['vigenteOrden', '=', 1]])
                                                    ->orderBy('descripcion','asc')->get();
           }
         }

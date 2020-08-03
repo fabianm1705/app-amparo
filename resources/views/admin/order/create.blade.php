@@ -7,53 +7,19 @@
     document.getElementById("divNecesitaSalud2").style.display = "none";
     document.getElementById("divNecesitaOdontologia").style.display = "none";
     document.getElementById("divNecesitaOdontologia2").style.display = "none";
+    document.getElementById("oftalmologiaOptions").style.display = "none";
+    @auth
+      @foreach (Auth::user()->roles as $role)
+        @if($role->slug=='dev')
+          document.getElementById("obs").style.display = "block";
+        @elseif($role->slug=='admin')
+          document.getElementById("obs").style.display = "block";
+        @elseif($role->slug=='socio')
+          document.getElementById("obs").style.display = "none";
+        @endif
+      @endforeach
+    @endauth
   }
-  </script>
-  <script>
-    function getDoctors(){
-            var id = document.getElementById('specialty_id').value;
-            axios.post('/getCoseguro/'+id)
-              .then((resp)=>{
-                if(resp.data.id == 19){
-                  if(document.getElementById("cant_orders_odonto").value>1){
-                    btnGenerarOrden.style.display = "none";
-                    alert("El límite odontológico es de 2 órdenes mensuales");
-                  }else{
-                    document.getElementById("msgCoseguro").innerText = "Coseguro variable en consultorio de acuerdo al arreglo";
-                    document.getElementById("monto_s").value = "";
-                  }
-                }else{
-                  document.getElementById("msgCoseguro").innerText = "Coseguro único a abonar en consultorio $";
-                  if(document.getElementById("cant_orders_salud").value<2){
-                    document.getElementById('coseguro').style.color = '#000000';
-                    document.getElementById("coseguro").innerText = resp.data.monto_s;
-                    document.getElementById("monto_s").value = resp.data.monto_s;
-                    document.getElementById("monto_a").value = resp.data.monto_a;
-                  }else{
-                    document.getElementById('coseguro').style.color = '#FF0000';
-                    document.getElementById("coseguro").innerText = resp.data.monto_s+(resp.data.monto_a/2);
-                    document.getElementById("monto_s").value = resp.data.monto_s+(resp.data.monto_a/2);
-                    document.getElementById("monto_a").value = resp.data.monto_a/2;
-                  }
-                }
-                var doctors = document.getElementById("doctor_id");
-                for (let i = doctors.options.length; i >= 0; i--) {
-                  doctors.remove(i);
-                }
-                axios.post('/getDoctors/'+id)
-                  .then((resp)=>{
-                    var doctors = document.getElementById("doctor_id");
-                    for (i = 0; i < Object.keys(resp.data).length; i++) {
-                      var option = document.createElement('option');
-                      option.value = resp.data[i].id;
-                      option.text = resp.data[i].apeynom;
-                      doctors.appendChild(option);
-                    }
-                  })
-                  .catch(function (error) {console.log(error);})
-              })
-              .catch(function (error) {console.log(error);})
-          }
   </script>
   <script>
     function checkSocio(){
@@ -139,11 +105,80 @@
             option.dataset.cantlimitorders = resp.data.specialties[i].cantLimitOrders;
             specialties.appendChild(option);
           }
-
         })
         .catch(function (error) {
           console.log(error);
         })
+    }
+  </script>
+  <script>
+    function getDoctors(){
+            var id = document.getElementById('specialty_id').value;
+            axios.post('/getCoseguro/'+id)
+              .then((resp)=>{
+                // Odontología
+                if(resp.data.id == 19){
+                  document.getElementById("oftalmologiaOptions").style.display = "none";
+                  if(document.getElementById("cant_orders_odonto").value>1){
+                    btnGenerarOrden.style.display = "none";
+                    alert("El límite odontológico es de 2 órdenes mensuales");
+                  }else{
+                    document.getElementById("msgCoseguro").innerText = "Coseguro variable en consultorio de acuerdo al arreglo";
+                    document.getElementById("monto_s").value = "";
+                  }
+                }else{
+                  // Oftalmologia
+                  if(resp.data.id == 13){
+                    document.getElementById("oftalmologiaOptions").style.display = "block";
+                    document.getElementById("obs").style.display = "block";
+                    document.getElementById("obs").value = "";
+                  }else{
+                    document.getElementById("oftalmologiaOptions").style.display = "none";
+                    document.getElementById("obs").value = "";
+                    @auth
+                      @foreach (Auth::user()->roles as $role)
+                        @if($role->slug=='socio')
+                          document.getElementById("obs").style.display = "none";
+                        @endif
+                      @endforeach
+                    @endauth
+                  }
+                  document.getElementById("msgCoseguro").innerText = "Coseguro único a abonar en consultorio $";
+                  if(document.getElementById("cant_orders_salud").value<2){
+                    document.getElementById('coseguro').style.color = '#000000';
+                    document.getElementById("coseguro").innerText = resp.data.monto_s;
+                    document.getElementById("monto_s").value = resp.data.monto_s;
+                    document.getElementById("monto_a").value = resp.data.monto_a;
+                  }else{
+                    document.getElementById('coseguro').style.color = '#FF0000';
+                    document.getElementById("coseguro").innerText = resp.data.monto_s+(resp.data.monto_a/2);
+                    document.getElementById("monto_s").value = resp.data.monto_s+(resp.data.monto_a/2);
+                    document.getElementById("monto_a").value = resp.data.monto_a/2;
+                  }
+                }
+                var doctors = document.getElementById("doctor_id");
+                for (let i = doctors.options.length; i >= 0; i--) {
+                  doctors.remove(i);
+                }
+                axios.post('/getDoctors/'+id)
+                  .then((resp)=>{
+                    var doctors = document.getElementById("doctor_id");
+                    for (i = 0; i < Object.keys(resp.data).length; i++) {
+                      var option = document.createElement('option');
+                      option.value = resp.data[i].id;
+                      option.text = resp.data[i].apeynom;
+                      doctors.appendChild(option);
+                    }
+                  })
+                  .catch(function (error) {console.log(error);})
+              })
+              .catch(function (error) {console.log(error);})
+          }
+  </script>
+  <script>
+    function obsSwitch(entrada){
+      obs = document.getElementById("obs");
+      obs.value = entrada;
     }
   </script>
 @endsection
@@ -188,8 +223,19 @@
             </div>
           </div>
 
+          <center>
+            <div class="btn-group btn-group-toggle mt-2" id="oftalmologiaOptions" data-toggle="buttons">
+              <label class="btn btn-success active">
+                <input type="radio" name="options" id="oftalmologiaConsulta" checked onclick="obsSwitch('Orden de Consulta')"> Orden de Consulta
+              </label>
+              <label class="btn btn-success">
+                <input type="radio" name="options" id="oftalmologiaEstudio" onclick="obsSwitch('Orden de Estudio')"> Orden de Estudio
+              </label>
+            </div>
+          </center>
+          <textarea class="form-control mt-2 mb-2" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
+
           @if($emiteOficina)
-            <textarea class="form-control mt-2 mb-2" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
             <div>
               <div class="row justify-content-center mb-2">
                 <div class="col-md-2">
@@ -204,7 +250,6 @@
             </div>
           @else
             <div>
-              <input type="hidden" class="form-control" name="obs" id="obs">
               <input type="hidden" class="form-control" name="monto_s" id="monto_s">
               <input type="hidden" class="form-control" name="monto_a" id="monto_a">
             </div>
@@ -217,7 +262,7 @@
             </h5>
           </div>
           <div class="text-center" id="divBtnGenerarOrden">
-            <input class="btn btn-success btn-block" id="btnGenerarOrden" type="submit" value="Generar Orden" />
+            <input class="btn btn-success btn-block btn-lg" id="btnGenerarOrden" type="submit" value="Generar Orden" />
           </div>
       </form>
     </div>

@@ -1347,6 +1347,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         'Carbon\\Traits\\Week' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Traits/Week.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
         'CategoriesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CategoriesTableSeeder.php',
+        'ConceptsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ConceptsTableSeeder.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',

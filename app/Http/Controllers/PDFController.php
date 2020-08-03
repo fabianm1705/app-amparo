@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Sale;
 use App\Receipt;
+use App\Concept;
 use Auth;
 use PDF;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class PDFController extends Controller
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
         }
-        return $pdf->stream('invoice');
+        return $pdf->stream('orden-'.$order->id.'.pdf');
       }
 
     public function getData($id)
@@ -41,16 +42,17 @@ class PDFController extends Controller
         $view =  \View::make('admin.receipt.show', compact('receipt','num_en_letras'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('recibo');
+        return $pdf->stream('recibo-'.$id.'.pdf');
       }
 
     public function factura($id)
       {
         $sale = Sale::find($id);
-        $view =  \View::make('admin.sale.show', compact('sale'))->render();
+        $concepts = Concept::where('sale_id', '=', $sale->id)->get();
+        $view =  \View::make('admin.sale.show', compact('sale','concepts'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->download('factura');
+        return $pdf->stream('factura-'.$sale->id.'.pdf');
       }
 
 }

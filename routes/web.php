@@ -145,6 +145,9 @@ Route::post('activar/odontologia', 'LayerController@activarOdontologia')
 Route::get('pdf/{id}', 'PDFController@invoice')
               ->middleware('auth')
               ->name('pdf');
+Route::get('factura/{id}', 'PDFController@factura')
+              ->middleware('auth')
+              ->name('factura');
 Route::get('imprimir/recibo/{id}/letras/{num_en_letras}', 'PDFController@recibo')
               ->middleware('auth')
               ->name('recibo');

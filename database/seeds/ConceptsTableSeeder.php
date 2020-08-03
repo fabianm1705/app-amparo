@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Sale;
+use App\Concept;
 
-class SalesTableSeeder extends Seeder
+class ConceptsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class SalesTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(Sale::Class)->times(1000)->create();
+      factory(Concept::Class)->times(3000)->create();
     }
 }

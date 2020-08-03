@@ -12,7 +12,7 @@ class Concept extends Model
    * @var array
    */
   protected $fillable = [
-      'descripcion', 'monto', 'sale_id', 'obs', 'plan_id',
+      'descripcion', 'monto', 'sale_id', 'obs',
   ];
 
   public function sale()
