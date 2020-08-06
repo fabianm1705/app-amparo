@@ -77,6 +77,7 @@ class ProductController extends Controller
       $product->cantidadCuotas = 6;
       $product->vigente = $request->input('vigente');
       $product->category_id = $request->input('category_id');
+      $product->longDescription = $request->input('longDescription');
       $product->image_url = $image_name;
       $product->image_url2 = $image_name2;
       $product->image_url3 = $image_name3;
@@ -132,6 +133,7 @@ class ProductController extends Controller
       $product->cantidadCuotas = 6;
       $product->category_id = $request->input('category_id');
       $product->vigente = $request->input('vigente');
+      $product->longDescription = $request->input('longDescription');
 
       $product->save();
 

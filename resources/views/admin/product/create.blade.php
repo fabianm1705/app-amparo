@@ -51,6 +51,14 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="longDescription">Descripción larga</label>
+                    <textarea class="form-control mt-2 mb-2" id="longDescription" name="longDescription" rows="6" placeholder="Descripción larga" autocomplete="off"></textarea>
+                  </div>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="image_url">Seleccione una imagen</label>
                 <input type="file" class="form-control" name="image_url">

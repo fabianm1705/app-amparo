@@ -53,6 +53,14 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="longDescription">Descripción larga</label>
+                      <textarea class="form-control mt-2 mb-2" id="longDescription" name="longDescription" rows="6" placeholder="Descripción larga" value="{{ $product->longDescription }}"></textarea>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-sm-12 text-right">
                 <button class="btn btn-dark text-light" type="submit" name="button">Guardar</button>

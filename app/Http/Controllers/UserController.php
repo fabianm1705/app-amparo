@@ -326,8 +326,7 @@ class UserController extends Controller
         $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[4])))
                                   ->get()->first();
         if(isset($group)){
-          $sale = Sale::where([['puntoContable', '=', intval(trim($datos[7]))],
-                               ['nroFactura', '=', intval(trim($datos[0]))],])
+          $sale = Sale::where('comprob_id', '=', intval(trim($datos[8])))
                         ->get()->first();
           if (is_null($sale)) {
             $sale = new Sale();
@@ -341,6 +340,7 @@ class UserController extends Controller
             $time = strtotime($datos[2]);
             $sale->fechaEmision = date('Y-m-d',$time);
             $sale->comprob_id = utf8_encode(trim($datos[8]));
+            $sale->obs = utf8_encode(trim($datos[9]));
           }
           if($datos[3]<>""){
             $time = strtotime($datos[3]);

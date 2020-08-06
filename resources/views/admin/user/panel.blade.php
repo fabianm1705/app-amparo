@@ -142,14 +142,14 @@
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Estado de Cuenta</h5>
         </div>
         <div id="tarjeta3" class="card shadow-sm mt-1">
-            <div class="card-body centrado">
+            <div class="card-body">
                 <table id="tabla3" class="table table-hover table-sm table-responsive">
                   <thead>
                     <tr>
                       <th>Mes</th>
                       <th>Monto</th>
                       <th>F. Pago</th>
-                      <th></th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -163,13 +163,22 @@
                           <td></td>
                         @endif
                         <td>
-                          <div class="row justify-content-center">
+                          <div class="row justify-content-center d-flex">
                             <a href="{{ route('factura', ['id' => $sale->id ]) }}" title="Descargar">
                               <div class="">
                                 @if(Auth::user()->darkMode)
                                   <i class="material-icons" style="color:white">get_app</i>
                                 @else
                                   <i class="material-icons">get_app</i>
+                                @endif
+                              </div>
+                            </a>
+                            <a href="{{ route('factura', ['id' => $sale->id ]) }}" title="Imprimir">
+                              <div class="">
+                                @if(Auth::user()->darkMode)
+                                  <i class="material-icons" style="color:white">print</i>
+                                @else
+                                  <i class="material-icons">print</i>
                                 @endif
                               </div>
                             </a>

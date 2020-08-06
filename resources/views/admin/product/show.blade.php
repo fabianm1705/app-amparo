@@ -104,6 +104,9 @@
               </div>
             </div>
           </div>
+          <div class="">
+            <h6>{{ $product->longDescription }}</h6>
+          </div>
         </div>
       </div>
     </div>

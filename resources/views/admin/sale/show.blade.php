@@ -104,28 +104,28 @@
         </tr>
       @endforeach
     </table>
+    <footer class="footer">
+      <img src="{{ public_path('/images/divider.png') }}">
+      <table class="Estilo1">
+        <tr>
+          <td align="right" width="100">Obs:</td>
+          <td align="left" colspan="3">{{ $sale->obs }}</td>
+        </tr>
+        <tr>
+          <td align="right" width="100">CAE:</td>
+          <td align="left">{{ $sale->cae }}</td>
+          <td align="right"></td>
+          <td align="center"></td>
+        </tr>
+        <tr>
+          <td align="right">Fecha CAE:</td>
+          <td align="left" width="210">{{ \Carbon\Carbon::parse($sale->fechaCae)->format('d/m/Y') }}</td>
+          <td colspan="3" align="right">TOTAL</td>
+          <td align="center"> ${{ $sale->total }}</td>
+        </tr>
+      </table>
+    </footer>
   </div>
 </div>
-<footer class="footer">
-  <img src="{{ public_path('/images/divider.png') }}">
-  <table class="Estilo1">
-    <tr>
-      <td align="right" width="100">Obs:</td>
-      <td align="left" colspan="3">{{ $sale->obs }}</td>
-    </tr>
-    <tr>
-      <td align="right" width="100">CAE:</td>
-      <td align="left">{{ $sale->cae }}</td>
-      <td align="right"></td>
-      <td align="center"></td>
-    </tr>
-    <tr>
-      <td align="right">Fecha CAE:</td>
-      <td align="left" width="280">{{ \Carbon\Carbon::parse($sale->fechaCae)->format('d/m/Y') }}</td>
-      <td colspan="3" align="right">TOTAL</td>
-      <td align="center"> ${{ $sale->total }}</td>
-    </tr>
-  </table>
-</footer>
 </body>
 </html>
