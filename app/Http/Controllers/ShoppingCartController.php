@@ -29,9 +29,9 @@ class ShoppingCartController extends Controller
 
   public function show(Request $request)
   {
+    registro_acceso(9,'Directo al Carrito');
     $payment_methods = PaymentMethod::where('activo',1)->get();
     $productsCost = $request->shopping_cart->amount();
-    $this->registroAcceso(9,'Directo al Carrito');
     return view('admin.shopping_cart.cart',
     ['shopping_cart' => $request->shopping_cart,
     'payment_methods' => $payment_methods,
@@ -40,9 +40,9 @@ class ShoppingCartController extends Controller
 
   public function show3(Request $request,Product $product)
   {
+    registro_acceso(9,$product->modelo);
     $payment_methods = PaymentMethod::where('activo',1)->get();
     $productsCost = $request->shopping_cart->amount();
-    $this->registroAcceso(9,$product->modelo);
     return view('admin.shopping_cart.cart',
     ['shopping_cart' => $request->shopping_cart,
     'payment_methods' => $payment_methods,
@@ -61,7 +61,7 @@ class ShoppingCartController extends Controller
 
   public function store(Request $request)
   {
-    $this->registroAcceso(10,'');
+    registro_acceso(10,'');
     $request->shopping_cart->status = 1;
     $request->shopping_cart->user_id = Auth::user()->id;
     $request->shopping_cart->fecha = Carbon::now();
@@ -126,16 +126,5 @@ class ShoppingCartController extends Controller
     $shopping_cart = ShoppingCart::find($id);
     $shopping_cart->delete();
     return redirect()->route('shopping_cart.index');
-  }
-
-  public function registroAcceso($interest_id,$obs)
-  {
-    foreach (Auth::user()->roles as $role){
-      if(($role->slug<>'dev') and ($role->slug<>'admin')){
-        UserInterest::create(['user_id' => Auth::user()->id,
-                              'interest_id' => $interest_id,
-                              'obs' => $obs]);
-      }
-    }
   }
 }

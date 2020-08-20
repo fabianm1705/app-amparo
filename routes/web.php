@@ -174,9 +174,9 @@ Route::post('/getProfesionales/{id}', 'DoctorController@getProfesionales')
 Route::post('/getCoseguro/{id}', 'SpecialtyController@getCoseguro')
               ->middleware('auth')
               ->name('getCoseguro');
-Route::post('/getSpecialtiesByUserCheck/{id}', 'SpecialtyController@getSpecialtiesByUserCheck')
+Route::post('/getDataUser/{id}', 'SpecialtyController@getDataUser')
               ->middleware('auth')
-              ->name('getSpecialtiesByUserCheck');
+              ->name('getDataUser');
 
 
 //Shopping y productos

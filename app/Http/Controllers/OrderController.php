@@ -50,12 +50,12 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+      registro_acceso(3,'');
       $emiteOficina = true;
       foreach (Auth::user()->roles as $role){
         if(($role->slug=='dev') or ($role->slug=='admin')){
           $users = User::where('id', $request->input('id'))->get();
         }else{
-          UserInterest::create(['user_id' => Auth::user()->id,'interest_id' => 3]);
           $emiteOficina = false;
           $group_id = Auth::user()->group_id;
           $users = User::where('group_id',$group_id)->get();
@@ -170,17 +170,6 @@ class OrderController extends Controller
       $order->delete();
       return redirect()
         ->route('orders.index');
-    }
-
-    public function necesitaOdontologia($user)
-    {
-      $odontologia = true;
-      foreach ($user->subscriptions as $subscription) {
-        if($subscription->odontologia==1){
-          $odontologia = false;
-        }
-      }
-      return $odontologia;
     }
 
     public function search(Request $request)

@@ -53,7 +53,7 @@
                   <td class="text-right">${{ $order->monto_s }}</td>
                   <td>{{ $order->lugarEmision }}</td>
                   <td>{{ $order->obs }}</td>
-                  <td>
+                  <td class="d-flex">
                     <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
                       <div class="">
                         @if(Auth::user()->darkMode)

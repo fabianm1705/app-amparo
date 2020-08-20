@@ -7,6 +7,8 @@
     document.getElementById("divNecesitaSalud2").style.display = "none";
     document.getElementById("divNecesitaOdontologia").style.display = "none";
     document.getElementById("divNecesitaOdontologia2").style.display = "none";
+    document.getElementById("divCarenciaSalud").style.display = "none";
+    document.getElementById("divCarenciaOdonto").style.display = "none";
     document.getElementById("oftalmologiaOptions").style.display = "none";
     @auth
       @foreach (Auth::user()->roles as $role)
@@ -24,14 +26,21 @@
   <script>
     function checkSocio(){
       var id = document.getElementById('user_id').value;
-      axios.post('/getSpecialtiesByUserCheck/'+id)
+      axios.post('/getDataUser/'+id)
         .then((resp)=>{
+          console.log(resp.data);
           document.getElementById("cant_orders_salud").value = resp.data.cant_orders_salud;
           document.getElementById("cant_orders_odonto").value = resp.data.cant_orders_odonto;
+          var f = new Date(resp.data.carencia_salud);
+          document.getElementById("carencia_salud").innerText = (f.getDate()+1) + "/"+ (f.getMonth()+1) +"/" +f.getFullYear();
+          var g = new Date(resp.data.carencia_odonto);
+          document.getElementById("carencia_odonto").innerText = (g.getDate()+1) + "/"+ (g.getMonth()+1) +"/" +g.getFullYear();
           needSalud = document.getElementById("divNecesitaSalud");
           needSalud2 = document.getElementById("divNecesitaSalud2");
           needOdontologia = document.getElementById("divNecesitaOdontologia");
           needOdontologia2 = document.getElementById("divNecesitaOdontologia2");
+          carenciaSalud = document.getElementById("divCarenciaSalud");
+          carenciaOdonto = document.getElementById("divCarenciaOdonto");
           btnGenerarOrden = document.getElementById("divBtnGenerarOrden");
           obs = document.getElementById("obs");
           monto_a = document.getElementById("monto_a");
@@ -41,21 +50,17 @@
           coseguro = document.getElementById("coseguro");
           @auth
             @foreach (Auth::user()->roles as $role)
-              @if($role->slug=='dev')
+              @if($role->slug=='dev' || $role->slug=='admin')
                 btnGenerarOrden.style.display = "block";
-                if(resp.data.odontologia){
+                if(resp.data.necesita_odonto){
                   needOdontologia.style.display = "block";
+                }else if(resp.data.carencia_odonto){
+                  carenciaOdonto.style.display = "block";
                 }
-                if(resp.data.salud){
+                if(resp.data.necesita_salud){
                   needSalud.style.display = "block";
-                }
-              @elseif($role->slug=='admin')
-                btnGenerarOrden.style.display = "block";
-                if(resp.data.odontologia){
-                  needOdontologia.style.display = "block";
-                }
-                if(resp.data.salud){
-                  needSalud.style.display = "block";
+                }else if(resp.data.carencia_salud){
+                  carenciaSalud.style.display = "block";
                 }
               @elseif($role->slug=='socio')
                 obs.style.display = "none";
@@ -63,22 +68,33 @@
                 monto_a.style.display = "none";
                 // msg_monto_s.style.display = "none";
                 // msg_monto_a.style.display = "none";
-                if(resp.data.odontologia && resp.data.salud){
+                if(resp.data.necesita_odonto && resp.data.necesita_salud){
                   btnGenerarOrden.style.display = "none";
                   needOdontologia.style.display = "block";
                   needOdontologia2.style.display = "block";
                   needSalud.style.display = "block";
                   needSalud2.style.display = "block";
-                }else if(resp.data.odontologia){
+                }else if(resp.data.necesita_odonto){
                   needOdontologia.style.display = "block";
                   needOdontologia2.style.display = "block";
-                }else if(resp.data.salud){
+                  if(resp.data.carencia_salud){
+                    carenciaSalud.style.display = "block";
+                    btnGenerarOrden.style.display = "none";
+                  }
+                }else if(resp.data.necesita_salud){
                   needSalud.style.display = "block";
                   needSalud2.style.display = "block";
-                  if(document.getElementById("cant_orders_odonto").value<2){
+                  if(resp.data.carencia_odonto){
+                    carenciaOdonto.style.display = "block";
+                    btnGenerarOrden.style.display = "none";
+                  }else if(document.getElementById("cant_orders_odonto").value<2){
                     btnGenerarOrden.style.display = "block";
                   }else{
                     btnGenerarOrden.style.display = "none";
+                    Swal.fire({
+                      icon: 'warning',
+                      text: 'El límite odontológico es de 2 órdenes mensuales'
+                    });
                   }
                 }else{
                   btnGenerarOrden.style.display = "block";
@@ -121,7 +137,10 @@
                   document.getElementById("oftalmologiaOptions").style.display = "none";
                   if(document.getElementById("cant_orders_odonto").value>1){
                     btnGenerarOrden.style.display = "none";
-                    alert("El límite odontológico es de 2 órdenes mensuales");
+                    Swal.fire({
+                      icon: 'warning',
+                      text: 'El límite odontológico es de 2 órdenes mensuales'
+                    });
                   }else{
                     document.getElementById("msgCoseguro").innerText = "Coseguro variable en consultorio de acuerdo al arreglo";
                     document.getElementById("monto_s").value = "";
@@ -186,7 +205,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-9 col-lg-6">
+    <div class="col-md-9 col-lg-6 mt-2">
       <form action="{{ route('orders.store') }}" method="post">
           @csrf
           <div class="fresh-table full-color-orange shadow-sm">
@@ -267,12 +286,58 @@
       </form>
     </div>
   </div>
-  <div id="divNecesitaSalud" class="col-md-9 container alert alert-warning text-justify mt-2">
-    <h5>Puedes activar el Plan Salud para poder utilizar nuestra red de consultorios, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!</h5>
-  </div>
-  <div id="divNecesitaOdontologia" class="col-md-9 container alert alert-warning text-justify mt-2">
-    <h5>Puedes activar el Plan Odontológico para atenderte con nuestros profesionales, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!</h5>
-  </div>
+  <br>
+  <center>
+    <div id="divCarenciaOdonto" class="alert alert-warning mt-2 col-md-9 col-lg-6">
+      <div class="d-flex">
+        <div class="alert-icon">
+            <i class="material-icons">check</i>
+        </div>
+        Carencia activa del plan odontológico hasta el &nbsp;<label id="carencia_odonto"></label>
+
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+      </div>
+    </div>
+    <div id="divCarenciaSalud" class="alert alert-warning mt-2 col-md-9 col-lg-6">
+      <div class="d-flex">
+        <div class="alert-icon">
+            <i class="material-icons">check</i>
+        </div>
+        Carencia activa del plan salud hasta el &nbsp;<label id="carencia_salud"></label>
+
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="divNecesitaSalud" class="col-md-9 col-lg-6 alert alert-warning text-justify mt-2">
+      <div class="d-flex">
+        <div class="alert-icon">
+            <i class="material-icons">check</i>
+        </div>
+        Puedes activar el Plan Salud para poder utilizar nuestra red de consultorios, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!
+
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+      </div>
+    </div>
+    <div id="divNecesitaOdontologia" class="col-md-9 col-lg-6 alert alert-warning text-justify mt-2">
+      <div class="d-flex">
+        <div class="alert-icon">
+            <i class="material-icons">check</i>
+        </div>
+        Puedes activar el Plan Odontológico para atenderte con nuestros profesionales, haciéndolo ahora mismo puedes comenzar a utilizarlo de inmediato!
+
+        <button type="button" class="close ml-auto" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true"><i class="material-icons">clear</i></span>
+        </button>
+      </div>
+    </div>
+  </center>
   <div class="row justify-content-center">
       <div id="divNecesitaSalud2" class="col-md-4 card shadow-sm fresh-table full-color-orange ml-4 mr-4 mt-2">
         <div class="title text-center text-white mb-4"><br>

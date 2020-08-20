@@ -57,7 +57,7 @@
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="longDescription">Descripción larga</label>
-                      <textarea class="form-control mt-2 mb-2" id="longDescription" name="longDescription" rows="6" placeholder="Descripción larga" value="{{ $product->longDescription }}"></textarea>
+                      <textarea class="form-control mt-2 mb-2" id="longDescription" name="longDescription" rows="6" placeholder="Descripción larga">{{ $product->longDescription }}</textarea>
                     </div>
                   </div>
                 </div>

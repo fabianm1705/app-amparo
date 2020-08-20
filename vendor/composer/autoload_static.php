@@ -30,6 +30,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
+        '6d394c3a532652dafb4dd296ba6a3f0b' => __DIR__ . '/../..' . '/app/Http/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (

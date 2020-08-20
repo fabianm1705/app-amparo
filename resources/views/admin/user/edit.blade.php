@@ -15,7 +15,7 @@
             <div class="row justify-content-server">
               <div class="col-sm-12">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label for="nroSocio">Nro. Socio</label>
                       <input type="text" class="form-control text-center" name="nroSocio" id="nroSocio" value="{{ $user->group->nroSocio }}/{{ $user->nroAdh }}" readonly>
@@ -27,18 +27,30 @@
                       <input type="text" class="form-control" name="name" id="name" value="{{ $user->name }}">
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label for="nroDoc">Documento</label>
                       <input type="text" class="form-control" name="nroDoc" id="nroDoc" value="{{ $user->nroDoc }}">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="fechaNac">Fecha Nac.</label>
-                      <input type="text" class="form-control" name="fechaNac" id="fechaNac" value="{{ $user->fechaNac }}">
+                      <input type="date" class="form-control" name="fechaNac" id="fechaNac" value="{{ $user->fechaNac }}">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="carencia_salud">Carencia Salud</label>
+                      <input type="date" class="form-control" name="carencia_salud" id="carencia_salud" value="{{ $user->carencia_salud }}">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="carencia_odonto">Carencia Odonto.</label>
+                      <input type="date" class="form-control" name="carencia_odonto" id="carencia_odonto" value="{{ $user->carencia_odonto }}">
                     </div>
                   </div>
                 </div>

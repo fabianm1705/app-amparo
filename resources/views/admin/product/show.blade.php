@@ -105,7 +105,9 @@
             </div>
           </div>
           <div class="">
-            <h6>{{ $product->longDescription }}</h6>
+            @if($product->longDescription)
+              <textarea class="form-control mt-2 mb-2" id="longDescription" name="longDescription" rows="8">{{ $product->longDescription }}</textarea>
+            @endif
           </div>
         </div>
       </div>

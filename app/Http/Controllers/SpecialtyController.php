@@ -128,46 +128,18 @@ class SpecialtyController extends Controller
         ->route('specialties.index');
     }
 
-    public function necesitaOdontologia($user)
-    {
-      $odontologia = true;
-      foreach ($user->subscriptions as $subscription) {
-        if($subscription->odontologia==1){
-          $odontologia = false;
-        }
-      }
-      return $odontologia;
-    }
-
-    public function necesitaSalud($user)
-    {
-      $salud = true;
-      foreach ($user->subscriptions as $subscription) {
-        if($subscription->salud==1){
-          $salud = false;
-        }
-      }
-      foreach ($user->group->subscriptions as $subscription) {
-        if($subscription->salud==1){
-          $salud = false;
-        }
-      }
-      return $salud;
-    }
-
-    public function getSpecialtiesByUserCheck(Request $request, $id)
+    public function cargarSpecialties($user)
     {
       foreach (Auth::user()->roles as $role){
         if(($role->slug=='dev') or ($role->slug=='admin')){
-          $user = User::find($id);
-          if($this->necesitaOdontologia($user) and $this->necesitaSalud($user)){
+          if(necesita_odontologia($user) and necesita_salud($user)){
             $specialties = DB::table('specialties')->where('id', '=', 0)
                                                    ->orderBy('descripcion','asc')->get();
-          }elseif($this->necesitaOdontologia($user)==false and $this->necesitaSalud($user)){
+          }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
             $specialties = DB::table('specialties')->where([['vigente', '=', 1],
                                                             ['id', '=', 19]])
                                                    ->orderBy('descripcion','asc')->get();
-          }elseif($this->necesitaOdontologia($user) and $this->necesitaSalud($user)==false){
+          }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
             $specialties = DB::table('specialties')->where([['vigente', '=', 1],
                                                             ['id', '<>', 19]])
                                                    ->orderBy('descripcion','asc')->get();
@@ -176,16 +148,15 @@ class SpecialtyController extends Controller
                                                    ->orderBy('descripcion','asc')->get();
           }
         }else{
-          $user = User::find($id);
-          if($this->necesitaOdontologia($user) and $this->necesitaSalud($user)){
+          if(necesita_odontologia($user) and necesita_salud($user)){
             $specialties = DB::table('specialties')->where('id', '=', 0)
                                                    ->orderBy('descripcion','asc')->get();
-          }elseif($this->necesitaOdontologia($user)==false and $this->necesitaSalud($user)){
+          }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
             $specialties = DB::table('specialties')->where([['vigente', '=', 1],
                                                             ['vigenteOrden', '=', 1],
                                                             ['id', '=', 19]])
                                                    ->orderBy('descripcion','asc')->get();
-          }elseif($this->necesitaOdontologia($user) and $this->necesitaSalud($user)==false){
+          }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
             $specialties = DB::table('specialties')->where([['vigente', '=', 1],
                                                             ['vigenteOrden', '=', 1],
                                                             ['id', '<>', 19]])
@@ -197,7 +168,11 @@ class SpecialtyController extends Controller
           }
         }
       }
-      $user = User::find($id);
+      return $specialties;
+    }
+
+    public function cantOrdersSalud($user)
+    {
       $cantOrdersSalud = DB::table('orders')
                      ->select(DB::raw('count(*) as order_count'))
                      ->where('pacient_id', '=', $user->id)
@@ -208,6 +183,11 @@ class SpecialtyController extends Controller
       foreach ($cantOrdersSalud as $order) {
         $order_salud_count = $order->order_count;
       }
+      return $order_salud_count;
+    }
+
+    public function cantOrdersOdonto($user)
+    {
       $cantOrdersOdonto = DB::table('orders')
                      ->select(DB::raw('count(*) as order_count'))
                      ->where('pacient_id', '=', $user->id)
@@ -218,12 +198,20 @@ class SpecialtyController extends Controller
       foreach ($cantOrdersOdonto as $order) {
         $order_odonto_count = $order->order_count;
       }
+      return $order_odonto_count;
+    }
+
+    public function getDataUser(Request $request, $id)
+    {
+      $user = User::find($id);
       $dataSocio = collect([
-        'salud' => $this->necesitaSalud($user),
-        'odontologia' => $this->necesitaOdontologia($user),
-        'cant_orders_salud' => $order_salud_count,
-        'cant_orders_odonto' => $order_odonto_count,
-        'specialties' => $specialties
+        'carencia_salud' => carencia_salud($user),
+        'carencia_odonto' => carencia_odontologia($user),
+        'necesita_salud' => necesita_salud($user),
+        'necesita_odonto' => necesita_odontologia($user),
+        'cant_orders_salud' => $this->cantOrdersSalud($user),
+        'cant_orders_odonto' => $this->cantOrdersOdonto($user),
+        'specialties' => $this->cargarSpecialties($user)
       ]);
       return $dataSocio;
     }
@@ -231,10 +219,6 @@ class SpecialtyController extends Controller
     public function getCoseguro($id)
     {
       $specialty = Specialty::find($id);
-
-      // if($request->ajax()){
-      //   return $specialties->toJson();
-      // }
       return $specialty;
     }
 }

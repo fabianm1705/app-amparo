@@ -3,6 +3,7 @@
 @section('myLinks')
   <script>
     function darkModePlanes(valor){
+
       var el41 = document.getElementById("titulo");
       var el42 = document.getElementById("tarjeta1");
       var el43 = document.getElementById("boton1");
@@ -71,55 +72,76 @@
         el60.classList.remove('bg-secondary');
         el61.classList.remove('text-white');
         el62.classList.remove('text-white');
-      }
-    };
+      };
+
+    }
   </script>
 @endsection
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-      <div id="divNecesitaSalud2" class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
+      <div class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Salud</h5>
           <h1 class="card-title">
-            @if($usersCount===1)
-              <small class="text-white">$</small><strong>600</strong><small class="text-white"> /mes</small>
+            @if($salud)
+              @if($usersCount===1)
+                <small class="text-white">$</small><strong>600</strong><small class="text-white"> /mes</small>
+              @else
+                <small class="text-white">$</small><strong>900</strong><small class="text-white"> Grupo Fliar</small>
+              @endif
             @else
-              <small class="text-white">$</small><strong>900</strong><small class="text-white"> Grupo Fliar</small>
+              <h5>Tienes este plan activo</h5>
             @endif
           </h1><br>
           Cobertura Ambulatoria Integral<hr>
           Consultorios Externos, Laboratorio<hr>
           Farmacia, Ambulancia, Emergencias<hr>
           Estudios, Radiografías, Ecografías y más.<br><br>
-          @if($usersCount===1)
-            <form action="{{ route('activar.salud') }}" method="post">
-              @csrf
-              <button class="btn btn-lg" type="submit" name="button">Activar</button>
-            </form>
+          @if($salud)
+            <div>
+              @if($usersCount===1)
+                <form action="{{ route('activar.salud') }}" method="post">
+                  @csrf
+                  <button class="btn btn-lg" type="submit" name="button">Activar</button>
+                </form>
+              @else
+                <form action="{{ route('activar.plan') }}" method="post">
+                  @csrf
+                  <button class="btn btn-lg" type="submit" name="button">Activar</button>
+                </form>
+              @endif
+            </div>
           @else
-            <form action="{{ route('activar.plan') }}" method="post">
-              @csrf
-              <button class="btn btn-lg" type="submit" name="button">Activar</button>
-            </form>
+            <h5>Tienes este plan activo</h5>
           @endif
         </div>
       </div>
-      <div id="divNecesitaOdontologia" class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
+      <div class="col-lg-4 col-md-5 col-sm-5 card shadow-sm fresh-table full-color-orange ml-2 mr-2 mt-2">
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Odontológico</h5>
           <h1 class="card-title">
-            <small class="text-white">$</small><strong>200</strong><small class="text-white"> /ind.</small>
+            @if($odontologia)
+              <small class="text-white">$</small><strong>220</strong><small class="text-white"> /ind.</small>
+            @else
+              <h5>Tienes este plan activo</h5>
+            @endif
           </h1><br>
-          + $150 por Adherente<hr>
+          + $180 por Adherente<hr>
           Cobertura Odontológica Integral<hr>
           Odontólogos distribuidos por la ciudad<hr>
           Turnos rápidos, coseguros muy económicos<br><br>
-          <form action="{{ route('activar.odontologia') }}" method="post">
-            @csrf
-            <button class="btn btn-lg" type="submit" name="button">Activar</button>
-          </form>
+          @if($odontologia)
+            <div>
+              <form action="{{ route('activar.odontologia') }}" method="post">
+                @csrf
+                <button class="btn btn-lg" type="submit" name="button">Activar</button>
+              </form>
+            </div>
+          @else
+            <h5>Tienes este plan activo</h5>
+          @endif
         </div>
       </div>
     </div>

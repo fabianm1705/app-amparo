@@ -91,6 +91,8 @@ class UserController extends Controller
     $user->fechaNac = $request->input('fechaNac');
     $user->email = $request->input('email');
     $user->no_aop = $request->input('no_aop');
+    $user->carencia_salud = $request->input('carencia_salud');
+    $user->carencia_odonto = $request->input('carencia_odonto');
     if($request->input('restablecerPassword')){
       $user->password = Hash::make('amparo');
       $user->password_changed_at = null;
@@ -167,7 +169,7 @@ class UserController extends Controller
 
   public function odontologia()
   {
-    $this->registroAcceso(12,'Odontología');
+    registro_acceso(12,'Odontología');
     $subscriptions = Subscription::where('odontologia',1)->get();
     $users = $subscriptions->flatMap->users->where('no_aop',0)->sortBy('name');
     $usersCount = $subscriptions->flatMap->users->where('no_aop',0)->count();
@@ -179,7 +181,7 @@ class UserController extends Controller
 
   public function emergencia()
   {
-    $this->registroAcceso(12,'Emergencia');
+    registro_acceso(12,'Emergencia');
     $subscriptions = Subscription::where('salud',1)->get();
     $groups = $subscriptions->flatMap->groups->sortBy('nroSocio');
     $uusers = $subscriptions->flatMap->users->sortBy('name');
@@ -201,47 +203,9 @@ class UserController extends Controller
     ]);
   }
 
-  public function necesitaSalud($user)
-  {
-    $salud = true;
-    foreach ($user->subscriptions as $subscription) {
-      if($subscription->salud==1){
-        $salud = false;
-      }
-    }
-    foreach ($user->group->subscriptions as $subscription) {
-      if($subscription->salud==1){
-        $salud = false;
-      }
-    }
-    return $salud;
-  }
-
-  public function necesitaOdontologia($user)
-  {
-    $odontologia = true;
-    foreach ($user->subscriptions as $subscription) {
-      if($subscription->odontologia==1){
-        $odontologia = false;
-      }
-    }
-    return $odontologia;
-  }
-
-  public function registroAcceso($interest_id,$obs)
-  {
-    foreach (Auth::user()->roles as $role){
-      if(($role->slug<>'dev') and ($role->slug<>'admin')){
-        UserInterest::create(['user_id' => Auth::user()->id,
-                              'interest_id' => $interest_id,
-                              'obs' => $obs]);
-      }
-    }
-  }
-
   public function panel($id)
   {
-    $this->registroAcceso(14,'');
+    registro_acceso(14,'');
     $user = User::find($id);
     $usersId = User::where('group_id',$user->group_id)->pluck('id')->toArray();
     $layers = Layer::whereIn('user_id',$usersId)->get();
@@ -262,17 +226,20 @@ class UserController extends Controller
 
   public function planes()
   {
+    registro_acceso(13,'');
     foreach (Auth::user()->roles as $role){
       if(($role->slug=='dev') or ($role->slug=='admin')){
         $users = User::where('id',Auth::user()->id)->get();
       }else{
-        UserInterest::create(['user_id' => Auth::user()->id,'interest_id' => 13]);
         $group_id = Auth::user()->group_id;
         $users = User::where('group_id',$group_id)->get();
       }
     }
     $usersCount = $users->count();
-    return view('admin.planes',compact("usersCount"));
+    $user = Auth::user();
+    $salud = necesita_salud($user);
+    $odontologia = necesita_odontologia($user);
+    return view('admin.planes',compact("usersCount","salud","odontologia"));
   }
 
   public function upload(Request $request)

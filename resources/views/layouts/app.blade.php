@@ -35,6 +35,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
    @yield('myLinks')
 </head>
 

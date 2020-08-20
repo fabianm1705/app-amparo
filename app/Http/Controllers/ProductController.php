@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\PaymentMethod;
-use App\UserInterest;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -138,7 +137,7 @@ class ProductController extends Controller
       $product->save();
 
       return redirect()
-        ->route('products.edit',['product' => $product])
+        ->route('products.index',['product' => $product])
         ->with('message','Producto Actualizado');
     }
 
@@ -157,8 +156,7 @@ class ProductController extends Controller
 
     public function shopping()
     {
-      $this->registroAcceso(5,'');
-      // $products = DB::table('products')->where('vigente', '=', 1)->orderBy('costo')->get();
+      registro_acceso(5,'');
       $categories = Category::inRandomOrder()->get();
       return view('admin.product.shopping', compact("categories"));
     }
@@ -169,7 +167,7 @@ class ProductController extends Controller
         $products = DB::table('products')->where('vigente', '=', 1)->orderBy('costo')->get();
       }else{
         $category = Category::find($id);
-        $this->registroAcceso(6,$category->nombre);
+        registro_acceso(6,$category->nombre);
         $products = DB::table('products')
               ->where([
                         ['category_id', '=', $id],
@@ -177,16 +175,5 @@ class ProductController extends Controller
                       ])->orderBy('costo')->get();
       }
       return $products;
-    }
-
-    public function registroAcceso($interest_id,$obs)
-    {
-      foreach (Auth::user()->roles as $role){
-        if(($role->slug<>'dev') and ($role->slug<>'admin')){
-          UserInterest::create(['user_id' => Auth::user()->id,
-                                'interest_id' => $interest_id,
-                                'obs' => $obs]);
-        }
-      }
     }
 }

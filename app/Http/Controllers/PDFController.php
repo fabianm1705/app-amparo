@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Sale;
-use App\Receipt;
 use App\Concept;
-use Auth;
+use App\Receipt;
 use PDF;
-use Illuminate\Support\Facades\DB;
 
 class PDFController extends Controller
 {
