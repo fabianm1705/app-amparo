@@ -16,6 +16,7 @@ function darkMode(valor){
   var el15 = document.getElementById("profesionales");
   var el16 = document.getElementById("categorias");
   var el18 = document.getElementById("metodosPago");
+  var el19 = document.getElementById("recibos");
   var el21 = document.getElementById("carrito");
   var el22 = document.getElementById("iconCarrito");
   var el23 = document.getElementById("cuerpo");
@@ -40,6 +41,7 @@ function darkMode(valor){
     el15.classList.add('text-white');
     el16.classList.add('text-white');
     el18.classList.add('text-white');
+    el19.classList.add('text-white');
     el21.classList.add('text-white');
     el22.style.color = "white";
     el23.classList.add('bg-dark');
@@ -63,6 +65,7 @@ function darkMode(valor){
     el15.classList.remove('text-white');
     el16.classList.remove('text-white');
     el18.classList.remove('text-white');
+    el19.classList.remove('text-white');
     el21.classList.remove('text-white');
     el22.style.color = "black";
     el23.style.backgroundImage = "url('https://amparosrl.com.ar/images/01.webp')";

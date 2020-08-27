@@ -47,10 +47,10 @@
                     </a>&nbsp;
                     @endcan
                     @can('interests.destroy')
-                    <form action="{{ route('interests.destroy', ['interest' => $interest ]) }}" method="post" style="background-color: transparent;">
+                    <form id="formEliminar{{ $interest->id }}" action="{{ route('interests.destroy', ['interest' => $interest ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf
-                      <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                      <button class="btn btn-sm" onclick="borrarRegistro({{ $interest->id }})">
                         Borrar
                       </button>
                     </form>
@@ -65,5 +65,8 @@
     </div>
   </div>
 </div>
+@endsection
 
+@section('myScripts')
+  <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
 @endsection

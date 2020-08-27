@@ -1,21 +1,5 @@
 @extends('layouts.app')
 
-@section('myLinks')
-<script>
-  function darkModeIndexOrder(valor){
-    var el51 = document.getElementById("tabla");
-    var el52 = document.getElementById("tarjeta");
-    if(valor){
-      el51.classList.add('table-dark');
-      el52.classList.add('bg-dark');
-    }else{
-      el51.classList.remove('table-dark');
-      el52.classList.remove('bg-dark');
-    }
-  };
-</script>
-@endsection
-
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -30,9 +14,17 @@
           @endcan
          </div>
       </div>
-      <div id="tarjeta" class="card shadow-sm mt-1">
+      @if(Auth::user()->darkMode)
+        <div class="card shadow-sm mt-1 bg-dark">
+      @else
+        <div class="card shadow-sm mt-1">
+      @endif
         <div class="card-body">
-          <table id="tabla" class="table table-hover table-sm table-responsive">
+          @if(Auth::user()->darkMode)
+            <table class="table table-hover table-sm table-responsive table-dark">
+          @else
+            <table class="table table-hover table-sm table-responsive">
+          @endif
             <thead>
               <th>Orden</th>
               <th>Fecha</th>
@@ -82,7 +74,5 @@
       </div>
     </div>
   </div>
-  <img onload="darkModeIndexOrder({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
-
 @endsection

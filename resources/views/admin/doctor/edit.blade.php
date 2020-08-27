@@ -73,23 +73,3 @@
   </div>
 </div>
 @endsection
-<!--
-
-                  <div class="row">
-                    <div class="col-sm-7">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Seleccione la Especialidad
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          @foreach($specialties as $specialty)
-                            <a class="dropdown-item" href="#" value="{{ $specialty->id }}" onclick="$('#especialidad').attr('value', '{{ $specialty->descripcion }}');$('#specialty_id').attr('value', '{{ $specialty->id }}');">{{ $specialty->descripcion }}</a>
-                          @endforeach
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-5">
-                      <input type="hidden" class="form-control" id="specialty_id" name="specialty_id" value="{{ $doctor->specialty->id }}">
-                      <input type="text" class="form-control" id="especialidad" name="especialidad" value="{{ $doctor->specialty->descripcion }}" readonly>
-                    </div>
-                  </div><br> -->

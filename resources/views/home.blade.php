@@ -1,20 +1,6 @@
 @extends('layouts.app')
 
-@section('myLinks')
-<script>
-  function darkModeHome(valor){
-    var el31 = document.getElementById("textoHome");
-    if(valor){
-      el31.classList.add('text-white');
-    }else{
-      el31.classList.remove('text-white');
-    }
-  };
-</script>
-@endsection
-
 @section('content')
-
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12 col-lg-12">
@@ -99,7 +85,11 @@
   </div>
 </div>
 <div class="container mt-2">
-    <div id="textoHome" class="text-center">
+  @if(Auth::user()->darkMode)
+    <div class="text-center text-white">
+  @else
+    <div class="text-center">
+  @endif
       Oficina Cura Alvarez 615, Paraná, Entre Ríos<br>
       Horario: Lunes a Viernes 8:30 a 18:00hs<br>
       Teléfonos Útiles<br>
@@ -108,6 +98,5 @@
       SOS Emergencias: 4222322 / 4233333<br>
       www.amparosrl.com.ar
     </div>
-    <img onload="darkModeHome({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
 @endsection

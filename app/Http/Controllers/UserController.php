@@ -98,6 +98,9 @@ class UserController extends Controller
       $user->password_changed_at = null;
     }
     $user->save();
+    $group = Group::find($user->group_id);
+    $group->direccion = $request->input('direccion');
+    $group->save();
 
     $user->roles()->sync($request->input('roles'));
 

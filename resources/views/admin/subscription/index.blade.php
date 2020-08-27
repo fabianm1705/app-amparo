@@ -65,10 +65,10 @@
                     </a>&nbsp;
                     @endcan
                     @can('subscriptions.destroy')
-                    <form action="{{ route('subscriptions.destroy', ['subscription' => $subscription ]) }}" method="post" style="background-color: transparent;">
+                    <form id="formEliminar{{ $subscription->id }}" action="{{ route('subscriptions.destroy', ['subscription' => $subscription ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf
-                      <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                      <button class="btn btn-sm" onclick="borrarRegistro({{ $subscription->id }})">
                         Borrar
                       </button>
                     </form>
@@ -83,5 +83,8 @@
     </div>
   </div>
 </div>
+@endsection
 
+@section('myScripts')
+  <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
 @endsection

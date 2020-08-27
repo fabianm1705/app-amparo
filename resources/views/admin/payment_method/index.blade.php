@@ -42,10 +42,10 @@
                       </a>&nbsp;
                     @endcan
                     @can('payment_methods.destroy')
-                      <form action="{{ route('payment_methods.destroy', ['payment_method' => $payment_method ]) }}" method="post" style="background-color: transparent;">
+                      <form id="formEliminar{{ $payment_method->id }}" action="{{ route('payment_methods.destroy', ['payment_method' => $payment_method ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                        <button class="btn btn-sm" onclick="borrarRegistro({{ $payment_method->id }})">
                           Borrar
                         </button>
                       </form>
@@ -60,5 +60,8 @@
     </div>
   </div>
 </div>
+@endsection
 
+@section('myScripts')
+  <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
 @endsection

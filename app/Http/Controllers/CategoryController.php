@@ -59,7 +59,7 @@ class CategoryController extends Controller
       $category->save();
 
       return redirect()
-        ->route('categories.show',['category' => $category])
+        ->route('categories.index')
         ->with('message','Categoría Registrada');
     }
 
@@ -110,8 +110,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+      $category = Category::find($id);
       $category->delete();
       return redirect()
         ->route('categories.index');

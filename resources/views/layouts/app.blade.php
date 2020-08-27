@@ -108,6 +108,9 @@
                               @can('subscriptions.index')
                                 <a id="planes" class="dropdown-item" href="{{ route('subscriptions.index') }}">Planes/Subscriptions</a>
                               @endcan
+                              @can('receipts.index')
+                                <a id="recibos" class="dropdown-item" href="{{ route('receipts.index') }}">Recibos</a>
+                              @endcan
                             </div>
                           </div>
                         @endcan
@@ -247,44 +250,6 @@
     </div>
     @yield('myScripts')
 </body>
-
-<script type="text/javascript">
-  // var $table = $('#fresh-table')
-  // $(function () {
-  //   $table.bootstrapTable({
-  //     classes: 'table table-hover table-striped',
-  //     // toolbar: '.toolbar',
-  //     search: true,
-  //     showRefresh: true,
-  //     showToggle: true,
-  //     showColumns: true,
-  //     pagination: true,
-  //     striped: true,
-  //     sortable: true,
-  //     pageSize: 8,
-  //     pageList: [8, 10, 25, 50, 100],
-  //     formatShowingRows: function (pageFrom, pageTo, totalRows) {
-  //       return ''
-  //     },
-  //     formatRecordsPerPage: function (pageNumber) {
-  //       return pageNumber + ' rows visible'
-  //     }
-  //   })
-  // })
-  // $('#facebook').sharrre({
-  //   share: {
-  //     facebook: true
-  //   },
-  //   enableHover: false,
-  //   enableTracking: true,
-  //   click: function (api, options) {
-  //     api.simulateClick()
-  //     api.openPopup('facebook')
-  //   },
-  //   template: '<i class="fa fa-facebook-square"></i> {total}',
-  //   url: location.href
-  // })
-</script>
 <script>
   // Nos aseguramos que el navegador implementa la api 'serviceWorker'
   if ('serviceWorker' in navigator) {
@@ -295,5 +260,4 @@
     });
   }
 </script>
-
 </html>

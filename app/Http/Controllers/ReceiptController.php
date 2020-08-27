@@ -15,7 +15,8 @@ class ReceiptController extends Controller
      */
     public function index()
     {
-        //
+      $receipts = Receipt::orderBy('id','desc')->get();
+      return view('admin.receipt.index',compact("receipts"));
     }
 
     /**
@@ -48,42 +49,8 @@ class ReceiptController extends Controller
       $receipt->save();
 
       return redirect()
-        ->route('recibo',['id' => $receipt->id,'num_en_letras' => $request->input('num_en_letras')])
+        ->route('receipts.show',['id' => $receipt->id])
         ->with('message','Recibo Registrado');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Receipt  $receipt
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Receipt $receipt)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Receipt  $receipt
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Receipt $receipt)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Receipt  $receipt
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Receipt $receipt)
-    {
-        //
     }
 
     /**
@@ -94,6 +61,8 @@ class ReceiptController extends Controller
      */
     public function destroy(Receipt $receipt)
     {
-        //
+      $receipt->delete();
+      return redirect()
+        ->route('receipts.index');
     }
 }

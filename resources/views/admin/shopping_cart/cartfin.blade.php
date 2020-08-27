@@ -1,19 +1,5 @@
 @extends('layouts.app')
 
-@section('myLinks')
-  <script>
-    function cargarPrecio(cuotas,percentage,costo){
-      var precio;
-      precio = Math.round(costo / 10 * (1+(percentage/100)) / cuotas) * 10;
-      if (cuotas=="1") {
-        $('#monto').html(cuotas+' pago de $'+precio);
-      } else {
-        $('#monto').html(cuotas+' cuotas de $'+precio);
-      }
-    }
-  </script>
-@endsection
-
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -41,13 +27,15 @@
           <div class="card-body">
             <div class="row justify-content-center">
               <div class="col-12 text-center" id="monto">
+                @if($payment_method->cant_cuotas==1)
+                  1 pago de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                @else
+                  {{ $payment_method->cant_cuotas }} cuotas de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                @endif
               </div>
             </div>
             <div>
-              <img onload="cargarPrecio({{ $payment_method->cant_cuotas }},{{ $payment_method->percentage }},{{ $productsCost }})"
-                   class="w-100"
-                   src="{{ asset('images/'.$payment_method->image_url) }}"
-                   alt="{{ $payment_method->name }}">
+              <img class="w-100" src="{{ asset('images/'.$payment_method->image_url) }}" alt="{{ $payment_method->name }}">
             </div>
           </div>
         </div>

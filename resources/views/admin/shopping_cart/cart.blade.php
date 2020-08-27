@@ -1,29 +1,5 @@
 @extends('layouts.app')
 
-@section('myLinks')
-  <script>
-    function darkModeCarrito(valor){
-      var el41 = document.getElementById("textoPago");
-      if(valor){
-        el41.classList.add('text-white');
-      }else{
-        el41.classList.remove('text-white');
-      }
-    };
-  </script>
-  <script>
-    function cargarPrecio(cuotas,percentage,costo){
-      var precio;
-      precio = Math.round(costo / 10 * (1+(percentage/100)) / cuotas) * 10;
-      if (cuotas=="1") {
-        $('#monto').html(cuotas+' pago de $'+precio);
-      } else {
-        $('#monto').html(cuotas+' cuotas de $'+precio);
-      }
-    }
-  </script>
-@endsection
-
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -95,7 +71,11 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-9 mt-2">
-        <h5 id="textoPago">Seleccione su medio de pago:</h5>
+        @if(Auth::user()->darkMode)
+          <h5 class="text-white">Seleccione su medio de pago:</h5>
+        @else
+          <h5>Seleccione su medio de pago:</h5>
+        @endif
 
         <div class="">
           <form action="{{ route('shopping_cart.store') }}" method="post" enctype="multipart/form-data">
@@ -112,13 +92,15 @@
                       </div>
                     </div>
                     <div class="col-10" id="monto">
+                      @if($payment_method->cant_cuotas==1)
+                        1 pago de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                      @else
+                        {{ $payment_method->cant_cuotas }} cuotas de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                      @endif
                     </div>
                   </div>
                   <div>
-                    <img onload="cargarPrecio({{ $payment_method->cant_cuotas }},{{ $payment_method->percentage }},{{ $productsCost }})"
-                         class="w-100"
-                         src="{{ asset('images/'.$payment_method->image_url) }}"
-                         alt="{{ $payment_method->name }}">
+                    <img class="w-100" src="{{ asset('images/'.$payment_method->image_url) }}" alt="{{ $payment_method->name }}">
                   </div>
                 </div>
               </div>
@@ -128,9 +110,7 @@
             </div>
           </form>
         </div>
-
       </div>
     </div>
-    <img onload="darkModeCarrito({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
   </div>
 @endsection

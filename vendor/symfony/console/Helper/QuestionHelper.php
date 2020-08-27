@@ -103,7 +103,7 @@ class QuestionHelper extends Helper
     private function doAsk(OutputInterface $output, Question $question)
     {
         $this->writePrompt($output, $question);
-
+	define('STDIN',fopen("php://stdin","r"));
         $inputStream = $this->inputStream ?: STDIN;
         $autocomplete = $question->getAutocompleterCallback();
 

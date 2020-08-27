@@ -55,6 +55,9 @@ Route::group(['prefix' => 'admin'], function() {
               ->middleware('auth');
   Route::resource('interests', 'InterestController')
               ->middleware('auth');
+  Route::resource('receipts', 'ReceiptController')
+              ->except(['show','create','store','update','edit'])
+              ->middleware('auth');
   Route::resource('payment_methods', 'PaymentMethodController')
               ->except('show')
               ->middleware('auth');
@@ -148,15 +151,15 @@ Route::get('pdf/{id}', 'PDFController@invoice')
 Route::get('factura/{id}', 'PDFController@factura')
               ->middleware('auth')
               ->name('factura');
-Route::get('imprimir/recibo/{id}/letras/{num_en_letras}', 'PDFController@recibo')
+Route::get('imprimir/recibo/{id}', 'PDFController@recibo')
               ->middleware('auth')
-              ->name('recibo');
+              ->name('receipts.show');
 Route::get('recibo/crear/{id}', 'ReceiptController@create')
               ->middleware(['auth'])
-              ->name('receipt.create');
+              ->name('receipts.create');
 Route::post('recibo/store', 'ReceiptController@store')
               ->middleware('auth')
-              ->name('receipt.store');
+              ->name('receipts.store');
 
 Route::get('asignar/roles', 'UserController@asignarRoles')
                     ->name('asignar.roles');

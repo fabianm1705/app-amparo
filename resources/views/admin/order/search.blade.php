@@ -1,18 +1,5 @@
 @extends('layouts.app')
 
-@section('myLinks')
-<script>
-  function darkModeSearch(valor){
-    var el31 = document.getElementById("tabla");
-    if(valor){
-      el31.classList.add('table-dark');
-    }else{
-      el31.classList.remove('table-dark');
-    }
-  };
-</script>
-@endsection
-
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -36,7 +23,11 @@
         @else
           <h4 class="title text-center mt-2">Resultados</h4>
         @endif
-        <table id="tabla" class="table table-hover table-sm table-responsive">
+        @if(Auth::user()->darkMode)
+          <table class="table table-hover table-sm table-responsive table-dark">
+        @else
+          <table class="table table-hover table-sm table-responsive">
+        @endif
           <thead>
             <th>Nro Socio</th>
             <th>Nombre</th>
@@ -69,6 +60,5 @@
         {{ $users->links() }}
       </div>
     </div>
-    <img onload="darkModeSearch({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
   </div>
 @endsection

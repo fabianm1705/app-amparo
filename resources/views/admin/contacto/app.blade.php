@@ -1,31 +1,5 @@
 @extends('layouts.app')
 
-<script>
-  function darkModeContacto(valor){
-    var el41 = document.getElementById("nombre");
-    var el42 = document.getElementById("tarjeta");
-    var el43 = document.getElementById("correo");
-    var el44 = document.getElementById("domicilio");
-    var el45 = document.getElementById("telefono");
-    var el46 = document.getElementById("mensaje");
-    if(valor){
-      el41.classList.add('text-white');
-      el42.classList.add('bg-dark');
-      el43.classList.add('text-white');
-      el44.classList.add('text-white');
-      el45.classList.add('text-white');
-      el46.classList.add('text-white');
-    }else{
-      el41.classList.remove('text-white');
-      el42.classList.remove('bg-dark');
-      el43.classList.remove('text-white');
-      el44.classList.remove('text-white');
-      el45.classList.remove('text-white');
-      el46.classList.remove('text-white');
-    }
-  };
-</script>
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -33,7 +7,11 @@
             <div class="fresh-table full-color-orange d-flex shadow-sm">
                 <h5 class="card-title text-white mt-4 ml-4 mb-4">Contacto</h5>
             </div>
-            <div id="tarjeta" class="card mt-1">
+            @if(Auth::user()->darkMode)
+              <div class="card mt-1 bg-dark">
+            @else
+              <div class="card mt-1">
+            @endif
               <div class="card-body">
                 @if (session('estado'))
                     <div class="alert alert-success">
@@ -48,18 +26,26 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="nombre" for="name">Tu nombre *</label>
-                                    <input id="name" type="text" name="name" class="form-control" placeholder="Por favor ingresa tu nombre" required="required" data-error="El nombre es requerido.">
+                                  @if(Auth::user()->darkMode)
+                                    <label for="name" class="text-white">Tu nombre *</label>
+                                  @else
+                                    <label for="name">Tu nombre *</label>
+                                  @endif
+                                  <input id="name" type="text" name="name" class="form-control" placeholder="Por favor ingresa tu nombre" required="required" data-error="El nombre es requerido.">
 
-                                        @if($errors->has('name'))
-                                            <div class="invalid-feedback">{{ $errors->first('name') }}</div>
-                                        @endif
+                                      @if($errors->has('name'))
+                                          <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+                                      @endif
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="correo" for="email">Email</label>
+                                  @if(Auth::user()->darkMode)
+                                    <label for="email" class="text-white">Email</label>
+                                  @else
+                                    <label for="email">Email</label>
+                                  @endif
                                     <input id="email" type="text" name="email" class="form-control" placeholder="Por favor ingresa tu email">
                                     @if($errors->has('email'))
                                         <div class="invalid-feedback">{{ $errors->first('email') }}</div>
@@ -71,7 +57,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="domicilio" for="address">Domicilio</label>
+                                  @if(Auth::user()->darkMode)
+                                    <label for="address" class="text-white">Domicilio</label>
+                                  @else
+                                    <label for="address">Domicilio</label>
+                                  @endif
                                     <input id="address" type="text" name="address" class="form-control" placeholder="Ingresa tu domicilio">
 
                                         @if($errors->has('address'))
@@ -82,7 +72,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label id="telefono" for="telephone">Teléfono</label>
+                                  @if(Auth::user()->darkMode)
+                                    <label for="telephone" class="text-white">Teléfono</label>
+                                  @else
+                                    <label for="telephone">Teléfono</label>
+                                  @endif
                                     <input id="telephone" type="text" name="telephone" class="form-control" placeholder="Ingresa tu teléfono">
                                     @if($errors->has('telephone'))
                                         <div class="invalid-feedback">{{ $errors->first('telephone') }}</div>
@@ -94,7 +88,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label id="mensaje" for="message">Mensaje *</label>
+                                  @if(Auth::user()->darkMode)
+                                    <label for="message" class="text-white">Mensaje *</label>
+                                  @else
+                                    <label for="message">Mensaje *</label>
+                                  @endif
                                     <textarea id="message" name="message" class="form-control" placeholder="Tu mensaje" rows="4" required="required" data-error="Por favor incluye un mensaje."></textarea>
                                     @if($errors->has('message'))
                                         <div class="invalid-feedback">{{ $errors->first('message') }}</div>
@@ -116,6 +114,5 @@
             </div> <!-- fin del componente card -->
         </div>
     </div>
-    <img onload="darkModeContacto({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
 @endsection

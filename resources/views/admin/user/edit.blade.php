@@ -64,7 +64,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="direccion">Domicilio</label>
-                      <input type="text" class="form-control" name="direccion" id="direccion" value="{{ $user->group->direccion }}" readonly>
+                      <input type="text" class="form-control" name="direccion" id="direccion" value="{{ $user->group->direccion }}">
                     </div>
                   </div>
                 </div>

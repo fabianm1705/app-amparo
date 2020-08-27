@@ -1,21 +1,5 @@
 @extends('layouts.app')
 
-@section('myLinks')
-  <script>
-    function darkModeProductos(valor){
-      var el41 = document.getElementById("tabla");
-      var el42 = document.getElementById("tarjeta");
-      if(valor){
-        el41.classList.add('table-dark');
-        el42.classList.add('bg-dark');
-      }else{
-        el41.classList.remove('table-dark');
-        el42.classList.remove('bg-dark');
-      }
-    };
-  </script>
-@endsection
-
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -30,9 +14,17 @@
             @endcan
            </div>
        </div>
-       <div id="tarjeta" class="card shadow-sm mt-1">
+       @if(Auth::user()->darkMode)
+         <div class="card shadow-sm mt-1 bg-dark">
+       @else
+         <div class="card shadow-sm mt-1">
+       @endif
         <div class="card-body centrado">
-          <table id="tabla" class="table table-hover table-sm table-responsive">
+          @if(Auth::user()->darkMode)
+            <table class="table table-hover table-sm table-responsive table-dark">
+          @else
+            <table class="table table-hover table-sm table-responsive">
+          @endif
             <thead>
               <th>Categoría</th>
               <th>Modelo</th>
@@ -64,10 +56,10 @@
                       </a>&nbsp;
                     @endcan
                     @can('products.destroy')
-                      <form action="{{ route('products.destroy', ['product' => $product ]) }}" method="post" style="background-color: transparent;">
+                      <form id="formEliminar{{ $product->id }}" action="{{ route('products.destroy', ['product' => $product ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                        <button class="btn btn-sm" onclick="borrarRegistro({{ $product->id }})">
                           @if(Auth::user()->darkMode)
                             <i class="material-icons" style="color:white">delete</i>
                           @else
@@ -85,6 +77,9 @@
       </div>
     </div>
   </div>
-  <img onload="darkModeProductos({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
+@endsection
+
+@section('myScripts')
+  <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
 @endsection

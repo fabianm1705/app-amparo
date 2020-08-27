@@ -7,6 +7,7 @@ use App\Models\Sale;
 use App\Concept;
 use App\Receipt;
 use PDF;
+use App\NumerosEnLetras;
 
 class PDFController extends Controller
 {
@@ -33,9 +34,10 @@ class PDFController extends Controller
         return $order;
       }
 
-    public function recibo($id,$num_en_letras)
+    public function recibo($id)
       {
         $receipt = Receipt::find($id);
+        $num_en_letras=NumerosEnLetras::convertir($receipt->monto,'Pesos',false,'Centavos');
         $view =  \View::make('admin.receipt.show', compact('receipt','num_en_letras'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);

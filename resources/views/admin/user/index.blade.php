@@ -1,19 +1,5 @@
 @extends('layouts.app')
 
-<script>
-  function darkModeUser(valor){
-    var el41 = document.getElementById("tabla");
-    var el42 = document.getElementById("tarjeta");
-    if(valor){
-      el41.classList.add('table-dark');
-      el42.classList.add('bg-dark');
-    }else{
-      el41.classList.remove('table-dark');
-      el42.classList.remove('bg-dark');
-    }
-  };
-</script>
-
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -46,9 +32,17 @@
             </div>
           </div>
       </div>
-      <div id="tarjeta" class="card shadow-sm mt-1">
+      @if(Auth::user()->darkMode)
+        <div class="card shadow-sm mt-1 bg-dark">
+      @else
+        <div class="card shadow-sm mt-1">
+      @endif
         <div class="card-body">
-          <table id="tabla" class="table table-hover table-sm table-responsive">
+          @if(Auth::user()->darkMode)
+            <table class="table table-hover table-sm table-responsive table-dark">
+          @else
+            <table class="table table-hover table-sm table-responsive">
+          @endif
             <thead>
               <th>ID / ID Grupo</th>
               <th>Nro. Socio</th>
@@ -75,7 +69,7 @@
                   </td>
                   <td class="text-right d-flex">
                     @can('users.edit')
-                      <a href="{{ route('receipt.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">
+                      <a href="{{ route('receipts.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">
                         <div class="">
                           @if(Auth::user()->darkMode)
                             <i class="material-icons" style="color:white">receipt</i>
@@ -108,10 +102,10 @@
                       </a>&nbsp;
                     @endcan
                     @can('users.destroy')
-                      <form action="{{ route('users.destroy', ['user' => $user ]) }}" method="post" style="background-color: transparent;">
+                      <form id="formEliminar{{ $user->id }}" action="{{ route('users.destroy', ['user' => $user ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                        <button class="btn btn-sm" onclick="borrarRegistro({{ $user->id }})">
                           @if(Auth::user()->darkMode)
                             <div class="text-white">X</div>
                           @else
@@ -130,6 +124,10 @@
       </div>
     </div>
   </div>
-  <img onload="darkModeUser({{ Auth::user()->darkMode }})" src="{{ asset('images/transparente.png') }}" alt="-">
 </div>
+@endsection
+
+@section('myScripts')
+  <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
+  <script src="{{ asset('js/numALet.js') }}" defer></script>
 @endsection

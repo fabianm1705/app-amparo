@@ -97,7 +97,7 @@ class ProductController extends Controller
     public function show($productId)
     {
       $product = Product::find($productId);
-      $this->registroAcceso(7,$product->modelo);
+      registro_acceso(7,$product->modelo);
       $payment_methods = PaymentMethod::where('activo',1)->get();
       $categories = Category::orderBy('nombre','asc')->get();
       return view('admin.product.show', compact("product","categories","payment_methods"));
