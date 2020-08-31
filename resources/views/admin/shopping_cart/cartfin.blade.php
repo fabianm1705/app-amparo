@@ -34,9 +34,6 @@
                 @endif
               </div>
             </div>
-            <div>
-              <img class="w-100" src="{{ asset('images/'.$payment_method->image_url) }}" alt="{{ $payment_method->name }}">
-            </div>
           </div>
         </div>
       @endforeach

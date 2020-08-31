@@ -9,7 +9,7 @@
           <h4>Modificar Método de Pago</h4>
         </header>
         <div class="card-body">
-          <form action="{{ route('payment_methods.update', ['payment_method' => $payment_method]) }}" method="post">
+          <form action="{{ route('payment_methods.update', ['payment_method' => $payment_method]) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf
               <div class="col-sm-12">

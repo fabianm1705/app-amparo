@@ -34,13 +34,13 @@
                       <small>by {{ $product->empresa }}</small>
                     </td>
                     <td class="text-right align-middle">
-                      <small>$</small>{{ round($product->costo * (1+($porccredito/100))/10, 0) * 10 }}
+                      <small>$</small>{{ round($product->costo * (1+($porccontado/100))/10, 0) * 10 }}
                     </td>
                     <td class="align-middle">
                       1
                     </td>
                     <td class="align-middle">
-                      <small>$</small>{{ round($product->costo * (1+($porccredito/100))/10, 0) * 10 }}
+                      <small>$</small>{{ round($product->costo * (1+($porccontado/100))/10, 0) * 10 }}
                     </td>
                     <td class="td-actions align-middle">
                       <form action="{{ route('out_shopping_cart.destroy', ['id' => $product->id ]) }}" method="post" style="background-color: transparent;">
@@ -61,7 +61,7 @@
                   <td colspan="1" class="td-price">
                     <total-value-only-component
                             :products="{{ $shopping_cart->products }}"
-                            :porccredito="{{ $porccredito }}">
+                            :porccredito="{{ $porccontado }}">
                     </total-value-only-component>
                   </td>
                 </tr>
@@ -72,39 +72,39 @@
       </div>
       <div class="col-lg-3 col-md-6 col-sm-9 mt-2">
         @if(Auth::user()->darkMode)
-          <h5 class="text-white">Seleccione su medio de pago:</h5>
+          <h5 class="text-white">Seleccione su forma de pago:</h5>
         @else
-          <h5>Seleccione su medio de pago:</h5>
+          <h5>Seleccione su forma de pago:</h5>
         @endif
 
         <div class="">
           <form action="{{ route('shopping_cart.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            @foreach($payment_methods as $payment_method)
-              <div class="card shadow-sm mb-2">
-                <div class="card-body">
-                  <div class="row justify-content-center">
-                    <div class="col-2">
-                      <div class="radio-inline">
-                          <label>
-                              <input type="radio" key="{{ $payment_method->id }}" value="{{ $payment_method->id }}" {{ $payment_method->id==1 ? 'checked="checked"' : '' }} name="payment_method_id" />
-                          </label>
+            <div class="card shadow-sm mb-2">
+              <div class="card-body">
+                @foreach($payment_methods as $payment_method)
+                      <div class="row justify-content-center">
+                        <div class="col-2">
+                          <div class="radio-inline">
+                              <label>
+                                  <input type="radio" key="{{ $payment_method->id }}" value="{{ $payment_method->id }}" {{ $payment_method->id==1 ? 'checked="checked"' : '' }} name="payment_method_id" />
+                              </label>
+                          </div>
+                        </div>
+                        <div class="col-10" id="monto">
+                          @if($payment_method->cant_cuotas==1)
+                            1 pago de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                          @else
+                            {{ $payment_method->cant_cuotas }} cuotas de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                          @endif
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-10" id="monto">
-                      @if($payment_method->cant_cuotas==1)
-                        1 pago de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                      @else
-                        {{ $payment_method->cant_cuotas }} cuotas de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                      @endif
-                    </div>
-                  </div>
-                  <div>
-                    <img class="w-100" src="{{ asset('images/'.$payment_method->image_url) }}" alt="{{ $payment_method->name }}">
-                  </div>
-                </div>
+                @endforeach
               </div>
-            @endforeach
+            </div>
+            <center><div>
+              <img class="w-75 mb-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
+            </div></center>
             <div class="text-right">
               <button class="btn btn-success btn-block btn-lg" type="submit" name="button">Finalizar Compra</button>
             </div>

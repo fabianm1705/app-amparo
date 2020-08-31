@@ -33,10 +33,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="image_url">Seleccione una imagen</label>
-                  <input type="file" class="form-control" name="image_url">
-                </div>
               </div>
               <div class="text-right">
                 <button class="btn btn-dark text-light" type="submit" name="button">Guardar</button>

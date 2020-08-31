@@ -43,18 +43,17 @@ class PaymentMethodController extends Controller
    */
   public function store(Request $request)
   {
-    if($request->hasFile('image_url')){
-      $image_file=$request->file('image_url');
-      $image_name=time().$image_file->getClientOriginalName();
-      $image_file->move(public_path().'/images',$image_name);
-    }
+    // if($request->hasFile('image_url')){
+    //   $image_file=$request->file('image_url');
+    //   $image_name=time().$image_file->getClientOriginalName();
+    //   $image_file->move(public_path().'/images',$image_name);
+    // }
 
     $payment_method = new PaymentMethod;
     $payment_method->name = $request->input('name');
     $payment_method->percentage = $request->input('percentage');
     $payment_method->cant_cuotas = $request->input('cant_cuotas');
     $payment_method->activo = $request->input('activo');
-    $payment_method->image_url = $image_name;
 
     $payment_method->save();
 
@@ -91,7 +90,7 @@ class PaymentMethodController extends Controller
     $payment_method->save();
 
     return redirect()
-      ->route('payment_methods.edit',['payment_method' => $payment_method])
+      ->route('payment_methods.index')
       ->with('message','Método de Pago Actualizado');
   }
 

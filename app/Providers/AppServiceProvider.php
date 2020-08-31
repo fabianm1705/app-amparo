@@ -38,17 +38,15 @@ class AppServiceProvider extends ServiceProvider
         \Session::put($sessionName, $shopping_cart->id);
         $view->with('productsCount', $shopping_cart->productsCount());
       });
+      $porccontado=15;
       if(Schema::hasTable('payment_methods')){
-        $cuotas = DB::table('payment_methods')->where('id',1)->get();
-        if($cuotas->isEmpty()){
-          $porccuotas = 23;
-        }else{
-          foreach($cuotas as $cuota){
-            $porccuotas = $cuota->percentage;
+        $payment_methods = DB::table('payment_methods')->where('cant_cuotas',1)->get();
+        if($payment_methods){
+          foreach($payment_methods as $payment_method){
+            $porccontado = $payment_method->percentage;
           }
         }
-        View::share('porccuotas', $porccuotas);
-        View::share('porccredito', 15);
       }
+      View::share('porccontado', $porccontado);
     }
 }

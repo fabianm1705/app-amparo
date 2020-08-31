@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function __construct()
     {
       $this->middleware('can:products.index')->only('index');
-      //$this->middleware('can:products.show')->only('show');
+      $this->middleware('can:products.show')->only('show');
       $this->middleware('can:products.destroy')->only('destroy');
       $this->middleware('can:products.edit')->only(['edit','update']);
       $this->middleware('can:products.create')->only(['create','store']);
@@ -72,8 +72,8 @@ class ProductController extends Controller
       $product->empresa = $request->input('empresa');
       $product->descripcion = $request->input('descripcion');
       $product->costo = $request->input('costo');
-      $product->montoCuota = 1;
-      $product->cantidadCuotas = 6;
+      $product->montoCuota = 1; //irrelevante
+      $product->cantidadCuotas = 1; //irrelevante
       $product->vigente = $request->input('vigente');
       $product->category_id = $request->input('category_id');
       $product->longDescription = $request->input('longDescription');
@@ -124,12 +124,31 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+      if($request->hasFile('image_url')){
+        $image_file=$request->file('image_url');
+        $image_name=time().$image_file->getClientOriginalName();
+        $image_file->move(public_path().'/images/products',$image_name);
+        $product->image_url = $image_name;
+      }
+      if($request->hasFile('image_url2')){
+        $image_file=$request->file('image_url2');
+        $image_name2=time().$image_file->getClientOriginalName();
+        $image_file->move(public_path().'/images/products',$image_name2);
+        $product->image_url2 = $image_name2;
+      }
+      if($request->hasFile('image_url3')){
+        $image_file=$request->file('image_url3');
+        $image_name3=time().$image_file->getClientOriginalName();
+        $image_file->move(public_path().'/images/products',$image_name3);
+        $product->image_url3 = $image_name3;
+      }
+
       $product->modelo = $request->input('modelo');
       $product->empresa = $request->input('empresa');
       $product->descripcion = $request->input('descripcion');
       $product->costo = $request->input('costo');
-      $product->montoCuota = 1;
-      $product->cantidadCuotas = 6;
+      $product->montoCuota = 1; //irrelevante
+      $product->cantidadCuotas = 1; //irrelevante
       $product->category_id = $request->input('category_id');
       $product->vigente = $request->input('vigente');
       $product->longDescription = $request->input('longDescription');
@@ -157,8 +176,9 @@ class ProductController extends Controller
     public function shopping()
     {
       registro_acceso(5,'');
+      $payment_methods = DB::table('payment_methods')->where('activo',1)->orderBy('cant_cuotas')->get();
       $categories = Category::inRandomOrder()->get();
-      return view('admin.product.shopping', compact("categories"));
+      return view('admin.product.shopping', compact("categories","payment_methods"));
     }
 
     public function getProductsXCategory($id)

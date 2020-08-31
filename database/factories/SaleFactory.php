@@ -16,6 +16,7 @@ $factory->define(App\Models\Sale::class, function (Faker $faker) {
     'fechaPago' => $faker->date($format = 'Y-m-d', $max = 'now'),
     'nroFactura' => $faker->numberBetween(1,10000),
     'total' => $faker->numberBetween(120,1400),
+    'obs' => '-',
     'group_id' => $faker->numberBetween(1,$count),
     'comprob_id' => $faker->numberBetween(1,1000000)
   ];

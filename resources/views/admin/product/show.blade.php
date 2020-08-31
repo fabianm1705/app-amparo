@@ -56,12 +56,12 @@
                             @endif
                           </div>
                         </div>
-                        <div>
-                          <img class="w-100" src="{{ asset('images/'.$payment_method->image_url) }}" alt="{{ $payment_method->name }}">
-                        </div>
                       </div>
                     </div></center>
                   @endforeach
+                  <center><div>
+                    <img class="w-50 mb-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
+                  </div></center>
                   <div class="row">
                     <div class="col-md-12 mb-1">
                       <add-to-cart-component :product="{{$product}}">

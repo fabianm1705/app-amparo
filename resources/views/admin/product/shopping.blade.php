@@ -23,9 +23,17 @@
                     <div class="card-body text-center textoDescripcion" style="height: 120px;overflow:auto;">
                       {{ $product->modelo }}<small> - {{ $product->descripcion }}</small>
                     </div>
-                    <h4 class="card-title text-center mt-1">
-                      <small>{{ $product->cantidadCuotas }} cuotas de $</small>{{ $product->precio($product->costo,$porccuotas,$product->cantidadCuotas) }}<br>
-                    </h4>
+                    <h5 class="">
+                      @foreach($payment_methods as $payment_method)
+                        <div class="mt-1">
+                          @if($payment_method->cant_cuotas==1)
+                            <small>1 pago de $</small>{{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}<br>
+                          @else
+                            <small>{{ $payment_method->cant_cuotas }} cuotas de $</small>{{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}<br>
+                          @endif
+                        </div>
+                      @endforeach
+                    </h5>
                   </div>
                 </a>
               </div>

@@ -38,18 +38,7 @@ class UserController extends Controller
 
   public function index()
   {
-    // Ver sólo los dev o admin
-    // $usuarios = User::orderBy('name')->where('activo','=',1)->get();
-    // $users = collect([]);
-    // foreach ($usuarios as $user) {
-    //   foreach ($user->roles as $role){
-    //     if(($role->slug=='dev') or ($role->slug=='admin')){
-    //       $users->push($user);
-    //     }
-    //   }
-    // }
-
-    $users = User::orderBy('name')->where('activo','=',1)->paginate();
+    $users = User::orderBy('name')->where('activo','=','1')->paginate();
     return view('admin.user.index',compact("users"));
   }
 
