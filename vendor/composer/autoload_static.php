@@ -611,6 +611,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         'App\\Models\\Profit' => __DIR__ . '/../..' . '/app/Models/Profit.php',
         'App\\Models\\Sale' => __DIR__ . '/../..' . '/app/Models/Sale.php',
         'App\\Models\\Specialty' => __DIR__ . '/../..' . '/app/Models/Specialty.php',
+        'App\\NumerosEnLetras' => __DIR__ . '/../..' . '/app/NumerosEnLetras.php',
         'App\\ProductInShoppingCart' => __DIR__ . '/../..' . '/app/ProductInShoppingCart.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

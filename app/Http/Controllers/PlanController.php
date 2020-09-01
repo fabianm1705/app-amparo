@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PlanController extends Controller
 {
@@ -13,12 +14,12 @@ class PlanController extends Controller
       return $plans;
     }
 
-    public function activarPlan()
+    public function activarPlan($precio_grupo_salud)
     {
       registro_acceso(11,'Plan Salud Grupal');
       Plan::create([
                     'nombre' => 'AMPARO SALUD PLUS',
-                    'monto' => 900,
+                    'monto' => $precio_grupo_salud,
                     'group_id' => Auth::user()->group_id,
                     'subscription_id' => 5
                   ]);

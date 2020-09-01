@@ -38,6 +38,46 @@ class AppServiceProvider extends ServiceProvider
         \Session::put($sessionName, $shopping_cart->id);
         $view->with('productsCount', $shopping_cart->productsCount());
       });
+
+      $precio_grupo_salud=900;
+      $precio_individual_salud=600;
+      if(Schema::hasTable('subscriptions')){
+        $subscriptions = DB::table('subscriptions')->where('id',5)->get();
+        if($subscriptions){
+          foreach($subscriptions as $subscription){
+            $precio_grupo_salud = $subscription->precio_grupo;
+            $precio_individual_salud = $subscription->precio_individual;
+          }
+        }
+      }
+      View::share('precio_grupo_salud', $precio_grupo_salud);
+      View::share('precio_individual_salud', $precio_individual_salud);
+
+      $precio_adherente_odontologia=180;
+      $precio_individual_odontologia=220;
+      if(Schema::hasTable('subscriptions')){
+        $subscriptions = DB::table('subscriptions')->where('id',9)->get();
+        if($subscriptions){
+          foreach($subscriptions as $subscription){
+            $precio_adherente_odontologia = $subscription->precio_adherente;
+            $precio_individual_odontologia = $subscription->precio_individual;
+          }
+        }
+      }
+      View::share('precio_adherente_odontologia', $precio_adherente_odontologia);
+      View::share('precio_individual_odontologia', $precio_individual_odontologia);
+
+      $precio_individual_joven=850;
+      if(Schema::hasTable('subscriptions')){
+        $subscriptions = DB::table('subscriptions')->where('id',7)->get();
+        if($subscriptions){
+          foreach($subscriptions as $subscription){
+            $precio_individual_joven = $subscription->precio_individual;
+          }
+        }
+      }
+      View::share('precio_individual_joven', $precio_individual_joven);
+
       $porccontado=15;
       if(Schema::hasTable('payment_methods')){
         $payment_methods = DB::table('payment_methods')->where('cant_cuotas',1)->get();

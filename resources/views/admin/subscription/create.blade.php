@@ -48,6 +48,26 @@
                     <label class="form-check-label" for="orden_medica">Emite Orden Médica</label>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                      <label for="precio_grupo">Precio Grupal</label>
+                      <input type="text" class="form-control" name="precio_grupo" id="precio_grupo" value="{{ old('precio_grupo') }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                      <label for="precio_individual">Precio Individual</label>
+                      <input type="text" class="form-control" name="precio_individual" id="precio_individual" value="{{ old('precio_individual') }}">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-group">
+                      <label for="precio_adherente">Precio Adherente</label>
+                      <input type="text" class="form-control" name="precio_adherente" id="precio_adherente" value="{{ old('precio_adherente') }}">
+                    </div>
+                  </div>
+                </div>
                 <div class="col-sm-12 text-right">
                   <button class="btn btn-dark text-light" type="submit" name="button">Guardar</button>
                 </div>

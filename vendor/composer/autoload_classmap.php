@@ -61,6 +61,7 @@ return array(
     'App\\Models\\Profit' => $baseDir . '/app/Models/Profit.php',
     'App\\Models\\Sale' => $baseDir . '/app/Models/Sale.php',
     'App\\Models\\Specialty' => $baseDir . '/app/Models/Specialty.php',
+    'App\\NumerosEnLetras' => $baseDir . '/app/NumerosEnLetras.php',
     'App\\ProductInShoppingCart' => $baseDir . '/app/ProductInShoppingCart.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

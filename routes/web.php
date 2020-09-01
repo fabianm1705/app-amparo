@@ -134,13 +134,13 @@ Route::post('updatedb', 'UserController@upload')
               ->middleware('auth')
               ->name('users.updatedb');
 
-Route::post('activar/plan', 'PlanController@activarPlan')
+Route::post('activar/plan/{precio_grupo_salud}', 'PlanController@activarPlan')
               ->middleware('auth')
               ->name('activar.plan');
-Route::post('activar/salud', 'LayerController@activarSalud')
+Route::post('activar/salud/{precio_individual_salud}', 'LayerController@activarSalud')
               ->middleware('auth')
               ->name('activar.salud');
-Route::post('activar/odontologia', 'LayerController@activarOdontologia')
+Route::post('activar/odontologia/{precio_individual_odontologia}', 'LayerController@activarOdontologia')
               ->middleware('auth')
               ->name('activar.odontologia');
 

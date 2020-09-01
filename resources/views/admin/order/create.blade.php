@@ -166,9 +166,9 @@
           <h5 class="fontAmparo">Plan Salud</h5>
           <h1 class="card-title">
             @if($usersCount===1)
-              <small class="text-white">$</small><strong>600</strong><small class="text-white"> /mes</small>
+              <small class="text-white">$</small><strong>{{ $precio_individual_salud }}</strong><small class="text-white"> /mes</small>
             @else
-              <small class="text-white">$</small><strong>900</strong><small class="text-white"> Grupo Fliar</small>
+              <small class="text-white">$</small><strong>{{ $precio_grupo_salud }}</strong><small class="text-white"> Grupo Fliar</small>
             @endif
           </h1><br>
           Cobertura Ambulatoria Integral<hr>
@@ -176,12 +176,12 @@
           Farmacia, Ambulancia, Emergencias<hr>
           Estudios, Radiografías, Ecografías y más.<br><br>
           @if($usersCount===1)
-            <form action="{{ route('activar.salud') }}" method="post">
+            <form action="{{ route('activar.salud', ['precio_individual_salud' => $precio_individual_salud ]) }}" method="post">
               @csrf
               <button class="btn btn-lg" type="submit" name="button">Activar</button>
             </form>
           @else
-            <form action="{{ route('activar.plan') }}" method="post">
+            <form action="{{ route('activar.plan', ['precio_grupo_salud' => $precio_grupo_salud ]) }}" method="post">
               @csrf
               <button class="btn btn-lg" type="submit" name="button">Activar</button>
             </form>
@@ -192,13 +192,13 @@
         <div class="title text-center text-white mb-4"><br>
           <h5 class="fontAmparo">Plan Odontológico</h5>
           <h1 class="card-title">
-            <small class="text-white">$</small><strong>220</strong><small class="text-white"> /ind.</small>
+            <small class="text-white">$</small><strong>{{ $precio_individual_odontologia }}</strong><small class="text-white"> /ind.</small>
           </h1><br>
-          + $180 por Adherente<hr>
+          + ${{ $precio_adherente_odontologia }} por Adherente<hr>
           Cobertura Odontológica Integral<hr>
           Odontólogos distribuidos por la ciudad<hr>
           Turnos rápidos, coseguros muy económicos<br><br>
-          <form action="{{ route('activar.odontologia') }}" method="post">
+          <form action="{{ route('activar.odontologia', ['precio_individual_odontologia' => $precio_individual_odontologia ]) }}" method="post">
             @csrf
             <button class="btn btn-lg" type="submit" name="button">Activar</button>
           </form>

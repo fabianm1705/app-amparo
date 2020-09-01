@@ -97,10 +97,10 @@
                   <div class="card-body">
                     <h5 class=""><strong>PLAN SALUD</strong></h5>
                     <h1 class="card-title">
-                      <small>$</small>600
+                      <small>$</small>{{ $precio_individual_salud }}
                       <small>/mes</small>
                     </h1>
-                    $900 por Grupo Familiar<hr>
+                    ${{ $precio_grupo_salud }} por Grupo Familiar<hr>
                     Cobertura Ambulatoria Integral<hr>
                     Consultorios Externos<hr>
                     Estudios Médicos, Farmacia, Ambulancia<br><br>
@@ -112,10 +112,10 @@
                   <div class="card-body">
                     <h5 class="" style="color:#FFFFFF"><strong>ODONTOLOGIA</strong></h5>
                     <h1 class="card-title">
-                      <small>$</small>220
+                      <small>$</small>{{ $precio_individual_odontologia }}
                       <small>/mes</small>
                     </h1>
-                    + $180 por Adherente<hr>
+                    + ${{ $precio_adherente_odontologia }} por Adherente<hr>
                     Cobertura Odontológica Integral<hr>
                     Odontólogos distribuidos por la ciudad<hr>
                     Turnos rápidos, coseguros muy económicos<br><br>
@@ -127,7 +127,7 @@
                   <div class="card-body">
                     <h5 class=""><strong>PLAN JOVEN</strong></h5>
                     <h1 class="card-title">
-                      <small>$</small>850
+                      <small>$</small>{{ $precio_individual_joven }}
                       <small>/mes</small>
                     </h1>
                     Plan Individual hasta 35 años<hr>

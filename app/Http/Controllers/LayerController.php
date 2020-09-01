@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Layer;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class LayerController extends Controller
 {
@@ -13,12 +14,12 @@ class LayerController extends Controller
       return $layers;
     }
 
-    public function activarSalud()
+    public function activarSalud($precio_individual_salud)
     {
       registro_acceso(11,'Plan Salud Individual');
       Layer::create([
                     'nombre' => 'Amparo Salud',
-                    'monto' => 600,
+                    'monto' => $precio_individual_salud,
                     'user_id' => Auth::user()->id,
                     'subscription_id' => 6
                   ]);
@@ -26,12 +27,12 @@ class LayerController extends Controller
         ->route('home')->with('message','Plan habilitado! Ya puedes emitir órdenes médicas de consulta.');
     }
 
-    public function activarOdontologia()
+    public function activarOdontologia($precio_individual_odontologia)
     {
       registro_acceso(11,'Plan Odontológico');
       Layer::create([
                     'nombre' => 'Amparo Odontológico',
-                    'monto' => 220,
+                    'monto' => $precio_individual_odontologia,
                     'user_id' => Auth::user()->id,
                     'subscription_id' => 9
                   ]);

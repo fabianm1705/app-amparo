@@ -52,6 +52,9 @@ class SubscriptionController extends Controller
       $subscription->odontologia = $request->input('odontologia');
       $subscription->salud = $request->input('salud');
       $subscription->orden_medica = $request->input('orden_medica');
+      $subscription->precio_grupo = $request->input('precio_grupo');
+      $subscription->precio_individual = $request->input('precio_individual');
+      $subscription->precio_adherente = $request->input('precio_adherente');
 
       $subscription->save();
 
@@ -98,6 +101,9 @@ class SubscriptionController extends Controller
       $subscription->odontologia = $request->input('odontologia');
       $subscription->salud = $request->input('salud');
       $subscription->orden_medica = $request->input('orden_medica');
+      $subscription->precio_grupo = $request->input('precio_grupo');
+      $subscription->precio_individual = $request->input('precio_individual');
+      $subscription->precio_adherente = $request->input('precio_adherente');
 
       $subscription->save();
 

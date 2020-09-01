@@ -9,9 +9,9 @@
           <h1 class="card-title">
             @if($salud)
               @if($usersCount===1)
-                <small class="text-white">$</small><strong>600</strong><small class="text-white"> /mes</small>
+                <small class="text-white">$</small><strong>{{ $precio_individual_salud }}</strong><small class="text-white"> /mes</small>
               @else
-                <small class="text-white">$</small><strong>900</strong><small class="text-white"> Grupo Fliar</small>
+                <small class="text-white">$</small><strong>{{ $precio_grupo_salud }}</strong><small class="text-white"> Grupo Fliar</small>
               @endif
             @else
               <h5>Tienes este plan activo</h5>
@@ -45,12 +45,12 @@
           <h5 class="fontAmparo">Plan Odontológico</h5>
           <h1 class="card-title">
             @if($odontologia)
-              <small class="text-white">$</small><strong>220</strong><small class="text-white"> /ind.</small>
+              <small class="text-white">$</small><strong>{{ $precio_individual_odontologia }}</strong><small class="text-white"> /ind.</small>
             @else
               <h5>Tienes este plan activo</h5>
             @endif
           </h1><br>
-          + $180 por Adherente<hr>
+          + ${{ $precio_adherente_odontologia }} por Adherente<hr>
           Cobertura Odontológica Integral<hr>
           Odontólogos distribuidos por la ciudad<hr>
           Turnos rápidos, coseguros muy económicos<br><br>
@@ -102,7 +102,7 @@
             @else
               <div class="card-body">
             @endif
-              No, por ser socios activos no hay espera al agregar un nuevo plan.
+              Siendo socios activos y agregando un nuevo plan no hay espera. Por el contrario, si se acaban de afiliar hay una espera de 2 meses en cualquiera de los planes.
             </div>
           </div>
         </div>
@@ -160,7 +160,7 @@
             @else
               <div class="card-body">
             @endif
-              No, es un plan ambulatorio, cubre todo lo que es laboratorio, radiografías, ecografías, consultorios externos, practicamente están todas las especialidades, emergencia médica, farmacia, etc.
+              No, es un plan ambulatorio, cubre todo lo que es laboratorio, radiografías, ecografías, consultorios externos, ya sea con órdenes o reintegros, emergencia médica, farmacia, óptica, etc.
             </div>
           </div>
         </div>

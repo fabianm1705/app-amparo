@@ -77,7 +77,7 @@
               @else
                 <div class="card-body">
               @endif
-                No, por ser socios activos no hay espera al agregar un nuevo plan.
+                Siendo socios activos y agregando un nuevo plan no hay espera. Por el contrario, si se acaban de afiliar hay una espera de 2 meses en cualquiera de los planes.
               </div>
             </div>
           </div>
@@ -135,7 +135,36 @@
               @else
                 <div class="card-body">
               @endif
-                No, es un plan ambulatorio, cubre todo lo que es laboratorio, radiografías, ecografías, consultorios externos, practicamente están todas las especialidades, emergencia médica, farmacia, etc.
+                No, es un plan ambulatorio, cubre todo lo que es laboratorio, radiografías, ecografías, consultorios externos, ya sea con órdenes o reintegros, emergencia médica, farmacia, óptica, etc.
+              </div>
+            </div>
+          </div>
+          @if(Auth::user()->darkMode)
+            <div class="card bg-secondary">
+          @else
+            <div class="card">
+          @endif
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+                @if(Auth::user()->darkMode)
+                  <button class="btn collapsed d-flex text-white" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                @else
+                  <button class="btn collapsed d-flex" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                @endif
+                  ¿Porqué hay especialidades que no figuran para emitir la órden?
+                  <span class="material-icons ml-auto">
+                    keyboard_arrow_down
+                  </span>
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              @if(Auth::user()->darkMode)
+                <div class="card-body text-white">
+              @else
+                <div class="card-body">
+              @endif
+                Sucede porque en dichas especialidades hay códigos que agregar y sólo se puede hacer en oficina (por ejemplo radiografías). O también cuando dicha especialidad funciona con reintegro.
               </div>
             </div>
           </div>
@@ -198,7 +227,7 @@
             </div>
           </div>
         </div>
-      </center>
+      </center><br><br>
     </div>
   </div>
 @endsection
