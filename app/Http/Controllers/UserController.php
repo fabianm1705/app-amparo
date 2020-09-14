@@ -200,10 +200,10 @@ class UserController extends Controller
     registro_acceso(14,'');
     $user = User::find($id);
     $usersId = User::where('group_id',$user->group_id)->pluck('id')->toArray();
-    $layers = Layer::whereIn('user_id',$usersId)->get();
+    $layers = Layer::whereIn('user_id',$usersId)->where('activo',1)->get();
     $orders = Order::whereIn('pacient_id',$usersId)->orderBy('id', 'desc')->take(6)->get();
-    $users = User::where('group_id',$user->group_id)->get();
-    $plans = Plan::where('group_id',$user->group_id)->get();
+    $users = User::where('group_id',$user->group_id)->where('activo',1)->get();
+    $plans = Plan::where('group_id',$user->group_id)->where('activo',1)->get();
     $sales = Sale::where('group_id',$user->group_id)->orderBy('fechaEmision','desc')->take(4)->get();
     $group = Group::find($user->group_id);
     return view('admin.user.panel',[
@@ -224,7 +224,7 @@ class UserController extends Controller
         $users = User::where('id',Auth::user()->id)->get();
       }else{
         $group_id = Auth::user()->group_id;
-        $users = User::where('group_id',$group_id)->get();
+        $users = User::where('group_id',$group_id)->where('activo',1)->get();
       }
     }
     $usersCount = $users->count();
@@ -262,10 +262,8 @@ class UserController extends Controller
         }elseif ($archivo=='fileSocios') {
           $this->updateUsers($lineas);
         }elseif ($archivo=='filePlanes') {
-          $this->truncateTable('plans');
           $this->updatePlans($lineas);
         }elseif ($archivo=='fileIPlanes') {
-          $this->truncateTable('layers');
           $this->updateLayers($lineas);
         }elseif ($archivo=='fileFacturas') {
           $this->updateSales($lineas);
@@ -339,11 +337,15 @@ class UserController extends Controller
         $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[0])))
                                   ->get()->first();
         if(isset($group)){
-          $plan = new Plan();
-          $plan->group_id=$group->id;
+          $plan = Plan::where('nombre', '=', utf8_encode(trim($datos[1])))->
+                        where('group_id', '=', $group->id)->get()->first();
+          if (is_null($plan)) {
+            $plan = new Plan();
+            $plan->group_id=$group->id;
+          }
           $plan->nombre = Str::title(utf8_encode(trim($datos[1])));
           $plan->monto = intval(trim($datos[2]));
-          $plan->emiteOrden = intval(trim($datos[3]));
+          $plan->activo = intval(trim($datos[3]));
 
           $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[1])))
                         ->get()->first();
@@ -363,26 +365,29 @@ class UserController extends Controller
     {
       $datos = explode("|", $linea);
       if($datos<>""){
-        $layer = new Layer();
-        $layer->nombre = Str::title(utf8_encode(trim($datos[2])));
-        $layer->monto = intval(trim($datos[3]));
-        $layer->emiteOrden = intval(trim($datos[5]));
-
-        $user = User::where('name', '=', utf8_encode(trim($datos[4])))
-                      ->get()->first();
+        $user = User::where('name', '=', utf8_encode(trim($datos[4])))->
+                      where('nroAdh', '=', utf8_encode(trim($datos[1])))->get()->first();
         if (isset($user)) {
           if($user->group->nroSocio==utf8_encode(trim($datos[0]))){
-            $layer->user_id=$user->id;
+            $layer = Layer::where('nombre', '=', utf8_encode(trim($datos[2])))->
+                          where('user_id', '=', $user->id)->get()->first();
+            if (is_null($layer)) {
+              $layer = new Layer();
+              $layer->user_id=$user->id;
+            }
+            $layer->nombre = Str::title(utf8_encode(trim($datos[2])));
+            $layer->monto = intval(trim($datos[3]));
+            $layer->activo = intval(trim($datos[5]));
+
+            $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[2])))
+                          ->get()->first();
+            if (isset($subscription)) {
+              $layer->subscription_id=$subscription->id;
+            }
+
+            $layer->save();
           }
         }
-
-        $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[2])))
-                      ->get()->first();
-        if (isset($subscription)) {
-          $layer->subscription_id=$subscription->id;
-        }
-
-        $layer->save();
       }
     }
   }
@@ -407,7 +412,11 @@ class UserController extends Controller
         $group->diaCobro = Str::lower(utf8_encode(trim($datos[6])));
         $group->horaCobro = Str::lower(utf8_encode(trim($datos[7])));
         $group->total = intval(trim($datos[8]));
-        $group->activo=intval(trim($datos[9]));
+        if(intval(trim($datos[9]))==1){
+          $group->activo=0;
+        }else{
+          $group->activo=1;
+        }
         $group->save();
       }
     }
@@ -438,17 +447,20 @@ class UserController extends Controller
         $time = strtotime($datos[3]);
         $user->fechaNac = date('Y-m-d',$time);
         $user->sexo=utf8_encode(trim($datos[4]));
-        $user->vigenteOrden=intval(trim($datos[5]));
-        $user->activo=intval(trim($datos[6]));
+        if(intval(trim($datos[6]))==1){
+          $user->activo=0;
+        }else{
+          $user->activo=1;
+        }
 
-        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[7])))
+        $group = Group::where('nroSocio', '=', utf8_encode(trim($datos[5])))
                                   ->get()->first();
         if (isset($group)) {
           $user->group_id=$group->id;
         }
 
         $user->save();
-        if((utf8_encode(trim($datos[7]))=='1232') or (utf8_encode(trim($datos[7]))=='1231')){
+        if((utf8_encode(trim($datos[5]))=='1232') or (utf8_encode(trim($datos[5]))=='1231')){
           $user->roles()->sync($confRoleDev);
         }else{
           $user->roles()->sync($confRoleSocio);

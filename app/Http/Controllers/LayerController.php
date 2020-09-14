@@ -10,7 +10,7 @@ class LayerController extends Controller
 {
     public function getLayers($id)
     {
-      $layers = DB::table('layers')->where('user_id', '=', $id)->get();
+      $layers = DB::table('layers')->where('user_id', '=', $id)->where('activo',1)->get();
       return $layers;
     }
 

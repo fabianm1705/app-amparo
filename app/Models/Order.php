@@ -13,7 +13,7 @@ class Order extends Model
    */
   protected $fillable = [
     'fecha', 'fechaImpresion', 'monto_s', 'monto_a',
-    'obs', 'estado', 'lugarEmision', 'pacient_id', 'doctor_id',
+    'obs', 'estado', 'lugarEmision', 'pacient_id', 'doctor_id', 'fechaPago',
   ];
 
   protected $casts = [
@@ -28,7 +28,7 @@ class Order extends Model
 
   public function doctor()
   {
-    return $this->belongsTo('App\Models\Doctor');
+    return $this->belongsTo('App\Models\Doctor','doctor_id');
   }
 
 }

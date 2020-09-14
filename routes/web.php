@@ -126,6 +126,14 @@ Route::post('search/{name?}/{nroDoc?}/', 'UserController@getUsers')
               ->where(['nroDoc' => '[0-9]+'])
               ->name('users.search');
 
+
+Route::get('orders/search/{id}', 'OrderController@getOrdenes')
+                    ->middleware(['auth','can:orders.show'])
+                    ->name('orders.search');
+Route::post('/orders/pay/{id}', 'OrderController@pay')
+              ->middleware('auth')
+              ->name('orders.pay');
+
 Route::get('uploadfiles', function () {
                 return view('admin.upload');
             })->middleware('auth')
@@ -180,6 +188,9 @@ Route::post('/getCoseguro/{id}', 'SpecialtyController@getCoseguro')
 Route::post('/getDataUser/{id}', 'SpecialtyController@getDataUser')
               ->middleware('auth')
               ->name('getDataUser');
+Route::post('/getOrdenes/{id}', 'OrderController@getOrdenes')
+              ->middleware('auth')
+              ->name('getOrdenes');
 
 
 //Shopping y productos

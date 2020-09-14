@@ -10,7 +10,7 @@ class PlanController extends Controller
 {
     public function getPlans($idGroup)
     {
-      $plans = DB::table('plans')->where('group_id', '=', $idGroup)->get();
+      $plans = DB::table('plans')->where('group_id', '=', $idGroup)->where('activo',1)->get();
       return $plans;
     }
 

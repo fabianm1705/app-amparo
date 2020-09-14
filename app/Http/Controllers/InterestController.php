@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Interest;
 use App\UserInterest;
+use Illuminate\Support\Facades\DB;
 
 class InterestController extends Controller
 {

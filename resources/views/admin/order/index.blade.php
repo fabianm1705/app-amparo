@@ -4,15 +4,35 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      <div class="fresh-table full-color-orange d-flex shadow-sm">
-        <h5 class="card-title text-white mt-3 mb-3 ml-3">Órdenes Médicas</h5>
-        <div class="ml-auto blanco mr-2 mt-2">
-          @can('orders.create')
-            <a href="{{ route('usersSearch') }}" title="Nueva">
-              Nueva Orden
-            </a>
-          @endcan
-         </div>
+      <div class="fresh-table full-color-orange shadow-sm">
+        <div class="row text-white">
+          <div class="col-lg-4 col-md-4 col-sm-12">
+            <h5 class="card-title text-white mt-3 mb-3 ml-4">Órdenes Médicas</h5>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="row">
+              <div class="col-md-8 m-2">
+                <select class="custom-select" name="doctor" id="doctor" onchange="cargarOrdenes()">
+                  <option selected>Seleccione profesional</option>
+                  @foreach($doctors as $doctor)
+                    <option value="{{ $doctor->id }}">
+                        {{ $doctor->apeynom }}
+                    </option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12 mt-2 blanco d-flex">
+            <div class="ml-auto mr-2">
+              @can('orders.create')
+                <a href="{{ route('usersSearch') }}" title="Nueva">
+                  Nueva Orden
+                </a>
+              @endcan
+            </div>
+          </div>
+        </div>
       </div>
       @if(Auth::user()->darkMode)
         <div class="card shadow-sm mt-1 bg-dark">
@@ -35,12 +55,13 @@
               <th>Amp</th>
               <th>App</th>
               <th>Estado</th>
+              <th>Pago</th>
               <th>Obs</th>
               <th>Acciones</th>
             </thead>
-            <tbody>
+            <tbody id="tablaordenes">
               @foreach($orders as $order)
-                <tr>
+                <tr id="borrar">
                   <td>{{ $order->id+5000 }}</td>
                   <td>{{ \Carbon\Carbon::parse($order->fechaImpresion)->format('d/m/Y') }}</td>
                   <td>{{ $order->user->group->nroSocio }}</td>
@@ -50,6 +71,11 @@
                   <td>{{ $order->monto_a }}</td>
                   <td>{{ $order->lugarEmision }}</td>
                   <td>{{ $order->estado }}</td>
+                  @if($order->fechaPago)
+                    <td>{{ \Carbon\Carbon::parse($order->fechaPago)->format('d/m/Y') }}</td>
+                  @else
+                    <td></td>
+                  @endif
                   <td>{{ $order->obs }}</td>
                   <td class="text-right d-flex">
                     @can('orders.edit')
@@ -81,6 +107,18 @@
                         @endif
                       </div>
                     </a>
+                    @if(is_null($order->fechaPago))
+                      <form id="formPagar{{ $order->id }}" action="{{ route('orders.pay', ['id' => $order->id ]) }}" method="post" style="background-color: transparent;">
+                        @csrf
+                        <button class="btn btn-sm" onclick="pagarOrden({{ $order->id }})">
+                          @if(Auth::user()->darkMode)
+                            <i class="material-icons" style="color:white">attach_money</i>
+                          @else
+                            <i class="material-icons">attach_money</i>
+                          @endif
+                        </button>
+                      </form>
+                    @endif
                     @can('orders.destroy')
                       <form id="formEliminar{{ $order->id }}" action="{{ route('orders.destroy', ['order' => $order ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
@@ -99,7 +137,9 @@
               @endforeach
             </tbody>
           </table>
-          {{ $orders->links() }}
+          <div id="paginador">
+            {{ $orders->links() }}
+          </div>
         </div>
       </div>
     </div>
@@ -109,4 +149,5 @@
 
 @section('myScripts')
   <script src="{{ asset('js/borrarRegistro.js') }}" defer></script>
+  <script src="{{ asset('js/orders.index.js') }}" defer></script>
 @endsection

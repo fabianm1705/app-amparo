@@ -24,12 +24,12 @@
           @if($salud)
             <div>
               @if($usersCount===1)
-                <form action="{{ route('activar.salud') }}" method="post">
+                <form action="{{ route('activar.salud', ['precio_individual_salud' => $precio_individual_salud ]) }}" method="post">
                   @csrf
                   <button class="btn btn-lg" type="submit" name="button">Activar</button>
                 </form>
               @else
-                <form action="{{ route('activar.plan') }}" method="post">
+                <form action="{{ route('activar.plan', ['precio_grupo_salud' => $precio_grupo_salud ]) }}" method="post">
                   @csrf
                   <button class="btn btn-lg" type="submit" name="button">Activar</button>
                 </form>
@@ -56,7 +56,7 @@
           Turnos rápidos, coseguros muy económicos<br><br>
           @if($odontologia)
             <div>
-              <form action="{{ route('activar.odontologia') }}" method="post">
+              <form action="{{ route('activar.odontologia', ['precio_individual_odontologia' => $precio_individual_odontologia ]) }}" method="post">
                 @csrf
                 <button class="btn btn-lg" type="submit" name="button">Activar</button>
               </form>

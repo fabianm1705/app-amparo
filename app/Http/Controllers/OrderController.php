@@ -29,15 +29,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-      $orders = Order::orderBy('id', 'desc')->take(60)->paginate();
-      return view('admin.order.index',compact("orders"));
+      $doctors = Doctor::where('vigente',1)->orderBy('specialty_id','asc')->orderBy('apeynom','asc')->get();
+      $orders = Order::orderBy('id', 'desc')->paginate();
+      return view('admin.order.index',compact("orders","doctors"));
     }
 
     public function indice()
     {
       $group_id = Auth::user()->group_id;
       //Tomar los Id de todos los usuarios del grupo
-      $usersId = User::where('group_id',$group_id)->pluck('id')->toArray();
+      $usersId = User::where('group_id',$group_id)->where('activo',1)->pluck('id')->toArray();
       //Para buscar las órdenes de todos
       $orders = Order::whereIn('pacient_id',$usersId)->orderBy('id', 'desc')->paginate();
       return view('admin.order.indice',compact("orders"));
@@ -58,7 +59,7 @@ class OrderController extends Controller
         }else{
           $emiteOficina = false;
           $group_id = Auth::user()->group_id;
-          $users = User::where('group_id',$group_id)->get();
+          $users = User::where('group_id',$group_id)->where('activo',1)->get();
         }
       }
       $usersCount = $users->count();
@@ -187,5 +188,26 @@ class OrderController extends Controller
                      ->whereYear('fecha','=',now()->year)
                      ->get();
       return $cantOrders->pluck('order_count');
+    }
+
+    public function getOrdenes($id)
+    {
+      $orders = Order::where('doctor_id', '=', $id)->get();
+      foreach($orders as $order){
+          $order->numeroSocio = $order->user->group->nroSocio;
+          $order->nombreDoctor = $order->doctor->apeynom;
+      }
+      return $orders;
+    }
+
+    public function pay($id)
+    {
+      $order = Order::find($id);
+      $order->estado = "Pagada";
+      $order->fechaPago = Carbon::now();
+      $order->save();
+
+      return redirect()
+        ->route('orders.index');
     }
 }
