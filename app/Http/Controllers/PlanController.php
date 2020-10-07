@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Mail;
 
 class PlanController extends Controller
 {
@@ -17,6 +18,14 @@ class PlanController extends Controller
     public function activarPlan($precio_grupo_salud)
     {
       registro_acceso(11,'Plan Salud Grupal');
+      Mail::send('admin.contacto.emailActivaPlan', array(
+              'name' => 'Probando',
+              'user_message' => 'Mensaje'
+           ), function($message){
+               $message->from('admin@amparosrl.com.ar');
+               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan');
+      });
       Plan::create([
                     'nombre' => 'AMPARO SALUD PLUS',
                     'monto' => $precio_grupo_salud,

@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-      $categories = Category::orderBy('nombre','asc')->get();
+      $categories = Category::orderBy('nombre','asc')->where('activa',1)->get();
       return view('admin.product.create', compact('categories'));
     }
 
@@ -99,7 +99,7 @@ class ProductController extends Controller
       $product = Product::find($productId);
       registro_acceso(7,$product->modelo);
       $payment_methods = PaymentMethod::where('activo',1)->get();
-      $categories = Category::orderBy('nombre','asc')->get();
+      $categories = Category::orderBy('nombre','asc')->where('activa',1)->get();
       return view('admin.product.show', compact("product","categories","payment_methods"));
     }
 
@@ -177,7 +177,7 @@ class ProductController extends Controller
     {
       registro_acceso(5,'');
       $payment_methods = DB::table('payment_methods')->where('activo',1)->orderBy('cant_cuotas')->get();
-      $categories = Category::inRandomOrder()->get();
+      $categories = Category::inRandomOrder()->where('activa',1)->get();
       return view('admin.product.shopping', compact("categories","payment_methods"));
     }
 

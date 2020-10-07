@@ -91,4 +91,15 @@ class ContactUsController extends Controller
       return redirect('/')->with('jsAlert', 'Gracias por el mensaje, ¡Nos contactaremos a la brevedad!');
   }
 
+  public function planActivado(Request $request)
+  {
+      Mail::send('admin.contacto.emailActivaPlan', array(
+              'name' => 'Probando',
+              'user_message' => 'Mensaje'
+           ), function($message){
+               $message->from('admin@amparosrl.com.ar');
+               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan');
+      });
+    }
 }

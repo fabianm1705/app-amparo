@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Layer;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Mail;
 
 class LayerController extends Controller
 {
@@ -17,6 +18,14 @@ class LayerController extends Controller
     public function activarSalud($precio_individual_salud)
     {
       registro_acceso(11,'Plan Salud Individual');
+      Mail::send('admin.contacto.emailActivaPlan', array(
+              'name' => 'Probando',
+              'user_message' => 'Mensaje'
+           ), function($message){
+               $message->from('admin@amparosrl.com.ar');
+               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan');
+      });
       Layer::create([
                     'nombre' => 'Amparo Salud',
                     'monto' => $precio_individual_salud,
@@ -30,6 +39,14 @@ class LayerController extends Controller
     public function activarOdontologia($precio_individual_odontologia)
     {
       registro_acceso(11,'Plan Odontológico');
+      Mail::send('admin.contacto.emailActivaPlan', array(
+              'name' => 'Probando',
+              'user_message' => 'Mensaje'
+           ), function($message){
+               $message->from('admin@amparosrl.com.ar');
+               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan');
+      });
       Layer::create([
                     'nombre' => 'Amparo Odontológico',
                     'monto' => $precio_individual_odontologia,

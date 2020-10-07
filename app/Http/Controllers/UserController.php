@@ -237,12 +237,12 @@ class UserController extends Controller
   public function upload(Request $request)
   {
     $this->uploadFiles($request, [
+      'fileGrupos',
+      'fileSocios',
       'fileFacturas',
       'fileConceptos',
-      'fileGrupos',
       'fileIPlanes',
       'filePlanes',
-      'fileSocios',
     ]);
 
     return redirect()->route('home')->with('message','Padrón Actualizado');
@@ -257,19 +257,12 @@ class UserController extends Controller
         $path = $request->file($archivo)->storeAs('public',$name);
         $lineas = file(storage_path().'/app/'.$path);
 
-        if($archivo=='fileGrupos'){
-          $this->updateGroups($lineas);
-        }elseif ($archivo=='fileSocios') {
-          $this->updateUsers($lineas);
-        }elseif ($archivo=='filePlanes') {
-          $this->updatePlans($lineas);
-        }elseif ($archivo=='fileIPlanes') {
-          $this->updateLayers($lineas);
-        }elseif ($archivo=='fileFacturas') {
-          $this->updateSales($lineas);
-        }elseif ($archivo=='fileConceptos') {
-          $this->updateConcepts($lineas);
-        }
+        if ($archivo=='fileGrupos') $this->updateGroups($lineas);
+        if ($archivo=='fileSocios') $this->updateUsers($lineas);
+        if ($archivo=='filePlanes') $this->updatePlans($lineas);
+        if ($archivo=='fileIPlanes') $this->updateLayers($lineas);
+        if ($archivo=='fileFacturas') $this->updateSales($lineas);
+        if ($archivo=='fileConceptos') $this->updateConcepts($lineas);
       }
     }
   }

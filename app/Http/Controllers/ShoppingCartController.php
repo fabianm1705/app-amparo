@@ -13,6 +13,7 @@ use App\UserInterest;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use Mail;
 
 class ShoppingCartController extends Controller
 {
@@ -61,6 +62,14 @@ class ShoppingCartController extends Controller
 
   public function store(Request $request)
   {
+    Mail::send('admin.contacto.emailCompraFinalizada', array(
+            'name' => 'Probando',
+            'user_message' => 'Mensaje'
+         ), function($message){
+             $message->from('admin@amparosrl.com.ar');
+             $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+            ->subject('Socio: Confirmaron una compra en el Shopping');
+    });
     registro_acceso(10,'');
     $request->shopping_cart->status = 1;
     $request->shopping_cart->user_id = Auth::user()->id;
