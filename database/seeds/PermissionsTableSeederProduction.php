@@ -14,21 +14,15 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-      //Recibos
-        Permission::create([
-          'name' => 'Navegar recibos',
-          'slug' => 'receipts.index',
-          'description' => 'Navega todos los recibos del sistema'
-        ]);
-        Permission::create([
-          'name' => 'Ver recibos',
-          'slug' => 'receipts.show',
-          'description' => 'Ver en detalle cada recibo'
-        ]);
-        Permission::create([
-          'name' => 'Eliminar recibos',
-          'slug' => 'receipts.destroy',
-          'description' => 'Eliminar un recibo del sistema'
-        ]);
+      Role::create([
+        'name' => 'Acceso Odontólogo',
+        'slug' => 'odontologo',
+        'description' => 'Acceso de Odontólogo a registro de órdenes y carga.'
+      ]);
+      Permission::create([
+        'name' => 'Gestión Odontólogo',
+        'slug' => 'odontologo.gestion',
+        'description' => 'Cargar órdenes y ver listados de pendientes'
+      ]);
     }
 }

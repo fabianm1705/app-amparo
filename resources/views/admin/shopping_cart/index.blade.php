@@ -20,7 +20,7 @@
                   <td class="align-middle">{{ $shopping_cart->user->name }}</td>
                   <td class="align-middle">{{ $shopping_cart->fecha }}</td>
                   <td class="d-flex">
-                    <button class="btn btn-sm" onclick="cargarCarrito({{ $shopping_cart->id }})" style="background-color: transparent;">
+                    <button class="btn btn-sm" onclick="cargarCarrito({{ $shopping_cart->id }},{{ $shopping_cart->paymentMethod->percentage }},{{ $shopping_cart->paymentMethod->cant_cuotas }})" style="background-color: transparent;">
                       <div class="">
                         <i class="material-icons">double_arrow</i>
                       </div>
@@ -47,7 +47,7 @@
             <thead>
               <th>Producto</th>
               <th>Cantidad</th>
-              <th class="text-center">Costo</th>
+              <th class="text-right">Cuota</th>
             </thead>
             <tbody id="tablaproductos">
             </tbody>

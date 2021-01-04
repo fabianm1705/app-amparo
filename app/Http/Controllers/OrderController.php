@@ -83,33 +83,44 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-      $order = new Order();
-      $order->fecha = Carbon::now();
-      $order->fechaImpresion = Carbon::now();
-      if($request->input('monto_s')){
-        $order->monto_s = $request->input('monto_s');
-        $order->monto_a = $request->input('monto_a');
+      $user=User::find($request->input('user_id'));
+      $cantOrders=0;
+      if($request->input('doctor_id')==44){
+        $cantOrders=cantOrdersOdonto($user);
+      }
+      if($cantOrders>1){
+        return redirect()
+          ->route('home')
+          ->with('message','Ya ha emitido 2 órdenes odontológicas en el mes, por dudas consultanos a la oficina');
       }else{
-        $order->monto_s = 0;
-        $order->monto_a = 0;
-      }
-      $order->obs = $request->input('obs');
-      $order->estado = 'Impresa';
-      $order->pacient_id = $request->input('user_id');
-      $order->doctor_id = $request->input('doctor_id');
-      foreach (Auth::user()->roles as $role){
-        if(($role->slug=='dev') or ($role->slug=='admin')){
-          $order->lugarEmision = 'Sede Amparo';
+        $order = new Order();
+        $order->fecha = Carbon::now();
+        $order->fechaImpresion = Carbon::now();
+        if($request->input('monto_s')){
+          $order->monto_s = $request->input('monto_s');
+          $order->monto_a = $request->input('monto_a');
         }else{
-          $order->lugarEmision = 'Autogestión';
+          $order->monto_s = 0;
+          $order->monto_a = 0;
         }
+        $order->obs = $request->input('obs');
+        $order->estado = 'Impresa';
+        $order->pacient_id = $request->input('user_id');
+        $order->doctor_id = $request->input('doctor_id');
+        foreach (Auth::user()->roles as $role){
+          if(($role->slug=='dev') or ($role->slug=='admin')){
+            $order->lugarEmision = 'Sede Amparo';
+          }else{
+            $order->lugarEmision = 'Autogestión';
+          }
+        }
+
+        $order->save();
+
+        return redirect()
+          ->route('pdf',['id' => $order->id])
+          ->with('message','Orden Registrada');
       }
-
-      $order->save();
-
-      return redirect()
-        ->route('pdf',['id' => $order->id])
-        ->with('message','Orden Registrada');
     }
 
     /**
@@ -179,16 +190,16 @@ class OrderController extends Controller
       return view('admin.order.search',compact("users"));
     }
 
-    public function cantOrders($id)
-    {
-      $cantOrders = DB::table('orders')
-                     ->select(DB::raw('count(*) as order_count'))
-                     ->where('pacient_id', '=', $id)
-                     ->whereMonth('fecha','=',now()->month)
-                     ->whereYear('fecha','=',now()->year)
-                     ->get();
-      return $cantOrders->pluck('order_count');
-    }
+    // public function cantOrders($id)
+    // {
+    //   $cantOrders = DB::table('orders')
+    //                  ->select(DB::raw('count(*) as order_count'))
+    //                  ->where('pacient_id', '=', $id)
+    //                  ->whereMonth('fecha','=',now()->month)
+    //                  ->whereYear('fecha','=',now()->year)
+    //                  ->get();
+    //   return $cantOrders->pluck('order_count');
+    // }
 
     public function getOrdenes($id)
     {

@@ -2,19 +2,24 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="Cache-Control" content="max-age=31536000, public">
-  <meta name="theme-color" content="#fff">
-  <meta name="description"
-        content="Amparo es una empresa de servicios sociales nacida en 2003,
-             dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
-  <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Amparo Servicios Sociales
   </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta charset="utf-8" />
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <meta name="description"
+        content="Servicios sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología.">
+  {{-- <meta http-equiv="Cache-Control" content="max-age=31536000, public"> --}}
+  <meta property="og:title" content="Amparo Servicios Sociales"/>
+  <meta property="og:description" content="Servicios sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología." />
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" itemProp="image" content="{{ asset('images/apple-icon.png') }}"/>
+  <meta property="og:url" content="https://amparosrl.com.ar/welcome"/>
+  <meta property="og:site_name" content="amparo"/>
+  {{-- <meta name="theme-color" content="#fff"> --}}
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
   <link rel="manifest" href="/manifest.json" />
   <script src="{{ asset('js/addToHomeScreen.js') }}" defer></script>
   <!--     Fonts and icons     -->
@@ -141,7 +146,7 @@
           </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-8 col-lg-4 align-middle">
           <form action="{{ route('preguntas.frecuentes') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
@@ -151,7 +156,7 @@
             </button>
           </form>
         </div>
-        <div class="col-sm-12 col-md-8 col-lg-4">
+        <div class="col-sm-12 col-md-8 col-lg-4 align-middle">
           <form action="{{ route('contacto.llamadaVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
@@ -161,15 +166,18 @@
             </button>
           </form>
         </div>
-        <div class="col-sm-12 col-md-8 col-lg-4">
-          <form action="{{ route('contacto.promotorVista') }}" method="get">
+        <div class="col-sm-8 col-md-5 col-lg-2"><center>
+          <a href="javascript:;" onclick="dcJs.startSend()">
+            <img style="border:0px;" id="dc_ImgStatus" src="https://dattachat.com/chat/img/wid/5fe71993a7db9323475492" />
+          </a></center>
+          {{-- <form action="{{ route('contacto.promotorVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
               <div class="d-flex justify-content-center">
                 Quiero que me visite un promotor
               </div>
             </button>
-          </form>
+          </form> --}}
         </div>
       </div>
       <div class="">
@@ -311,5 +319,6 @@
       });
     }
   </script>
+  <script type="text/javascript" async="async" defer="defer" src="https://dattachat.com/chat/cargar/wid/5fe71993a7db9323475492" ></script>
 </body>
 </html>

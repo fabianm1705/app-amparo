@@ -482,4 +482,11 @@ class UserController extends Controller
     return redirect()->back();
   }
 
+  public function suscripcion()
+  {
+    $user = Auth::user();
+    $user->save();
+    return view('admin.suscripcion');
+  }
+
 }

@@ -12,24 +12,24 @@ class DatabaseSeeder extends Seeder
 
     public function run()
     {
-        $this->truncateTables([
-          'layers',
-          'plans',
-          'sales'
-        ]);
-        // $this->call(PermissionsTableSeeder::class);
+        // $this->truncateTables([
+        //   'layers',
+        //   'plans',
+        //   'sales'
+        // ]);
+        $this->call(PermissionsTableSeeder::class);
         // $this->call(InterestsSeeder::class);
         // $this->call(SubscriptionsTableSeeder::class);
         // $this->call(SpecialtiesTableSeeder::class);
         // $this->call(DoctorsTableSeeder::class);
-        $this->call(GroupsTableSeeder::class);
+        // $this->call(GroupsTableSeeder::class);
         // $this->call(CategoriesTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         // $this->call(ProductsTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(PlansTableSeeder::class);
-        $this->call(LayersTableSeeder::class);
-        $this->call(SalesTableSeeder::class);
+        // $this->call(UsersTableSeeder::class);
+        // $this->call(PlansTableSeeder::class);
+        // $this->call(LayersTableSeeder::class);
+        // $this->call(SalesTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 

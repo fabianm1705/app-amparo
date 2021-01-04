@@ -40,6 +40,13 @@
                 </button>
               </div>
             @endcan
+            @can('planes')
+              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
+                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
+                  <a style="text-decoration:none;" href="{{ route('planes') }}">Planes</a>
+                </button>
+              </div>
+            @endcan
             @can('users.panel')
               <div class="col-sm-6 col-md-4 col-lg-2 blanco">
                 <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
@@ -47,15 +54,14 @@
                 </button>
               </div>
             @endcan
-            @if(Auth::user()->password_changed_at)
-              @can('planes')
-                <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                  <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                    <a style="text-decoration:none;" href="{{ route('planes') }}">Planes</a>
-                  </button>
-                </div>
-              @endcan
-            @else
+            @can('users.suscripcion')
+              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
+                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
+                  <a style="text-decoration:none;" href="{{ route('users.suscripcion', ['id' => Auth::user()->id ]) }}">Suscribirme</a>
+                </button>
+              </div>
+            @endcan
+            @if(Auth::user()->password_changed_at==null)
               <div class="col-sm-6 col-md-4 col-lg-2 blanco">
                 <button class="btn btn-danger m-1 text-light btn-block btn-lg" name="button">
                   <a style="text-decoration:none;" href="{{ route('password.edit') }}">Modif Contraseña</a>

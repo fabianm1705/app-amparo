@@ -19,6 +19,13 @@
               <div class="swiper-slide">
                 <a href="/admin/products/{{ $product->id }}" style="text-decoration:none;">
                   <div class="card shadow-sm">
+                    <div class="">
+                      @if($product->stock)
+                        <img src="{{ asset('images/entregainmediata.png') }}" alt="Entrega Inmediata!">
+                      @else
+                        <img src="{{ asset('images/entregainmediatablanco.png') }}" alt="Entrega Inmediata!">
+                      @endif
+                    </div>
                     <img src="{{ asset('images/products/'.$product->image_url) }}" alt="{{ $product->modelo }}">
                     <div class="card-body text-center textoDescripcion" style="height: 120px;overflow:auto;">
                       {{ $product->modelo }}<small> - {{ $product->descripcion }}</small>

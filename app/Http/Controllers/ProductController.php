@@ -75,6 +75,7 @@ class ProductController extends Controller
       $product->montoCuota = 1; //irrelevante
       $product->cantidadCuotas = 1; //irrelevante
       $product->vigente = $request->input('vigente');
+      $product->stock = $request->input('stock');
       $product->category_id = $request->input('category_id');
       $product->longDescription = $request->input('longDescription');
       $product->image_url = $image_name;
@@ -149,6 +150,7 @@ class ProductController extends Controller
       $product->costo = $request->input('costo');
       $product->montoCuota = 1; //irrelevante
       $product->cantidadCuotas = 1; //irrelevante
+      $product->stock = $request->input('stock');
       $product->category_id = $request->input('category_id');
       $product->vigente = $request->input('vigente');
       $product->longDescription = $request->input('longDescription');

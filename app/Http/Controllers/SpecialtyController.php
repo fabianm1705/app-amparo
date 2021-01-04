@@ -171,36 +171,6 @@ class SpecialtyController extends Controller
       return $specialties;
     }
 
-    public function cantOrdersSalud($user)
-    {
-      $cantOrdersSalud = DB::table('orders')
-                     ->select(DB::raw('count(*) as order_count'))
-                     ->where('pacient_id', '=', $user->id)
-                     ->where('doctor_id', '<>', 44)
-                     ->whereMonth('fecha','=',now()->month)
-                     ->whereYear('fecha','=',now()->year)
-                     ->get();
-      foreach ($cantOrdersSalud as $order) {
-        $order_salud_count = $order->order_count;
-      }
-      return $order_salud_count;
-    }
-
-    public function cantOrdersOdonto($user)
-    {
-      $cantOrdersOdonto = DB::table('orders')
-                     ->select(DB::raw('count(*) as order_count'))
-                     ->where('pacient_id', '=', $user->id)
-                     ->where('doctor_id', '=', 44)
-                     ->whereMonth('fecha','=',now()->month)
-                     ->whereYear('fecha','=',now()->year)
-                     ->get();
-      foreach ($cantOrdersOdonto as $order) {
-        $order_odonto_count = $order->order_count;
-      }
-      return $order_odonto_count;
-    }
-
     public function getDataUser(Request $request, $id)
     {
       $user = User::find($id);
@@ -209,8 +179,8 @@ class SpecialtyController extends Controller
         'carencia_odonto' => carencia_odontologia($user),
         'necesita_salud' => necesita_salud($user),
         'necesita_odonto' => necesita_odontologia($user),
-        'cant_orders_salud' => $this->cantOrdersSalud($user),
-        'cant_orders_odonto' => $this->cantOrdersOdonto($user),
+        'cant_orders_salud' => cantOrdersSalud($user),
+        'cant_orders_odonto' => cantOrdersOdonto($user),
         'specialties' => $this->cargarSpecialties($user)
       ]);
       return $dataSocio;

@@ -49,14 +49,17 @@
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-3">
-                  <div class="row d-flex">
-                      <div class="form-check">
-                        <input type="hidden" class="form-check-input" name="vigente" value="0">
-                        <input type="checkbox" class="form-check-input" id="vigente" name="vigente" value="1" {{ old('vigente') ? 'checked="checked"' : '' }}>
-                        <label class="form-check-label" for="vigente">Activo</label>
-                      </div>
-                    </div>
+                  <div class="form-check">
+                    <input type="hidden" class="form-check-input" name="vigente" value="0">
+                    <input type="checkbox" class="form-check-input" id="vigente" name="vigente" value="1" {{ old('vigente') ? 'checked="checked"' : '' }}>
+                    <label class="form-check-label" for="vigente">Activo</label>
                   </div>
+                  <div class="form-check">
+                    <input type="hidden" class="form-check-input" name="stock" value="0">
+                    <input type="checkbox" class="form-check-input" id="stock" name="stock" value="1" {{ old('stock') ? 'checked="checked"' : '' }}>
+                    <label class="form-check-label" for="stock">Stock</label>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">

@@ -1,6 +1,7 @@
 <?php
 
 use App\UserInterest;
+use Illuminate\Support\Facades\DB;
 
 function necesita_salud($user)
 {
@@ -64,4 +65,34 @@ function registro_acceso($interest_id,$obs)
                             'obs' => $obs]);
     }
   }
+}
+
+function cantOrdersSalud($user)
+{
+  $cantOrdersSalud = DB::table('orders')
+                 ->select(DB::raw('count(*) as order_count'))
+                 ->where('pacient_id', '=', $user->id)
+                 ->where('doctor_id', '<>', 44)
+                 ->whereMonth('fecha','=',now()->month)
+                 ->whereYear('fecha','=',now()->year)
+                 ->get();
+  foreach ($cantOrdersSalud as $order) {
+    $order_salud_count = $order->order_count;
+  }
+  return $order_salud_count;
+}
+
+function cantOrdersOdonto($user)
+{
+  $cantOrdersOdonto = DB::table('orders')
+                 ->select(DB::raw('count(*) as order_count'))
+                 ->where('pacient_id', '=', $user->id)
+                 ->where('doctor_id', '=', 44)
+                 ->whereMonth('fecha','=',now()->month)
+                 ->whereYear('fecha','=',now()->year)
+                 ->get();
+  foreach ($cantOrdersOdonto as $order) {
+    $order_odonto_count = $order->order_count;
+  }
+  return $order_odonto_count;
 }

@@ -388,6 +388,16 @@ class PermissionsTableSeeder extends Seeder
           'slug' => 'receipts.destroy',
           'description' => 'Eliminar un recibo del sistema'
         ]);
+        Permission::create([
+          'name' => 'Suscripción cuota social',
+          'slug' => 'users.suscripcion',
+          'description' => 'Suscripción al pago recurrente de la cuota social'
+        ]);
+        Permission::create([
+          'name' => 'Gestión Odontólogo',
+          'slug' => 'odontologo.gestion',
+          'description' => 'Cargar órdenes y ver listados de pendientes'
+        ]);
         Role::create([
           'name' => 'Admin',
           'slug' => 'admin',
@@ -423,6 +433,11 @@ class PermissionsTableSeeder extends Seeder
           'name' => 'Farmacia Nueva Farma',
           'slug' => 'farmacia.farmacia',
           'description' => 'Acceso padrón farmacia'
+        ]);
+        Role::create([
+          'name' => 'Acceso Odontólogo',
+          'slug' => 'odontologo',
+          'description' => 'Acceso de Odontólogo a registro de órdenes y carga.'
         ]);
         PaymentMethod::create([
           'name' => 'Cuotas de la Casa',

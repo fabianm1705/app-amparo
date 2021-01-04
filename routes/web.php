@@ -211,16 +211,19 @@ Route::post('getProductsXCategory/{id}', 'ProductController@getProductsXCategory
 Route::get('orders/indice', 'OrderController@indice')
               ->middleware(['auth','can:orders.indice'])
               ->name('orders.indice');
-Route::post('getOnlyOrders/{id}', 'OrderController@getOnlyOrders')
-              ->middleware('auth')
-              ->name('getOnlyOrders');
-Route::post('cantOrders/{id}', 'OrderController@cantOrders')
-              ->middleware('auth')
-              ->name('cantOrders');
+// Route::post('getOnlyOrders/{id}', 'OrderController@getOnlyOrders')
+//               ->middleware('auth')
+//               ->name('getOnlyOrders');
+// Route::post('cantOrders/{id}', 'OrderController@cantOrders')
+//               ->middleware('auth')
+//               ->name('cantOrders');
 
 Route::get('users/panel/{id}', 'UserController@panel')
               ->middleware(['auth','can:users.panel'])
               ->name('users.panel');
+Route::get('users/suscripcion', 'UserController@suscripcion')
+              ->middleware('auth')
+              ->name('users.suscripcion');
 Route::get('password/edit', 'UserController@editPassword')
               ->name('password.edit');
 Route::post('password/change', 'UserController@change')
