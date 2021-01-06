@@ -1,9 +1,17 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#fff">
+
+    <meta property="og:title" content="App | amparosrl.com.ar"/>
+    <meta property="og:description" content="Aplicación disponible en Google Play, con toda la información de los servicios, productos y la posibilidad de emitir órdenes médicas." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+    <meta property="og:url" content="https://amparosrl.com.ar/home"/>
+    <meta property="og:site_name" content="amparo"/>
+
     <meta
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,

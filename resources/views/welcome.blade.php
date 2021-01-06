@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 
 <head>
   <title>
     Amparo Servicios Sociales
   </title>
+
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta charset="utf-8" />
-  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+   <meta charset="utf-8" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+   {{-- <meta http-equiv="Cache-Control" content="max-age=31536000, public"> --}}
+
+   <meta property="og:title" content="Amparo Servicios Sociales"/>
+   <meta property="og:description" content="Servicios Sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología." />
+   <meta property="og:type" content="website"/>
+   <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+   <meta property="og:url" content="https://amparosrl.com.ar"/>
+   <meta property="og:site_name" content="amparo"/>
   <meta name="description"
-        content="Servicios sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología.">
-  {{-- <meta http-equiv="Cache-Control" content="max-age=31536000, public"> --}}
-  <meta property="og:title" content="Amparo Servicios Sociales"/>
-  <meta property="og:description" content="Servicios sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología." />
-  <meta property="og:type" content="website"/>
-  <meta property="og:image" itemProp="image" content="{{ asset('images/apple-icon.png') }}"/>
-  <meta property="og:url" content="https://amparosrl.com.ar/welcome"/>
-  <meta property="og:site_name" content="amparo"/>
+        content="Servicios Sociales, desde 2003 brindamos servicios de medicina ambulatoria, emergencia y odontología.">
   {{-- <meta name="theme-color" content="#fff"> --}}
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
