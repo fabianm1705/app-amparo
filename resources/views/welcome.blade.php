@@ -67,6 +67,11 @@
                     @endauth
                 @endif
               </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('preguntas.frecuentes') }}">
+                    <i class="material-icons">help</i>&nbsp;Preguntas Frecuentes
+                  </a>
+              </li>
           </ul>
       </div>
     </div>
@@ -168,18 +173,19 @@
             </button>
           </form>
         </div>
-        <div class="col-sm-8 col-md-5 col-lg-2"><center>
+        <div class="col-sm-8 col-md-5 col-lg-4 align-middle">
+          {{-- <center>
           <a href="javascript:;" onclick="dcJs.startSend()">
             <img style="border:0px;" id="dc_ImgStatus" src="https://dattachat.com/chat/img/wid/5fe71993a7db9323475492" />
-          </a></center>
-          {{-- <form action="{{ route('contacto.promotorVista') }}" method="get">
+          </a></center> --}}
+          <form action="{{ route('contacto.promotorVista') }}" method="get">
             @csrf
             <button class="btn btn-warning btn-lg btn-block" type="submit" name="button">
               <div class="d-flex justify-content-center">
                 Quiero que me visite un promotor
               </div>
             </button>
-          </form> --}}
+          </form>
         </div>
       </div>
       <div class="">

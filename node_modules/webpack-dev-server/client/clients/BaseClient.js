@@ -1,7 +1,4 @@
 'use strict';
-/* eslint-disable
-  no-unused-vars
-*/
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -16,6 +13,7 @@ module.exports = /*#__PURE__*/function () {
 
   _createClass(BaseClient, null, [{
     key: "getClientPath",
+    // eslint-disable-next-line no-unused-vars
     value: function getClientPath(options) {
       throw new Error('Client needs implementation');
     }

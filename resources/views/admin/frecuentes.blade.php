@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#f6993f">
+
+    <meta property="og:title" content="Preguntas Frecuentes | amparosrl.com.ar"/>
+    <meta property="og:description" content="Consultas sobre toda la información de los servicios, productos, carencias, forma de pago y uso." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+    <meta property="og:url" content="https://amparosrl.com.ar/frecuentes"/>
+    <meta property="og:site_name" content="amparo"/>
+
     <meta
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,
@@ -31,7 +39,7 @@
   <div class="container">
     <div class="row justify-content-center m-4">
       <a class="" href="{{ route('welcome') }}">
-        <img src="{{ asset('images/logo300x68.png') }}" height="68" alt="Logo Amparo">
+        <img src="{{ asset('images/logo300x68.png') }}" height="68" alt="Amparo">
       </a>
     </div>
     <div class="mb-4 text-center">
@@ -53,7 +61,7 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-            Si, todos nuestros planes tienen una espera de 1 mes.
+            Si, todos nuestros planes tienen una espera de 2 meses.
           </div>
         </div>
       </div>
@@ -172,7 +180,7 @@
         </div>
         <div id="collapseOcho" class="collapse" aria-labelledby="headingOcho" data-parent="#accordionExample">
           <div class="card-body">
-            No, las formas de pago habilitadas son débito vía CBU bancario, transferencia bancaria, rapipago, pago fácil, pago en oficina o cobranza domiciliaria.
+            Si, las formas de pago habilitadas son crédito, débito vía CBU bancario, transferencia bancaria, rapipago, pago fácil, pago en oficina o cobranza domiciliaria.
           </div>
         </div>
       </div>

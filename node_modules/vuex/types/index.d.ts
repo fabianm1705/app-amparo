@@ -4,8 +4,10 @@ import _Vue, { WatchOptions } from "vue";
 import "./vue";
 
 import { mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers } from "./helpers";
+import createLogger from "./logger";
 
 export * from "./helpers";
+export * from "./logger";
 
 export declare class Store<S> {
   constructor(options: StoreOptions<S>);
@@ -77,10 +79,12 @@ export interface SubscribeOptions {
 }
 
 export type ActionSubscriber<P, S> = (action: P, state: S) => any;
+export type ActionErrorSubscriber<P, S> = (action: P, state: S, error: Error) => any;
 
 export interface ActionSubscribersObject<P, S> {
   before?: ActionSubscriber<P, S>;
   after?: ActionSubscriber<P, S>;
+  error?: ActionErrorSubscriber<P, S>;
 }
 
 export type SubscribeActionOptions<P, S> = ActionSubscriber<P, S> | ActionSubscribersObject<P, S>;
@@ -145,6 +149,8 @@ export interface ModuleTree<R> {
   [key: string]: Module<any, R>;
 }
 
+export { createLogger }
+
 declare const _default: {
   Store: typeof Store;
   install: typeof install;
@@ -153,5 +159,6 @@ declare const _default: {
   mapGetters: typeof mapGetters,
   mapActions: typeof mapActions,
   createNamespacedHelpers: typeof createNamespacedHelpers,
+  createLogger: typeof createLogger
 };
 export default _default;

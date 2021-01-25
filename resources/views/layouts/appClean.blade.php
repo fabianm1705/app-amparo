@@ -1,9 +1,17 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" prefix="og: https://ogp.me/ns#">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#fff">
+
+    <meta property="og:title" content="App | amparosrl.com.ar"/>
+    <meta property="og:description" content="Aplicación disponible en Google Play, con toda la información de los servicios, productos y la posibilidad de emitir órdenes médicas." />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+    <meta property="og:url" content="https://amparosrl.com.ar/home"/>
+    <meta property="og:site_name" content="amparo"/>
+
     <meta
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,
@@ -80,43 +88,6 @@
     @yield('myScripts')
 </body>
 
-<script type="text/javascript">
-  // var $table = $('#fresh-table')
-  // $(function () {
-  //   $table.bootstrapTable({
-  //     classes: 'table table-hover table-striped',
-  //     // toolbar: '.toolbar',
-  //     search: true,
-  //     showRefresh: true,
-  //     showToggle: true,
-  //     showColumns: true,
-  //     pagination: true,
-  //     striped: true,
-  //     sortable: true,
-  //     pageSize: 8,
-  //     pageList: [8, 10, 25, 50, 100],
-  //     formatShowingRows: function (pageFrom, pageTo, totalRows) {
-  //       return ''
-  //     },
-  //     formatRecordsPerPage: function (pageNumber) {
-  //       return pageNumber + ' rows visible'
-  //     }
-  //   })
-  // })
-  // $('#facebook').sharrre({
-  //   share: {
-  //     facebook: true
-  //   },
-  //   enableHover: false,
-  //   enableTracking: true,
-  //   click: function (api, options) {
-  //     api.simulateClick()
-  //     api.openPopup('facebook')
-  //   },
-  //   template: '<i class="fa fa-facebook-square"></i> {total}',
-  //   url: location.href
-  // })
-</script>
 <script>
   // Nos aseguramos que el navegador implementa la api 'serviceWorker'
   if ('serviceWorker' in navigator) {

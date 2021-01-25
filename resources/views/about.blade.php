@@ -1,14 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 
 <head>
+  <title>
+    Quienes Somos | amparosrl.com.ar
+  </title>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Quienes Somos - Amparo Servicios Sociales
-  </title>
+
+  <meta property="og:title" content="Quienes Somos | amparosrl.com.ar"/>
+  <meta property="og:description" content="Amparo es una empresa de Servicios Sociales de Paraná,
+  nacida en 2003 y comprometida con el desarrollo de la ciudad y su gente." />
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+  <meta property="og:url" content="https://amparosrl.com.ar/about"/>
+  <meta property="og:site_name" content="amparo"/>
+
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <link rel="manifest" href="/manifest.json" />
   <!--     Fonts and icons     -->

@@ -8,7 +8,7 @@
         <img src="{{ asset('images/mercadopago.webp') }}" class="d-block" width="250" alt="Medios de pago"><br>
       </center>
       @if(Auth::user()->darkMode)
-        <div class="card text-center text-white shadow-sm">
+        <div class="card text-center text-white shadow-sm bg-secondary">
       @else
         <div class="card text-center shadow-sm">
       @endif

@@ -8,6 +8,10 @@
 
 @section('content')
 <div class="container">
+    <div class="container alert alert-warning col-md-8 mt-2">
+      No es necesario registrarse, al afiliarse damos de alta sus datos.
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="fresh-table full-color-orange d-flex shadow-sm">
