@@ -5,17 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#fff">
 
-    <meta property="og:title" content="App | amparosrl.com.ar"/>
-    <meta property="og:description" content="Aplicación disponible en Google Play, con toda la información de los servicios, productos y la posibilidad de emitir órdenes médicas." />
+    @auth
+      @if (\Request::is('products/shopping'))
+        <meta property="og:title" content="Shopping | amparosrl.com.ar"/>
+        <meta property="og:description" content="Toda la información de los productos disponibles, entrega inmediata o a pedido." />
+        <meta property="og:url" content="https://amparosrl.com.ar/products/shopping"/>
+        <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+      @else
+        <meta property="og:title" content="{{ $product->modelo }} | cuotas de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }} | amparosrl.com.ar"/>
+        <meta property="og:description" content="{{ $product->descripcion }}" />
+        <meta property="og:url" content="https://amparosrl.com.ar/admin/products/{{ $product->id }}"/>
+        <meta property="og:image" content="https://amparosrl.com.ar/images/products/{{$product->image_url}}"/>
+        <meta property="og:image:width" content="200" />
+        <meta property="og:image:height" content="200" />
+      @endif
+    @endauth
+    @guest
+      <meta property="og:title" content="Inicie sesión...  | amparosrl.com.ar"/>
+      <meta property="og:description" content="Toda la información de los productos disponibles, entrega inmediata o a pedido." />
+      <meta property="og:url" content="https://amparosrl.com.ar/products/shopping"/>
+      <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
+    @endguest
     <meta property="og:type" content="website"/>
-    <meta property="og:image" content="https://amparosrl.com.ar/images/logo200x200.png"/>
-    <meta property="og:url" content="https://amparosrl.com.ar/home"/>
     <meta property="og:site_name" content="amparo"/>
 
     <meta
       name="description"
-      content="Amparo es una empresa de servicios sociales nacida en 2003,
-               dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
+      content="Toda la información de los productos disponibles, entrega inmediata o a pedido.">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
@@ -39,7 +55,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app-amparo.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.0.min.js" crossorigin="anonymous"></script>
    @yield('myLinks')
 </head>
 

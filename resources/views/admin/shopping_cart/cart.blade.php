@@ -1,116 +1,152 @@
 @extends('layouts.app')
 
+@section('myLinks')
+  <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+  <script src="{{ asset('js/mp.js') }}" defer></script>
+  <link href="{{ asset('css/mp.css') }}" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js" crossorigin="anonymous"></script>
+@endsection
+
 @section('content')
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-9 col-md-12 col-sm-12 mt-2">
-        <div class="fresh-table full-color-orange d-flex shadow-sm">
-          <h5 class="card-title text-white mt-3 mb-3 ml-3">Carrito de Compras</h5>
-        </div>
-        <div class="card mt-1">
-          <div class="card-body table-responsive">
-            <table class="table table-shopping">
-              <thead>
-                <tr>
-                  <th class="text-center"></th>
-                  <th>Producto</th>
-                  <th class="text-right">P. Unit.</th>
-                  <th class="text-center">Cant.</th>
-                  <th class="text-left">Total</th>
-                  <th>Quitar</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($shopping_cart->products as $product)
-                  <tr id="{{ $product->id }}">
-                    <td>
-                      <div class="">
-                        <img class="card-img-top" style="width:100px;" src="{{ asset('images/products/'.$product->image_url) }}" alt="{{ $product->modelo }}">
+  <!-- Shopping Cart -->
+  <section class="shopping-cart dark">
+    <div class="container" id="container">
+      <div class="block-heading fresh-table full-color-orange d-flex shadow-sm">
+        <h5 class="card-title text-white mb-3 ml-3">Carrito de Compras</h5>
+      </div>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="items">
+              <input type="hidden" id="cant-prod" value="{{ $shopping_cart->products->count() }}">
+              @foreach($shopping_cart->products as $index => $product)
+                <div class="product">
+                <div class="info">
+                  <div class="product-details">
+                    <div class="row justify-content-md-center">
+                      <div class="col-md-3">
+                        <img class="img-fluid mx-auto d-block image" src="{{ asset('images/products/'.$product->image_url) }}" alt="{{ $product->modelo }}">
                       </div>
-                    </td>
-                    <td class="align-middle">
-                      <a href="" style="text-decoration:none;color:black;">{{ $product->modelo }}</a>
-                      <br />
-                      <small>by {{ $product->empresa }}</small>
-                    </td>
-                    <td class="text-right align-middle">
-                      <small>$</small>{{ round($product->costo * (1+($porccontado/100))/10, 0) * 10 }}
-                    </td>
-                    <td class="align-middle">
-                      1
-                    </td>
-                    <td class="align-middle">
-                      <small>$</small>{{ round($product->costo * (1+($porccontado/100))/10, 0) * 10 }}
-                    </td>
-                    <td class="td-actions align-middle">
-                      <form action="{{ route('out_shopping_cart.destroy', ['id' => $product->id ]) }}" method="post" style="background-color: transparent;">
-                        @method('DELETE')
-                        @csrf
-                        <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
-                          <i class="material-icons">close</i>
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
-                @endforeach
-                <tr>
-                  <td colspan="3"></td>
-                  <td class="td-total">
-                    Total
-                  </td>
-                  <td colspan="1" class="td-price">
-                    <total-value-only-component
-                            :products="{{ $shopping_cart->products }}"
-                            :porccredito="{{ $porccontado }}">
-                    </total-value-only-component>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <div class="col-md-4 product-detail">
+                        <h5>Producto</h5>
+                        <div class="product-info">
+                          <p><b><span id="product-description">{{ $product->modelo }}</span></b> by {{ $product->empresa }}<br>
+                          <small>{{ $product->descripcion }}</small><br>
+                          <b>Precio:</b> $ <span id="unit-price{{ $index }}">{{ round($product->costo * (1+($porccontado/100))/10, 0) * 10 }}</span></p>
+                        </div>
+                      </div>
+                      <div class="col-md-3 product-detail">
+                        <label for="quantity{{ $index }}"><h5>Cantidad</h5></label>
+                        <input type="number" id="quantity{{ $index }}" value="1" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <div class="summary">
+              <h3>Carrito</h3>
+              <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total"><b>{{ $productsCost }}</b></span></div>
+              <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Finalizar Compra</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-9 mt-2">
-        @if(Auth::user()->darkMode)
-          <h5 class="text-white">Seleccione su forma de pago:</h5>
-        @else
-          <h5>Seleccione su forma de pago:</h5>
-        @endif
-
-        <div class="">
-          <form action="{{ route('shopping_cart.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="card shadow-sm mb-2">
-              <div class="card-body">
-                @foreach($payment_methods as $payment_method)
-                      <div class="row justify-content-center">
-                        <div class="col-2">
-                          <div class="radio-inline">
-                              <label>
-                                  <input type="radio" key="{{ $payment_method->id }}" value="{{ $payment_method->id }}" {{ $payment_method->id==1 ? 'checked="checked"' : '' }} name="payment_method_id" />
-                              </label>
-                          </div>
-                        </div>
-                        <div class="col-10" id="monto">
-                          @if($payment_method->cant_cuotas==1)
-                            1 pago de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                          @else
-                            {{ $payment_method->cant_cuotas }} cuotas de ${{ round($productsCost / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                          @endif
-                        </div>
-                      </div>
-                @endforeach
+    </div>
+  </section>
+  <!-- Payment -->
+  <section class="payment-form dark">
+    <div class="container_payment container col-md-6">
+      <div class="block-heading fresh-table full-color-orange d-flex shadow-sm">
+        <h5 class="card-title text-white mb-3 ml-3">Pago con tarjeta</h5>
+      </div>
+      <div class="form-payment">
+        <div class="products">
+          <h2 class="title">Sumario</h3>
+            @foreach($shopping_cart->products as $index => $product)
+              <div class="item">
+                <span class="price" id="unit-price"></span>
+                <p class="item-name">{{ $product->modelo }} x <span id="quantityy{{ $index }}"></span></p>
               </div>
-            </div>
-            <center><div>
-              <img class="w-75 mb-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
-            </div></center>
-            <div class="text-right">
-              <button class="btn btn-success btn-block btn-lg" type="submit" name="button">Finalizar Compra</button>
-            </div>
+            @endforeach
+          <div class="total">Total<span class="price" id="summary-total"><b>{{ $productsCost }}</b></span></div>
+        </div>
+        <div class="payment-details">
+          <form action="/process_payment" method="post" id="paymentForm">
+              @csrf
+              <h3 class="title">Detalles del Socio</h3>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="email">E-Mail</label>
+                  <input id="email" value="{{ Auth::user()->email }}" name="email" type="text" class="form-control"></select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-5">
+                  <label for="docType">Tipo de Documento</label>
+                  <select id="docType" name="docType" data-checkout="docType" type="text" class="form-control"></select>
+                </div>
+                <div class="form-group col-sm-7">
+                  <label for="docNumber">Número de Documento</label>
+                  <input id="docNumber" value="{{ Auth::user()->nroDoc }}" name="docNumber" data-checkout="docNumber" type="text" class="form-control"/>
+                </div>
+              </div>
+              <br>
+              <h3 class="title">Detalles de la Tarjeta</h3>
+              <div class="row">
+                <div class="form-group col-sm-8">
+                  <label for="cardholderName">Titular de la Tarjeta</label>
+                  <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control">
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="">Fecha de Vencimiento</label>
+                  <div class="input-group expiration-date">
+                    <input type="text" class="form-control" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
+                      onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
+                    <span class="date-separator">/</span>
+                    <input type="text" class="form-control" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear"
+                      onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
+                  </div>
+                </div>
+                <div class="form-group col-sm-8">
+                  <label for="cardNumber">Número de Tarjeta</label>
+                  <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
+                    onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
+                </div>
+                <div class="form-group col-sm-4">
+                  <label for="securityCode">Código de Seguridad</label>
+                  <input id="securityCode" data-checkout="securityCode" type="text" class="form-control"
+                    onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
+                </div>
+                <div id="issuerInput" class="form-group col-sm-12 hidden">
+                  <label for="issuer">Banco emisor</label>
+                  <select id="issuer" name="issuer" data-checkout="issuer" class="form-control"></select>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="installments">Cuotas</label>
+                  <select type="text" id="installments" name="installments" class="form-control"></select>
+                </div>
+                <div class="form-group col-sm-12">
+                  <input type="hidden" name="transactionAmount" id="amount" value="10" />
+                  <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+                  <input type="hidden" name="description" id="description" />
+                  <br>
+                  <button type="submit" class="btn btn-primary btn-block btn-lg">Pagar</button>
+                  <br>
+                  <a id="go-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
+                      <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
+                    </svg>
+                    Volver al Carrito
+                  </a>
+                </div>
+              </div>
           </form>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.appClean')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -44,23 +44,21 @@
                   <div class="form-group">
                     <label for="descripcion">{{ $product->descripcion }}</label>
                   </div>
-                  @foreach($payment_methods as $payment_method)
-                    <center><div class="card shadow-sm mb-3 w-75">
-                      <div class="card-body">
-                        <div class="row justify-content-center">
-                          <div class="col-10" id="monto">
-                            @if($payment_method->cant_cuotas==1)
-                              1 pago de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                            @else
-                              {{ $payment_method->cant_cuotas }} cuotas de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                            @endif
-                          </div>
-                        </div>
+                  <center><div class="card shadow-sm mb-3 w-75">
+                    <div class="card-body">
+                      <div class="row justify-content-center">
+                        @foreach($payment_methods as $payment_method)
+                                <div class="col-10" id="monto">
+                                  @if($payment_method->cant_cuotas==1)
+                                    1 pago de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                                  @else
+                                    {{ $payment_method->cant_cuotas }} cuotas de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
+                                  @endif
+                                </div>
+                        @endforeach
+                        <img class="w-75 mt-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
                       </div>
-                    </div></center>
-                  @endforeach
-                  <center><div>
-                    <img class="w-50 mb-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
+                    </div>
                   </div></center>
                   <div class="row">
                     <div class="col-md-12 mb-1">

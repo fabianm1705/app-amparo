@@ -1,4 +1,4 @@
-<title>{{ 'Orden_'. $order->user->group->nroSocio . '_' . date('d-m-Y') }}</title>
+<title>{{ 'orden-'.$order->id.'.pdf' }}</title>
 <style type="text/css">
     .Estilo1 {
       font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -11,7 +11,7 @@
   <div class="centrado">
     <table class="Estilo1">
       <tr>
-        <td><img src="{{ public_path('/images/logo.png') }}" width="200px"></td>
+        <td><img src="{{ asset('/images/logo.png') }}" width="200px"></td>
         <td></td>
         <td><center>
           <span>Lugar de Emisión: Sede Amparo</span><br>

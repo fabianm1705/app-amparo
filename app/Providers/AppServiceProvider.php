@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
       }
       View::share('precio_individual_joven', $precio_individual_joven);
 
-      $porccontado=15;
+      $porccontado=24;
       if(Schema::hasTable('payment_methods')){
         $payment_methods = DB::table('payment_methods')->where('cant_cuotas',1)->get();
         if($payment_methods){

@@ -18,6 +18,7 @@
         <div class="card-body centrado">
           <table class="table table-hover table-sm table-responsive">
             <thead>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Cant. Cuotas</th>
               <th>%</th>
@@ -27,6 +28,7 @@
             <tbody>
               @foreach($payment_methods as $payment_method)
                 <tr>
+                  <td>{{ $payment_method->id }}</td>
                   <td>{{ $payment_method->name }}</td>
                   <td class="text-center">${{ $payment_method->cant_cuotas }}</td>
                   <td class="text-center">${{ $payment_method->percentage }}</td>

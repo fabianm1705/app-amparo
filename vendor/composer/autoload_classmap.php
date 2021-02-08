@@ -21,6 +21,7 @@ return array(
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\InterestController' => $baseDir . '/app/Http/Controllers/InterestController.php',
     'App\\Http\\Controllers\\LayerController' => $baseDir . '/app/Http/Controllers/LayerController.php',
+    'App\\Http\\Controllers\\MercadoPagoController' => $baseDir . '/app/Http/Controllers/MercadoPagoController.php',
     'App\\Http\\Controllers\\OrderController' => $baseDir . '/app/Http/Controllers/OrderController.php',
     'App\\Http\\Controllers\\PDFController' => $baseDir . '/app/Http/Controllers/PDFController.php',
     'App\\Http\\Controllers\\PaymentMethodController' => $baseDir . '/app/Http/Controllers/PaymentMethodController.php',

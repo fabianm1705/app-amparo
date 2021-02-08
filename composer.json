@@ -18,9 +18,9 @@
         "laravel/ui": "^1.2.0",
         "laraveles/spanish": "^1.4",
         "league/flysystem-aws-s3-v3": "~1.0",
-        "mercadopago/dx-php": "dev-master",
-        "tightenco/ziggy": "^0.9.4",
-        "milon/barcode": "^6.0"
+        "mercadopago/dx-php": "2.2.1",
+        "milon/barcode": "^6.0",
+        "tightenco/ziggy": "^0.9.4"
     },
     "require-dev": {
         "facade/ignition": "^1.16.1",

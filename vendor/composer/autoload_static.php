@@ -614,6 +614,7 @@ class ComposerStaticInit64e18ec32fe7db7b37c1c8ba14f64b4c
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\InterestController' => __DIR__ . '/../..' . '/app/Http/Controllers/InterestController.php',
         'App\\Http\\Controllers\\LayerController' => __DIR__ . '/../..' . '/app/Http/Controllers/LayerController.php',
+        'App\\Http\\Controllers\\MercadoPagoController' => __DIR__ . '/../..' . '/app/Http/Controllers/MercadoPagoController.php',
         'App\\Http\\Controllers\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/OrderController.php',
         'App\\Http\\Controllers\\PDFController' => __DIR__ . '/../..' . '/app/Http/Controllers/PDFController.php',
         'App\\Http\\Controllers\\PaymentMethodController' => __DIR__ . '/../..' . '/app/Http/Controllers/PaymentMethodController.php',

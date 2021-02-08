@@ -22,7 +22,7 @@
   <div class="centrado">
     <table class="Estilo1">
       <tr>
-        <td><img src="{{ public_path('/images/logo.png') }}"></td>
+        <td><img src="{{ asset('/images/logo.png') }}"></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td align="center" width="200" colspan="2">Página 1 de 1 - Original<br>
           <span>FACTURA B<br>000{{ $sale->puntoContable }} - 000{{ $sale->nroFactura }}</span><br>

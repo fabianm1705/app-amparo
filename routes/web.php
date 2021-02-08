@@ -207,6 +207,9 @@ Route::post('getProductsXCategory/{id}', 'ProductController@getProductsXCategory
               ->middleware('auth')
               ->name('getProductsXCategory');
 
+Route::post('/process_payment', 'MercadoPagoController@process_payment')
+              ->middleware('auth');
+
 //Ordenes
 Route::get('orders/indice', 'OrderController@indice')
               ->middleware(['auth','can:orders.indice'])

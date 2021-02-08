@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ShoppingCart extends Model
 {
@@ -33,7 +34,15 @@ class ShoppingCart extends Model
     }
 
     public function amount(){
-      return $this->products()->sum('product_in_shopping_carts.costo');
+      $payment_methods = DB::table('payment_methods')->where('cant_cuotas',1)->get();
+      $porccontado = 0;
+      if($payment_methods){
+        foreach($payment_methods as $payment_method){
+          $porccontado = $payment_method->percentage;
+        }
+      }
+      $margen =  1+($porccontado/100);
+      return round(($this->products()->sum('product_in_shopping_carts.costo')*$margen/10),0)*10;
     }
 
     public function user()
