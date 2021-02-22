@@ -22,6 +22,7 @@ class MercadoPagoController extends Controller
   public function process_payment(Request $request)
   {
     SDK::setAccessToken("APP_USR-6083498452659149-012612-b3f312cb28965682cca230e1586e007b-540492876");
+    // SDK::setAccessToken("TEST-8573893571173885-020408-508c7d9efbea13d65fc317d4d5129759-708342243");
 
     $payment = new Payment();
     $payment->transaction_amount = (float)$_POST['transactionAmount'];
@@ -44,7 +45,7 @@ class MercadoPagoController extends Controller
     $ruta = "home";
     switch($payment->status_detail){
       case 'accredited':
-            registro_acceso(10,'');
+            registro_acceso(10,'Pago Acreditado');
             $request->shopping_cart->status = 1;
             $request->shopping_cart->user_id = Auth::user()->id;
             $request->shopping_cart->fecha = Carbon::now();
@@ -64,7 +65,7 @@ class MercadoPagoController extends Controller
             });
             break;
       case 'pending_contingency':
-            registro_acceso(10,'');
+            registro_acceso(10,'Pago en espera');
             $request->shopping_cart->status = 1;
             $request->shopping_cart->user_id = Auth::user()->id;
             $request->shopping_cart->fecha = Carbon::now();
@@ -84,7 +85,7 @@ class MercadoPagoController extends Controller
             });
             break;
       case 'pending_review_manual':
-            registro_acceso(10,'');
+            registro_acceso(10,'Pago en espera, revisión manual MP');
             $request->shopping_cart->status = 1;
             $request->shopping_cart->user_id = Auth::user()->id;
             $request->shopping_cart->fecha = Carbon::now();

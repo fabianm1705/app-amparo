@@ -14,4 +14,15 @@ class PaymentMethod extends Model
   protected $fillable = [
       'name', 'activo', 'image_url', 'percentage', 'cant_cuotas',
   ];
+
+  public function products()
+  {
+    return $this->hasMany('App\Models\Product','payment_method_id');
+  }
+
+  public function payment_method_items()
+  {
+    return $this->hasMany('App\PaymentMethodItem','payment_method_id');
+  }
+
 }

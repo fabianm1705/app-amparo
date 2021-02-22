@@ -40,7 +40,8 @@ class ProductController extends Controller
     public function create()
     {
       $categories = Category::orderBy('nombre','asc')->where('activa',1)->get();
-      return view('admin.product.create', compact('categories'));
+      $payment_methods = PaymentMethod::where('activo',1)->get();
+      return view('admin.product.create', compact('categories','payment_methods'));
     }
 
     /**
@@ -77,6 +78,7 @@ class ProductController extends Controller
       $product->vigente = $request->input('vigente');
       $product->stock = $request->input('stock');
       $product->category_id = $request->input('category_id');
+      $product->payment_method_id = $request->input('payment_method_id');
       $product->longDescription = $request->input('longDescription');
       $product->image_url = $image_name;
       $product->image_url2 = $image_name2;
@@ -113,7 +115,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
       $categories = Category::orderBy('nombre','asc')->get();
-      return view('admin.product.edit', compact("product","categories"));
+      $payment_methods = PaymentMethod::where('activo',1)->get();
+      return view('admin.product.edit', compact("product","categories","payment_methods"));
     }
 
     /**
@@ -154,6 +157,7 @@ class ProductController extends Controller
       $product->category_id = $request->input('category_id');
       $product->vigente = $request->input('vigente');
       $product->longDescription = $request->input('longDescription');
+      $product->payment_method_id = $request->input('payment_method_id');
 
       $product->save();
 
@@ -171,16 +175,14 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
       $product->delete();
-      return redirect()
-        ->route('products.index');
+      return redirect()->route('products.index');
     }
 
     public function shopping()
     {
       registro_acceso(5,'');
-      $payment_methods = DB::table('payment_methods')->where('activo',1)->orderBy('cant_cuotas')->get();
       $categories = Category::inRandomOrder()->where('activa',1)->get();
-      return view('admin.product.shopping', compact("categories","payment_methods"));
+      return view('admin.product.shopping', compact("categories"));
     }
 
     public function getProductsXCategory($id)

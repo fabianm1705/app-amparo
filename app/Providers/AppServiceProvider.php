@@ -80,12 +80,8 @@ class AppServiceProvider extends ServiceProvider
 
       $porccontado=24;
       if(Schema::hasTable('payment_methods')){
-        $payment_methods = DB::table('payment_methods')->where('cant_cuotas',1)->get();
-        if($payment_methods){
-          foreach($payment_methods as $payment_method){
-            $porccontado = $payment_method->percentage;
-          }
-        }
+        $payment_method = DB::table('payment_methods')->first();
+        $porccontado = $payment_method->percentage;
       }
       View::share('porccontado', $porccontado);
     }

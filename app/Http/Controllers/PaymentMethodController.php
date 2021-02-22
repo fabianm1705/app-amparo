@@ -43,12 +43,6 @@ class PaymentMethodController extends Controller
    */
   public function store(Request $request)
   {
-    // if($request->hasFile('image_url')){
-    //   $image_file=$request->file('image_url');
-    //   $image_name=time().$image_file->getClientOriginalName();
-    //   $image_file->move(public_path().'/images',$image_name);
-    // }
-
     $payment_method = new PaymentMethod;
     $payment_method->name = $request->input('name');
     $payment_method->percentage = $request->input('percentage');

@@ -17,16 +17,31 @@ class ProductInShoppingCartsController extends Controller
   public function store(Request $request)
   {
     $product = Product::find($request->product_id);
+    $porcentaje = $product->payment_method->payment_method_items()->where('activo',1)->where('cuotas',1)->get()->first();
     $inShoppingCart = ProductInShoppingCart::create([
       'shopping_cart_id' => $request->shopping_cart->id,
       'product_id' => $request->product_id,
       'cantidadUnidades' => 1,
-      'costo' => $product->costo
+      'cantidadCuotas' => 1,
+      'costo' => $product->costo,
+      'percentage' => $porcentaje->percentage
     ]);
     if($inShoppingCart){
       return redirect()->back();
     }
     return redirect()->back()->withErrors('Hubo un problema');
+  }
+
+  public function update(Request $request)
+  {
+    $productInShoppingCart = ProductInShoppingCart::where([
+                ['product_id', '=', $request->product_id],
+                ['shopping_cart_id', '=', $request->shopping_cart_id]])->get()->first();
+    $productInShoppingCart->cantidadUnidades = $request->cant;
+    $productInShoppingCart->save();
+    if($productInShoppingCart){
+      return "Actualizado con éxito ".$productInShoppingCart->cantidadUnidades;
+    }
   }
 
   public function products(Request $request)
@@ -47,8 +62,10 @@ class ProductInShoppingCartsController extends Controller
 
   public function getProducts($id)
   {
-    $productsId = ProductInShoppingCart::where('shopping_cart_id',$id)->pluck('product_id')->toArray();
-    $products = Product::whereIn('id',$productsId)->orderBy('id', 'desc')->get();
+    $products = ProductInShoppingCart::where('shopping_cart_id',$id)->get();
+    foreach($products as $producto){
+        $producto->modelo = $producto->product->modelo;
+    }
     return $products;
   }
 

@@ -1,4 +1,5 @@
 window.Mercadopago.setPublishableKey("APP_USR-196b047d-2503-445b-aab2-fd91a3cc3af2");
+// window.Mercadopago.setPublishableKey("TEST-9492b601-a890-430e-a159-f156dc349520");
 
 window.Mercadopago.getIdentificationTypes();
 
@@ -114,7 +115,6 @@ function getCardToken(event){
     if(!doSubmit){
         let $form = document.getElementById('paymentForm');
         window.Mercadopago.createToken($form, setCardTokenAndPay);
-
         return false;
     }
 };
@@ -163,6 +163,16 @@ function updatePrice(){
       document.getElementById('quantityy'+i).innerHTML = quantity;
       let unitPrice = document.getElementById('unit-price'+i).innerHTML;
       amount = amount + parseInt(unitPrice) * parseInt(quantity);
+      axios.post('/updateCart', {
+          product_id : document.getElementById('prodid'+i).value,
+          cant : quantity,
+          shopping_cart_id : document.getElementById('shopid').value
+        })
+        .then((resp)=>{
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     }
     document.getElementById('cart-total').innerHTML = '$ ' + amount;
     document.getElementById('summary-total').innerHTML = '$ ' + amount;

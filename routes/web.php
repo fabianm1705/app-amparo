@@ -61,6 +61,8 @@ Route::group(['prefix' => 'admin'], function() {
   Route::resource('payment_methods', 'PaymentMethodController')
               ->except('show')
               ->middleware('auth');
+  Route::resource('payment_method_items', 'PaymentMethodItemsController')
+              ->middleware('auth');
   Route::resource('users', 'UserController')
               ->except(['store','create'])
               ->middleware('auth');
@@ -94,6 +96,9 @@ Route::delete('/shopping_cart_destroy/{id}', 'ShoppingCartController@destroy')
 Route::post('/getProducts/{id}', 'ProductInShoppingCartsController@getProducts')
               ->middleware('auth')
               ->name('getProducts');
+Route::post('/updateCart', 'ProductInShoppingCartsController@update')
+              ->middleware('auth')
+              ->name('updateCart');
 
 
 Route::delete('/out_shopping_cart/{id}', 'ProductInShoppingCartsController@destroy')

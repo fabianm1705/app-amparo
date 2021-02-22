@@ -53,7 +53,7 @@
               <th>Profesional</th>
               <th>Soc</th>
               <th>Amp</th>
-              <th>App</th>
+              <th>noAOP</th>
               <th>Estado</th>
               <th>Pago</th>
               <th>Obs</th>
@@ -68,8 +68,10 @@
                   <td>{{ $order->user->name }}</td>
                   <td>{{ $order->doctor->apeynom }}</td>
                   <td>{{ $order->monto_s }}</td>
-                  <td>{{ $order->monto_a }}</td>
                   <td>{{ $order->lugarEmision }}</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" id="no_aop" name="no_aop" disabled value="1" {{ $order->user->no_aop ? 'checked="checked"' : '' }}>
+                  </td>
                   <td>{{ $order->estado }}</td>
                   @if($order->fechaPago)
                     <td>{{ \Carbon\Carbon::parse($order->fechaPago)->format('d/m/Y') }}</td>

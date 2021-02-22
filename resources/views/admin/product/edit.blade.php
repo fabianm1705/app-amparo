@@ -13,7 +13,7 @@
             @method('PUT')
             @csrf
             <div class="row justify-content-server">
-              <div class="col-sm-12 col-md-6 col-lg-3">
+              <div class="col-sm-12 col-md-6 col-lg-2">
                 <div class="form-group">
                   <label for="content">Categoría</label>
                   <select class="custom-select" name="category_id" id="category_id">
@@ -33,16 +33,26 @@
                   <input type="text" class="form-control" name="modelo" id="modelo" value="{{ $product->modelo }}">
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-3">
+              <div class="col-sm-12 col-md-6 col-lg-2">
                 <div class="form-group">
                   <label for="empresa">Empresa</label>
                   <input type="text" class="form-control" name="empresa" id="empresa" value="{{ $product->empresa }}">
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-3">
+              <div class="col-sm-12 col-md-6 col-lg-2">
                 <div class="form-group">
                   <label for="costo">Costo</label>
                   <input type="text" class="form-control" name="costo" id="costo" value="{{ $product->costo }}">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="form-group">
+                  <label for="content">Lista de Precios</label>
+                  <select class="custom-select" name="payment_method_id" id="payment_method_id">
+                    @foreach($payment_methods as $payment_method)
+                      <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
+                    @endforeach
+                  </select>
                 </div>
               </div>
             </div>

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-11">
+    <div class="col-md-12">
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Productos</h5>
           <div class="ml-auto blanco mr-2 mt-2">
@@ -30,6 +30,7 @@
               <th>Modelo</th>
               <th>Descripcion</th>
               <th class="text-center">Costo</th>
+              <th>Precio</th>
               <th class="text-center">Activo</th>
               <th class="text-center">Acciones</th>
             </thead>
@@ -40,6 +41,7 @@
                   <td>{{ $product->modelo }}</td>
                   <td class="text-justify">{{ $product->descripcion }}</td>
                   <td class="text-center">${{ $product->costo }}</td>
+                  <td>{{ $product->payment_method->name }}</td>
                   <td class="text-center">
                     <input type="checkbox" class="form-check-input" id="vigente" name="vigente" disabled value="1" {{ $product->vigente ? 'checked="checked"' : '' }}>
                   </td>

@@ -20,18 +20,22 @@
                   <td class="align-middle">{{ $shopping_cart->user->name }}</td>
                   <td class="align-middle">{{ $shopping_cart->fecha }}</td>
                   <td class="d-flex">
-                    <button class="btn btn-sm" onclick="cargarCarrito({{ $shopping_cart->id }},{{ $shopping_cart->paymentMethod->percentage }},{{ $shopping_cart->paymentMethod->cant_cuotas }})" style="background-color: transparent;">
-                      <div class="">
-                        <i class="material-icons">double_arrow</i>
-                      </div>
-                    </button>
                     <form id="formEliminar{{ $shopping_cart->id }}" action="{{ route('shopping_cart.destroy', ['id' => $shopping_cart->id ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf
                       <button class="btn btn-sm" onclick="borrarRegistro({{ $shopping_cart->id }})">
-                        Borrar
+                        @if(Auth::user()->darkMode)
+                          <i class="material-icons" style="color:white">delete</i>
+                        @else
+                          <i class="material-icons">delete</i>
+                        @endif
                       </button>
                     </form>
+                    <button class="btn btn-sm" onclick="cargarCarrito({{ $shopping_cart->id }})" style="background-color: transparent;">
+                      <div class="">
+                        <i class="material-icons">double_arrow</i>
+                      </div>
+                    </button>
                   </td>
                 </tr>
               @endforeach
@@ -47,7 +51,7 @@
             <thead>
               <th>Producto</th>
               <th>Cantidad</th>
-              <th class="text-right">Cuota</th>
+              <th class="text-right">Monto</th>
             </thead>
             <tbody id="tablaproductos">
             </tbody>

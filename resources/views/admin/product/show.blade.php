@@ -47,15 +47,15 @@
                   <center><div class="card shadow-sm mb-3 w-75">
                     <div class="card-body">
                       <div class="row justify-content-center">
-                        @foreach($payment_methods as $payment_method)
-                                <div class="col-10" id="monto">
-                                  @if($payment_method->cant_cuotas==1)
-                                    1 pago de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                                  @else
-                                    {{ $payment_method->cant_cuotas }} cuotas de ${{ round($product->costo / 10 * (1+($payment_method->percentage/100)) / $payment_method->cant_cuotas) * 10 }}
-                                  @endif
-                                </div>
-                        @endforeach
+                          @foreach ($product->payment_method->payment_method_items->where('activo', 1) as $payment_method_item)
+                            <div class="col-10" id="monto">
+                              @if($payment_method_item->cuotas==1)
+                                <small>{{ $payment_method_item->cuotas }} pago de $</small>{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100))) * 10 }}
+                              @else
+                                <small>{{ $payment_method_item->cuotas }} cuotas de $</small>{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100)) / $payment_method_item->cuotas) * 10 }}
+                              @endif
+                            </div>
+                          @endforeach
                         <img class="w-75 mt-3" src="{{ asset('images/cuotascasa.webp') }}" alt="Cuotas de la Casa">
                       </div>
                     </div>
