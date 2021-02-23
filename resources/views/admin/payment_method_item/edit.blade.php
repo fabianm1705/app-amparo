@@ -6,7 +6,7 @@
     <div class="col-md-8">
       <div class="card shadow-sm"><br>
         <header class="centrado">
-          <h4>Modificar Item Método de Pago</h4>
+          <h4>Modificar Item Lista de Precios</h4>
         </header>
         <div class="card-body">
           <form action="{{ route('payment_method_items.update', ['payment_method_item' => $payment_method_item]) }}" method="post">

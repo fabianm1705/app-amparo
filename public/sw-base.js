@@ -10,7 +10,7 @@ importScripts(
 
 workbox.core.setCacheNameDetails({
   prefix: 'app-amparo',
-  suffix: 'v5',
+  suffix: 'v6',
   precache: 'precache-cache',
   runtime: 'runtime-cache'
 });

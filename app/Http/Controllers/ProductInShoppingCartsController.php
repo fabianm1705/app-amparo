@@ -17,7 +17,7 @@ class ProductInShoppingCartsController extends Controller
   public function store(Request $request)
   {
     $product = Product::find($request->product_id);
-    $porcentaje = $product->payment_method->payment_method_items()->where('activo',1)->where('cuotas',1)->get()->first();
+    $porcentaje = $product->payment_method->payment_method_items()->where('cuotas',1)->get()->first();
     $inShoppingCart = ProductInShoppingCart::create([
       'shopping_cart_id' => $request->shopping_cart->id,
       'product_id' => $request->product_id,

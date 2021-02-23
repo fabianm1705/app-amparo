@@ -24,7 +24,7 @@ class ContactUsController extends Controller
               'user_message' => $request->get('message')
            ), function($message){
                 $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
               ->subject('Socio: Alguien ha enviado un mensaje');
       });
       return redirect('home')->with('message', '¡Gracias por el mensaje! Nos contactaremos a la brevedad.');
@@ -42,8 +42,8 @@ class ContactUsController extends Controller
               'telefono' => $request->get('telefono'),
               'horario' => $request->get('horario'),
            ), function($message){
-                $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                $message->from('admin@amparosrl.com.ar', 'Admin. Amparo');
+                $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
               ->subject('Visitante: Alguien solicita una llamada');
       });
       return redirect('/')->with('jsAlert', '¡Gracias! Nos contactaremos a la brevedad');
@@ -64,7 +64,7 @@ class ContactUsController extends Controller
               'horario' => $request->get('horario'),
            ), function($message){
                 $message->from('admin@amparosrl.com.ar');
-                $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
               ->subject('Visitante: Alguien solicita un promotor');
       });
       return redirect('/')->with('jsAlert', '¡Gracias! Nos contactaremos para coordinar la visita.');
@@ -85,7 +85,7 @@ class ContactUsController extends Controller
               'user_message' => $request->get('message')
            ), function($message){
                $message->from('admin@amparosrl.com.ar');
-               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+               $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
               ->subject('Visitante: Alguien ha enviado un mensaje');
       });
       return redirect('/')->with('jsAlert', 'Gracias por el mensaje, ¡Nos contactaremos a la brevedad!');
@@ -98,7 +98,7 @@ class ContactUsController extends Controller
               'user_message' => 'Mensaje'
            ), function($message){
                $message->from('admin@amparosrl.com.ar');
-               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+               $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
               ->subject('Socio: Activaron un plan');
       });
     }

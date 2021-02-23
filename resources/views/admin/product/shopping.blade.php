@@ -34,11 +34,7 @@
                       <div class="mt-1">
                         @foreach ($product->payment_method->payment_method_items->where('activo', 1) as $payment_method_item)
                           <div class="col-10" id="monto">
-                            @if($payment_method_item->cuotas==1)
-                              <small>{{ $payment_method_item->cuotas }} pago de $</small>{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100))) * 10 }}
-                            @else
-                              <small>{{ $payment_method_item->cuotas }} cuotas de $</small>{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100)) / $payment_method_item->cuotas) * 10 }}
-                            @endif
+                              <small>$</small>{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100)) / $payment_method_item->cuotas) * 10 }}<small> x {{ $payment_method_item->cuotas }}</small>
                           </div>
                         @endforeach
                       </div>

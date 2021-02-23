@@ -108,8 +108,8 @@
                                 <a id="roles" class="dropdown-item" href="{{ route('roles.index') }}">Roles</a>
                               @endcan
                               @can('payment_methods.index')
-                                <a id="metodosPago" class="dropdown-item" href="{{ route('payment_methods.index') }}">Métodos de Pago</a>
-                                <a id="metodosPagoItem" class="dropdown-item" href="{{ route('payment_method_items.index') }}">Ítems Métodos de Pago</a>
+                                <a id="metodosPago" class="dropdown-item" href="{{ route('payment_methods.index') }}">Listas de Precios</a>
+                                <a id="metodosPagoItem" class="dropdown-item" href="{{ route('payment_method_items.index') }}">Ítems Listas de Precios</a>
                               @endcan
                               @can('interests.index')
                                 <a id="zonasInteres" class="dropdown-item" href="{{ route('interests.index') }}">Zonas de Interés</a>

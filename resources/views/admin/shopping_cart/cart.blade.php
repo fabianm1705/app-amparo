@@ -24,23 +24,32 @@
                 <div class="info">
                   <div class="product-details">
                     <div class="row justify-content-md-center">
-                      <div class="col-md-3">
+                      <div class="col-md-3 col-sm-12">
                         <img class="img-fluid mx-auto d-block image" src="{{ asset('images/products/'.$product->image_url) }}" alt="{{ $product->modelo }}">
                       </div>
-                      <div class="col-md-4 product-detail">
+                      <div class="col-md-5 col-sm-12 product-detail">
                         <h5>Producto</h5>
                         <div class="product-info">
                           <p><b><span id="product-description">{{ $product->modelo }}</span></b> by {{ $product->empresa }}<br>
                           <small>{{ $product->descripcion }}</small><br>
-                          @foreach($product->payment_method->payment_method_items->where('activo', 1)->where('cuotas', 1) as $payment_method_item)
+                          @foreach($product->payment_method->payment_method_items->where('cuotas', 1) as $payment_method_item)
                             <b>Precio:</b> $ <span id="unit-price{{ $index }}">{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100))) * 10 }}</span></p>
                           @endforeach
                         </div>
                       </div>
-                      <div class="col-md-3 product-detail">
-                        <label for="quantity{{ $index }}"><h5>Cantidad</h5></label>
+                      <div class="col-md-2 col-sm-4 product-detail">
+                        <label for="quantity{{ $index }}"><h5>Cant</h5></label>
                         <input type="number" id="quantity{{ $index }}" value="1" class="form-control">
                         <input type="hidden" id="prodid{{ $index }}" value="{{ $product->id }}">
+                      </div>
+                      <div class="col-md-2 col-sm-3 mt-5">
+                        <form action="{{ route('out_shopping_cart.destroy', ['id' => $product->id ]) }}" method="post" style="background-color: transparent;">
+                          @method('DELETE')
+                          @csrf
+                          <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                            <i class="material-icons">close</i>
+                          </button>
+                        </form>
                       </div>
                     </div>
                   </div>
@@ -72,7 +81,7 @@
             <input type="hidden" id="shopid" value="{{ $shopping_cart->id }}">
             @foreach($shopping_cart->products as $index => $product)
               <div class="item">
-                @foreach($product->payment_method->payment_method_items->where('activo', 1)->where('cuotas', 1) as $payment_method_item)
+                @foreach($product->payment_method->payment_method_items->where('cuotas', 1) as $payment_method_item)
                   <span class="price" id="unit-price">{{ round($product->costo / 10 * (1+($payment_method_item->percentage/100))) * 10 }}</span>
                   <p class="item-name">{{ $product->modelo }} x <span id="quantityy{{ $index }}"></span></p>
                 @endforeach

@@ -60,7 +60,7 @@ class MercadoPagoController extends Controller
                     'user_message' => 'Mensaje'
                  ), function($message){
                      $message->from('admin@amparosrl.com.ar');
-                     $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
                     ->subject('Confirmaron una compra en el Shopping, pago por MercadoPago');
             });
             break;
@@ -80,7 +80,7 @@ class MercadoPagoController extends Controller
                     'user_message' => 'Mensaje'
                  ), function($message){
                      $message->from('admin@amparosrl.com.ar');
-                     $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
                     ->subject('Confirmaron una compra en el Shopping, pago en proceso por MercadoPago');
             });
             break;
@@ -100,7 +100,7 @@ class MercadoPagoController extends Controller
                     'user_message' => 'Mensaje'
                  ), function($message){
                      $message->from('admin@amparosrl.com.ar');
-                     $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
+                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
                     ->subject('Confirmaron una compra en el Shopping, pago en proceso por MercadoPago');
             });
             break;

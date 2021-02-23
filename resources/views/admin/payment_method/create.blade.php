@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card shadow-sm"><br>
           <header class="centrado">
-            <h4>Cargar Nuevo Método de Pago</h4>
+            <h4>Cargar Nueva Lista de Precios</h4>
           </header>
           <div class="card-body">
             <form action="{{ route('payment_methods.store') }}" method="post" enctype="multipart/form-data">

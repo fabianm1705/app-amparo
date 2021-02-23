@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="fresh-table full-color-orange d-flex shadow-sm">
-          <h5 class="card-title text-white mt-3 mb-3 ml-3">Item Método de Pago</h5>
+          <h5 class="card-title text-white mt-3 mb-3 ml-3">Item Lista de Precios</h5>
           <ul class="nav justify-content-end ml-auto mr-2 mt-2">
               <li class="nav-item ml-2 blanco">
                 @can('payment_method_items.create')
