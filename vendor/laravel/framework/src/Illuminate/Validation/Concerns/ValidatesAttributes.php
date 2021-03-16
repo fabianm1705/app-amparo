@@ -1054,7 +1054,7 @@ trait ValidatesAttributes
      */
     public function validateImage($attribute, $value)
     {
-        return $this->validateMimes($attribute, $value, ['jpeg', 'png', 'gif', 'bmp', 'svg', 'webp']);
+        return $this->validateMimes($attribute, $value, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp']);
     }
 
     /**
@@ -1160,7 +1160,11 @@ trait ValidatesAttributes
      */
     public function validateJson($attribute, $value)
     {
-        if (! is_scalar($value) && ! method_exists($value, '__toString')) {
+        if (is_array($value)) {
+            return false;
+        }
+
+        if (! is_scalar($value) && ! is_null($value) && ! method_exists($value, '__toString')) {
             return false;
         }
 
@@ -1204,6 +1208,10 @@ trait ValidatesAttributes
 
         if ($this->shouldBlockPhpUpload($value, $parameters)) {
             return false;
+        }
+
+        if (in_array('jpg', $parameters) || in_array('jpeg', $parameters)) {
+            $parameters = array_unique(array_merge($parameters, ['jpg', 'jpeg']));
         }
 
         return $value->getPath() !== '' && in_array($value->guessExtension(), $parameters);
@@ -1414,7 +1422,7 @@ trait ValidatesAttributes
 
         [$values, $other] = $this->prepareValuesAndOther($parameters);
 
-        if (in_array($other, $values)) {
+        if (in_array($other, $values, is_bool($other))) {
             return $this->validateRequired($attribute, $value);
         }
 
@@ -1435,7 +1443,7 @@ trait ValidatesAttributes
 
         [$values, $other] = $this->prepareValuesAndOther($parameters);
 
-        return ! in_array($other, $values);
+        return ! in_array($other, $values, is_bool($other));
     }
 
     /**
@@ -1452,7 +1460,7 @@ trait ValidatesAttributes
 
         [$values, $other] = $this->prepareValuesAndOther($parameters);
 
-        return in_array($other, $values);
+        return in_array($other, $values, is_bool($other));
     }
 
     /**
@@ -1507,7 +1515,7 @@ trait ValidatesAttributes
 
         [$values, $other] = $this->prepareValuesAndOther($parameters);
 
-        if (! in_array($other, $values)) {
+        if (! in_array($other, $values, is_bool($other))) {
             return $this->validateRequired($attribute, $value);
         }
 

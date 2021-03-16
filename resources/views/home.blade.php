@@ -54,10 +54,10 @@
                 </button>
               </div>
             @endcan
-            @can('users.suscripcion')
+            @can('users.pagos')
               <div class="col-sm-6 col-md-4 col-lg-2 blanco">
                 <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('users.suscripcion', ['id' => Auth::user()->id ]) }}">Suscribirme</a>
+                  <a style="text-decoration:none;" href="{{ route('users.pagos', ['id' => Auth::user()->id ]) }}">Pagos</a>
                 </button>
               </div>
             @endcan

@@ -11,6 +11,9 @@
 |
 */
 
+use App\ShoppingCart;
+use Illuminate\Support\Carbon;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -115,7 +118,6 @@ Route::delete('/out_user_interest/{id}', 'InterestController@borrar')
               ->middleware(['auth','can:interests.destroy'])
               ->name('user_interest.borrar');
 
-
 //Buscar socios
 Route::get('emergencia', 'UserController@emergencia')
               ->middleware('auth')
@@ -158,7 +160,7 @@ Route::post('activar/odontologia/{precio_individual_odontologia}', 'LayerControl
               ->name('activar.odontologia');
 
 
-Route::get('pdf/{id}', 'PDFController@invoice')
+Route::get('pdf/{id}', 'PDFController@orden')
               ->middleware('auth')
               ->name('pdf');
 Route::get('factura/{id}', 'PDFController@factura')
@@ -219,12 +221,6 @@ Route::post('/process_payment', 'MercadoPagoController@process_payment')
 Route::get('orders/indice', 'OrderController@indice')
               ->middleware(['auth','can:orders.indice'])
               ->name('orders.indice');
-// Route::post('getOnlyOrders/{id}', 'OrderController@getOnlyOrders')
-//               ->middleware('auth')
-//               ->name('getOnlyOrders');
-// Route::post('cantOrders/{id}', 'OrderController@cantOrders')
-//               ->middleware('auth')
-//               ->name('cantOrders');
 
 Route::get('users/panel/{id}', 'UserController@panel')
               ->middleware(['auth','can:users.panel'])
@@ -232,6 +228,9 @@ Route::get('users/panel/{id}', 'UserController@panel')
 Route::get('users/suscripcion', 'UserController@suscripcion')
               ->middleware('auth')
               ->name('users.suscripcion');
+Route::get('users/pagos', 'UserController@pagos')
+              ->middleware('auth')
+              ->name('users.pagos');
 Route::get('password/edit', 'UserController@editPassword')
               ->name('password.edit');
 Route::post('password/change', 'UserController@change')
@@ -283,3 +282,13 @@ Route::post('contacto/promotor','ContactUsController@contactoPromotor')
 
 Route::post('/','ContactUsController@contactoWelcome')
   ->name('contacto.welcome');
+
+Route::post('/notifications', function () {
+    $shopping_cart = ShoppingCart::where('operation_id',$_POST["id"])->get()->first();
+    if($shopping_cart){
+      $shopping_cart->estado = 'pagado';
+      $shopping_cart->fechaPago = Carbon::now();
+      $shopping_cart->save();
+    }
+    return http_response_code(200);
+});

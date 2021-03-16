@@ -16,7 +16,7 @@
       name="description"
       content="Amparo es una empresa de servicios sociales nacida en 2003,
                dedicada a brindar servicios de medicina ambulatoria, sepelio y odontología.">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Amparo') }}</title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('images/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">

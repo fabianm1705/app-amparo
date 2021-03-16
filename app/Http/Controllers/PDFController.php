@@ -8,30 +8,23 @@ use App\Concept;
 use App\Receipt;
 use PDF;
 use App\NumerosEnLetras;
+use App\Services\GitHub;
 
 class PDFController extends Controller
 {
-    public function invoice($id)
+    public function orden($id)
       {
-        $orden = $this->getData($id);
-        foreach ($orden as $order)
-        {
-          if($order->doctor->specialty->id === 19){
-            $coseguro = "";
-          }else{
-            $coseguro = "Coseguro único a abonar en consultorio: $".$order->monto_s;
-          }
-          $view =  \View::make('admin.order.show', compact('order','coseguro'))->render();
-          $pdf = \App::make('dompdf.wrapper');
-          $pdf->loadHTML($view);
+        $coseguro = "";
+        $order = Order::where('id',$id)->get()->first();
+        if($order->doctor->specialty->id === 19){
+          $coseguro = "";
+        }else{
+          $coseguro = "Coseguro único a abonar en consultorio: $".$order->monto_s;
         }
+        $view =  \View::make('admin.order.show', compact('order','coseguro'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
         return $pdf->stream('orden-'.$order->id.'.pdf');
-      }
-
-    public function getData($id)
-      {
-        $order = Order::where('id',$id)->get();
-        return $order;
       }
 
     public function recibo($id)

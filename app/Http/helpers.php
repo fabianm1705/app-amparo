@@ -95,4 +95,4 @@ function cantOrdersOdonto($user)
     $order_odonto_count = $order->order_count;
   }
   return $order_odonto_count;
-}
+ }

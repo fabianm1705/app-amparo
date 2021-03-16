@@ -17,6 +17,7 @@ function darkMode(valor){
   var el16 = document.getElementById("categorias");
   var el17 = document.getElementById("roles");
   var el18 = document.getElementById("metodosPago");
+  var el25 = document.getElementById("metodosPagoItem");
   var el19 = document.getElementById("zonasInteres");
   var el20 = document.getElementById("planes");
   var el24 = document.getElementById("recibos");
@@ -47,11 +48,12 @@ function darkMode(valor){
     el18.classList.add('text-white');
     el19.classList.add('text-white');
     el20.classList.add('text-white');
-    el24.classList.add('text-white');
     el21.classList.add('text-white');
     el22.style.color = "white";
     el23.style.backgroundImage = null;
     el23.classList.add('bg-dark');
+    el24.classList.add('text-white');
+    el25.classList.add('text-white');
   }else{
     el1.classList.remove('navbar-dark');
     el1.classList.remove('bg-dark');
@@ -75,9 +77,10 @@ function darkMode(valor){
     el18.classList.remove('text-white');
     el19.classList.remove('text-white');
     el20.classList.remove('text-white');
-    el24.classList.remove('text-white');
     el21.classList.remove('text-white');
     el22.style.color = "black";
     el23.style.backgroundImage = "url('https://amparosrl.com.ar/images/01.webp')";
+    el24.classList.remove('text-white');
+    el25.classList.remove('text-white');
   }
 }

@@ -163,8 +163,8 @@ class UserController extends Controller
   {
     registro_acceso(12,'Odontología');
     $subscriptions = Subscription::where('odontologia',1)->get();
-    $users = $subscriptions->flatMap->users->where('no_aop',0)->sortBy('name');
-    $usersCount = $subscriptions->flatMap->users->where('no_aop',0)->count();
+    $users = $subscriptions->flatMap->users->where('no_aop',0)->where('activo',1)->sortBy('name');
+    $usersCount = $subscriptions->flatMap->users->where('no_aop',0)->where('activo',1)->count();
     return view('admin.user.odontologia',[
       'users' => $users,
       'usersCount' => $usersCount
@@ -175,17 +175,15 @@ class UserController extends Controller
   {
     registro_acceso(12,'Emergencia');
     $subscriptions = Subscription::where('salud',1)->get();
-    $groups = $subscriptions->flatMap->groups->sortBy('nroSocio');
-    $uusers = $subscriptions->flatMap->users->sortBy('name');
     $users = collect([]);
     $usersCount = 0;
-    foreach ($subscriptions->flatMap->groups as $group) {
+    foreach ($subscriptions->flatMap->groups->where('activo',1) as $group) {
       $usersCount = $usersCount + $group->users->count();
-      foreach ($group->users as $user) {
+      foreach ($group->users->where('activo',1) as $user) {
         $users->push($user);
       }
     }
-    foreach ($subscriptions->flatMap->users as $user) {
+    foreach ($subscriptions->flatMap->users->where('activo',1) as $user) {
       $usersCount = $usersCount + 1;
       $users->push($user);
     }
@@ -435,7 +433,11 @@ class UserController extends Controller
         }
         $user->nroAdh = utf8_encode(trim($datos[0]));
         $user->name = Str::title(utf8_encode(trim($datos[1])));
-        $user->nroDoc = str_replace(".","",utf8_encode(trim($datos[2])));
+        if($datos[2]){
+          $user->nroDoc = str_replace(".","",utf8_encode(trim($datos[2])));
+        }else{
+          $user->nroDoc = 1;
+        }
         $user->tipoDoc=1;
         $time = strtotime($datos[3]);
         $user->fechaNac = date('Y-m-d',$time);
@@ -487,6 +489,11 @@ class UserController extends Controller
     $user = Auth::user();
     $user->save();
     return view('admin.suscripcion');
+  }
+
+  public function pagos()
+  {
+    return view('admin.pagos');
   }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="{{ config('app.locale', 'es') }}" prefix="og: https://ogp.me/ns#">
 
 <head>
   <title>

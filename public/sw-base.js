@@ -1,6 +1,9 @@
 importScripts(
-	'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
+	'https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js'
 );
+// importScripts(
+// 	'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
+// );
 
 // if (workbox) { //workbox solo existe en el scope del serviceWorker
 //   console.log('Workbox loaded!');
@@ -10,22 +13,24 @@ importScripts(
 
 workbox.core.setCacheNameDetails({
   prefix: 'app-amparo',
-  suffix: 'v6',
+  suffix: 'v7',
   precache: 'precache-cache',
   runtime: 'runtime-cache'
 });
 
-workbox.precaching.precacheAndRoute([]);
+const precacheManifest = injectionPoint;
+
+workbox.precaching.precacheAndRoute(precacheManifest);
 
 workbox.routing.registerRoute(
 	new RegExp('/images/'),
 	new workbox.strategies.StaleWhileRevalidate({
 		cacheName: 'images',
 		plugins: [
-			new workbox.expiration.Plugin({
+			new workbox.expiration.ExpirationPlugin({
 				maxEntries: 15
 			}),
-			new workbox.cacheableResponse.Plugin({
+			new workbox.cacheableResponse.CacheableResponsePlugin({
 				statuses: [200]
 			})
 		]
@@ -35,10 +40,10 @@ workbox.routing.registerRoute(
 const networkFirstHandler = new workbox.strategies.NetworkFirst({
 	cacheName: 'dynamic',
 	plugins: [
-		new workbox.expiration.Plugin({
+		new workbox.expiration.ExpirationPlugin({
 			maxEntries: 10
 		}),
-		new workbox.cacheableResponse.Plugin({
+		new workbox.cacheableResponse.CacheableResponsePlugin({
 			statuses: [200]
 		})
 	]

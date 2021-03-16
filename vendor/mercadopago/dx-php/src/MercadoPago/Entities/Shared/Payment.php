@@ -15,7 +15,6 @@ use MercadoPago\Annotation\Attribute;
  * @RestMethod(resource="/v1/payments/search", method="search")
  * @RestMethod(resource="/v1/payments/:id", method="update")
  * @RestMethod(resource="/v1/payments/:id/refunds", method="refund")
- * @RequestParam(param="access_token")
  */
 class Payment extends Entity
 {
@@ -537,6 +536,20 @@ class Payment extends Entity
      * @Attribute()
      */
     protected $charges_details;
+
+    /**
+     * taxes
+     * @Attribute(type = "array")
+     * @var array
+     */
+    protected $taxes;
+
+    /**
+     * net_amount
+     * @var float
+     * @Attribute(type = "float")
+     */
+    protected $net_amount;
 
     /**
      * refund

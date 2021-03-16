@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "sweetalert2": "^9.17.1",
-        "vuex": "^3.3.0"
+        "vuex": "^3.3.0",
+        "workbox-cli": "^6.1.1"
     }
 }

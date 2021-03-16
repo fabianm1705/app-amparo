@@ -7,23 +7,20 @@ use App\ShoppingCart;
 use MercadoPago\SDK;
 use MercadoPago\Payment;
 use MercadoPago\Payer;
-use Mail;
 use Auth;
 use Illuminate\Support\Carbon;
-use App\Models\PaymentMethod;
+use Mail;
 
 class MercadoPagoController extends Controller
 {
   public function __construct()
   {
     $this->middleware('shopping_cart');
+    SDK::setAccessToken(config('app.mercadopago.access_token'));
   }
 
   public function process_payment(Request $request)
   {
-    SDK::setAccessToken("APP_USR-6083498452659149-012612-b3f312cb28965682cca230e1586e007b-540492876");
-    // SDK::setAccessToken("TEST-8573893571173885-020408-508c7d9efbea13d65fc317d4d5129759-708342243");
-
     $payment = new Payment();
     $payment->transaction_amount = (float)$_POST['transactionAmount'];
     $payment->token = $_POST['token'];
@@ -59,9 +56,9 @@ class MercadoPagoController extends Controller
                     'name' => 'Probando',
                     'user_message' => 'Mensaje'
                  ), function($message){
-                     $message->from('admin@amparosrl.com.ar');
-                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
-                    ->subject('Confirmaron una compra en el Shopping, pago por MercadoPago');
+                     $message->from(config('mail.username'));
+                     $message->to(config('mail.amparo'), 'Admin. Amparo')
+                    ->subject('Confirmaron una compra en el Shopping, pago en proceso por MercadoPago');
             });
             break;
       case 'pending_contingency':
@@ -79,8 +76,8 @@ class MercadoPagoController extends Controller
                     'name' => 'Probando',
                     'user_message' => 'Mensaje'
                  ), function($message){
-                     $message->from('admin@amparosrl.com.ar');
-                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
+                     $message->from(config('mail.username'));
+                     $message->to(config('mail.amparo'), 'Admin. Amparo')
                     ->subject('Confirmaron una compra en el Shopping, pago en proceso por MercadoPago');
             });
             break;
@@ -99,8 +96,8 @@ class MercadoPagoController extends Controller
                     'name' => 'Probando',
                     'user_message' => 'Mensaje'
                  ), function($message){
-                     $message->from('admin@amparosrl.com.ar');
-                     $message->to('amparoserviciossociales@gmail.com', 'Admin. Amparo')
+                     $message->from(config('mail.username'));
+                     $message->to(config('mail.amparo'), 'Admin. Amparo')
                     ->subject('Confirmaron una compra en el Shopping, pago en proceso por MercadoPago');
             });
             break;
@@ -164,4 +161,10 @@ class MercadoPagoController extends Controller
       ->route($ruta)
       ->with('message',$message);
   }
+
+  public function chequear_payment($id)
+  {
+
+  }
+
 }

@@ -4,6 +4,10 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-9 col-lg-6 mt-2">
+      {{-- <div class="container alert alert-success mb-2">
+        Momentáneamente la emisión de órdenes se realiza sólo en oficina o solicitándolas por whatsapp al 155-508247.
+      </div> --}}
+
       <form action="{{ route('orders.store') }}" method="post">
           @csrf
           <div class="fresh-table full-color-orange shadow-sm">

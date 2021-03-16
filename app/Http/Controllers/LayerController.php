@@ -22,9 +22,9 @@ class LayerController extends Controller
               'name' => 'Probando',
               'user_message' => 'Mensaje'
            ), function($message){
-               $message->from('admin@amparosrl.com.ar');
-               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
-              ->subject('Socio: Activaron un plan');
+               $message->from(config('mail.username'));
+               $message->to(config('mail.amparo'), 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan salud');
       });
       Layer::create([
                     'nombre' => 'Amparo Salud',
@@ -43,9 +43,9 @@ class LayerController extends Controller
               'name' => 'Probando',
               'user_message' => 'Mensaje'
            ), function($message){
-               $message->from('admin@amparosrl.com.ar');
-               $message->to('admin@amparosrl.com.ar', 'Admin. Amparo')
-              ->subject('Socio: Activaron un plan');
+               $message->from(config('mail.username'));
+               $message->to(config('mail.amparo'), 'Admin. Amparo')
+              ->subject('Socio: Activaron un plan odontológico');
       });
       Layer::create([
                     'nombre' => 'Amparo Odontológico',

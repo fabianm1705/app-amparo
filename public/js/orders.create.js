@@ -54,7 +54,7 @@ function getDoctors(socio){
           for (let i = 0; i < Object.keys(resp.data).length; i++) {
             var option = document.createElement('option');
             option.value = resp.data[i].id;
-            option.text = resp.data[i].apeynom;
+            option.text = resp.data[i].apeynom + " (" + resp.data[i].direccion + ")";
             doctors.appendChild(option);
           }
         })
