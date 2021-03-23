@@ -14,8 +14,7 @@ class AddGroupIdToSalesTable extends Migration
     public function up()
     {
         Schema::table('sales', function (Blueprint $table) {
-          $table->unsignedBigInteger('group_id');
-          $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+          $table->foreignId('group_id')->unsigned()->nullable()->references('id')->on('groups')->onDelete('cascade');
         });
     }
 

@@ -14,13 +14,12 @@ class CreatePaymentMethodItemsTable extends Migration
     public function up()
     {
         Schema::create('payment_method_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name')->nullable();
             $table->bigInteger('cuotas')->default(1);
             $table->bigInteger('percentage')->default(0);
             $table->bigInteger('activo')->default(1);
-            $table->unsignedBigInteger('payment_method_id')->default(1);
-            $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
+            $table->foreignId('payment_method_id')->unsigned()->references('id')->on('payment_methods')->onDelete('cascade');
             $table->timestamps();
         });
     }

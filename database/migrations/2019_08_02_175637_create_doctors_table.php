@@ -14,13 +14,14 @@ class CreateDoctorsTable extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('apeynom');
             $table->string('direccion');
             $table->string('email')->nullable();
             $table->string('telefono');
             $table->boolean('vigente');
             $table->boolean('coseguroConsultorio');
+            $table->boolean('ordenWeb')->default(0);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -14,10 +14,11 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nombre');
             $table->bigInteger('monto');
             $table->boolean('emiteOrden')->default(false);
+            $table->bigInteger('activo')->default(1);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

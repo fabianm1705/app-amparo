@@ -14,11 +14,11 @@ class CreateConceptsTable extends Migration
     public function up()
     {
         Schema::create('concepts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('descripcion');
             $table->bigInteger('monto');
-            $table->unsignedBigInteger('sale_id')->default(1);
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
+            $table->foreignId('sale_id')->unsigned()->references('id')->on('sales')->onDelete('cascade');
+            $table->string('obs')->nullable();
             $table->timestamps();
         });
     }

@@ -15,12 +15,15 @@ class CreateShoppingCartsTable extends Migration
     public function up()
     {
         Schema::create('shopping_carts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->integer('status')->default(0);
             $table->string('email')->nullable();
             $table->date('fecha')->default(Carbon::now());
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->unsigned()->default(1)->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('payment_method_id')->unsigned()->default(1)->references('id')->on('payment_methods')->onDelete('cascade');
+            $table->unsignedBigInteger('operation_id')->nullable();
+            $table->string('estado')->default('pendiente');
+            $table->date('fechaPago')->nullable();
             $table->timestamps();
         });
     }

@@ -54,8 +54,6 @@ Route::group(['prefix' => 'admin'], function() {
               ->middleware('auth');
   Route::resource('roles', 'RoleController')
               ->middleware('auth');
-  Route::resource('profits', 'ProfitController')
-              ->middleware('auth');
   Route::resource('interests', 'InterestController')
               ->middleware('auth');
   Route::resource('receipts', 'ReceiptController')
@@ -231,6 +229,9 @@ Route::get('users/suscripcion', 'UserController@suscripcion')
 Route::get('users/pagos', 'UserController@pagos')
               ->middleware('auth')
               ->name('users.pagos');
+Route::post('users/pago/tarjeta/', 'UserController@pagoConTarjeta')
+              ->middleware('auth')
+              ->name('users.pagoConTarjeta');
 Route::get('password/edit', 'UserController@editPassword')
               ->name('password.edit');
 Route::post('password/change', 'UserController@change')

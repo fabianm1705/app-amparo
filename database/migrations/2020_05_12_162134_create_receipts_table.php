@@ -14,9 +14,8 @@ class CreateReceiptsTable extends Migration
     public function up()
     {
         Schema::create('receipts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('user_id')->unsigned()->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('monto');
             $table->text('concepto')->nullable();
             $table->timestamps();

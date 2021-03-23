@@ -14,10 +14,8 @@ class AddPacientIdAndDoctorIdToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-          $table->unsignedBigInteger('pacient_id');
-          $table->foreign('pacient_id')->references('id')->on('users')->onDelete('cascade');
-          $table->unsignedBigInteger('doctor_id');
-          $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+          $table->foreignId('pacient_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
+          $table->foreignId('doctor_id')->unsigned()->nullable()->references('id')->on('doctors')->onDelete('cascade');
         });
     }
 

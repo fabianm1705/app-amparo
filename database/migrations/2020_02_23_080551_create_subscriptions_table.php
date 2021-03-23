@@ -14,7 +14,7 @@ class CreateSubscriptionsTable extends Migration
     public function up()
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('description');
             $table->boolean('grupal');
             $table->boolean('sepelio_estandar');
@@ -22,6 +22,9 @@ class CreateSubscriptionsTable extends Migration
             $table->boolean('salud');
             $table->boolean('odontologia');
             $table->boolean('orden_medica');
+            $table->bigInteger('precio_grupo')->default(0);
+            $table->bigInteger('precio_individual')->default(0);
+            $table->bigInteger('precio_adherente')->default(0);
             $table->timestamps();
         });
     }

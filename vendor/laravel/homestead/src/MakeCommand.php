@@ -6,8 +6,8 @@ use Laravel\Homestead\Settings\JsonSettings;
 use Laravel\Homestead\Settings\YamlSettings;
 use Laravel\Homestead\Traits\GeneratesSlugs;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeCommand extends Command
@@ -63,7 +63,7 @@ class MakeCommand extends Command
      *
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @return void
+     * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
@@ -96,6 +96,8 @@ class MakeCommand extends Command
         $this->checkForDuplicateConfigs($output);
 
         $output->writeln('Homestead Installed!');
+
+        return 0;
     }
 
     /**

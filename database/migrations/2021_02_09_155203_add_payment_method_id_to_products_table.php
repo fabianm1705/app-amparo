@@ -14,8 +14,7 @@ class AddPaymentMethodIdToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-          $table->unsignedBigInteger('payment_method_id')->default(1);
-          $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
+          $table->foreignId('payment_method_id')->unsigned()->default(1)->references('id')->on('payment_methods')->onDelete('cascade');
         });
     }
 
@@ -27,7 +26,7 @@ class AddPaymentMethodIdToProductsTable extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+          $table->dropForeign('products_payment_method_id_foreign');
         });
     }
 }

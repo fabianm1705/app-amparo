@@ -14,8 +14,7 @@ class AddSpecialtyIdToDoctorsTable extends Migration
     public function up()
     {
         Schema::table('doctors', function (Blueprint $table) {
-          $table->unsignedBigInteger('specialty_id')->default(1);
-          $table->foreign('specialty_id')->references('id')->on('specialties')->onDelete('cascade');
+          $table->foreignId('specialty_id')->unsigned()->nullable()->references('id')->on('specialties')->onDelete('cascade');
         });
     }
 

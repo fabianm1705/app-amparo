@@ -81,7 +81,9 @@ class AppServiceProvider extends ServiceProvider
       $porccontado=24;
       if(Schema::hasTable('payment_methods')){
         $payment_method = DB::table('payment_methods')->first();
-        $porccontado = $payment_method->percentage;
+        if($payment_method){
+          $porccontado = $payment_method->percentage;
+        }
       }
       View::share('porccontado', $porccontado);
     }

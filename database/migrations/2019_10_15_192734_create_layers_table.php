@@ -14,12 +14,12 @@ class CreateLayersTable extends Migration
     public function up()
     {
         Schema::create('layers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nombre');
             $table->bigInteger('monto');
             $table->boolean('emiteOrden')->default(false);
-            $table->unsignedBigInteger('user_id')->default(1);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->unsigned()->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('activo')->default(1);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

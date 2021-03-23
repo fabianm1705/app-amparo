@@ -14,10 +14,13 @@ class CreatePaymentMethodsTable extends Migration
     public function up()
     {
         Schema::create('payment_methods', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
-            $table->boolean('activo');
+            $table->boolean('activo')->default(1);
             $table->string('icon')->nullable();
+            $table->integer('percentage')->default(0);
+            $table->bigInteger('cant_cuotas')->default(0);
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }

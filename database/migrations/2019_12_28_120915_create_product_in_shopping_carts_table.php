@@ -14,15 +14,14 @@ class CreateProductInShoppingCartsTable extends Migration
     public function up()
     {
         Schema::create('product_in_shopping_carts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->unsignedBigInteger('shopping_cart_id')->unsigned();
-            $table->foreign('shopping_cart_id')->references('id')->on('shopping_carts');
+            $table->id();
+            $table->foreignId('product_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('shopping_cart_id')->unsigned()->references('id')->on('shopping_carts');
             $table->bigInteger('cantidadUnidades')->default(1);
             $table->bigInteger('cantidadCuotas')->nullable();
             $table->bigInteger('costo')->nullable();
             $table->bigInteger('total')->nullable();
+            $table->bigInteger('percentage')->default(0);
             $table->timestamps();
         });
     }

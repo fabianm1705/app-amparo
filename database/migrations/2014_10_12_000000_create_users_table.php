@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->default(now());
@@ -27,6 +27,11 @@ class CreateUsersTable extends Migration
             $table->date('fechaNac')->nullable();
             $table->boolean('activo')->default(1);
             $table->boolean('vigenteOrden')->default(1);
+            $table->boolean('darkMode')->default(false);
+            $table->timestamp('darkMode_verified_at')->nullable();
+            $table->boolean('no_aop');
+            $table->date('carencia_salud')->nullable();
+            $table->date('carencia_odonto')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

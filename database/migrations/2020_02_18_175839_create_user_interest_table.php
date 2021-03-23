@@ -14,11 +14,9 @@ class CreateUserInterestTable extends Migration
     public function up()
     {
         Schema::create('user_interest', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('interest_id')->nullable();
-            $table->foreign('interest_id')->references('id')->on('interests')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('user_id')->unsigned()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('interest_id')->unsigned()->references('id')->on('interests')->onDelete('cascade');
             $table->string('obs')->nullable();
             $table->timestamps();
         });

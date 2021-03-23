@@ -1,9 +1,6 @@
 importScripts(
 	'https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js'
 );
-// importScripts(
-// 	'https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js'
-// );
 
 // if (workbox) { //workbox solo existe en el scope del serviceWorker
 //   console.log('Workbox loaded!');

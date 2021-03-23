@@ -330,21 +330,27 @@ class UserController extends Controller
         if(isset($group)){
           $plan = Plan::where('nombre', '=', utf8_encode(trim($datos[1])))->
                         where('group_id', '=', $group->id)->get()->first();
-          if (is_null($plan)) {
-            $plan = new Plan();
-            $plan->group_id=$group->id;
+          // Si viene activo el plan
+          if (intval(trim($datos[3]))==1) {
+            // Si es nuevo
+            if (is_null($plan)) {
+              $plan = new Plan();
+              $plan->group_id=$group->id;
+            }
+            // Si se modifica
+            $plan->nombre = Str::title(utf8_encode(trim($datos[1])));
+            $plan->monto = intval(trim($datos[2]));
+            $plan->activo = intval(trim($datos[3]));
+            $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[1])))
+                          ->get()->first();
+            if (isset($subscription)) {
+              $plan->subscription_id=$subscription->id;
+            }
+            $plan->save();
+            // Si viene para desactivar
+          }elseif (isset($plan)) {
+            $plan->delete();
           }
-          $plan->nombre = Str::title(utf8_encode(trim($datos[1])));
-          $plan->monto = intval(trim($datos[2]));
-          $plan->activo = intval(trim($datos[3]));
-
-          $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[1])))
-                        ->get()->first();
-          if (isset($subscription)) {
-            $plan->subscription_id=$subscription->id;
-          }
-
-          $plan->save();
         }
       }
     }
@@ -358,25 +364,37 @@ class UserController extends Controller
       if($datos<>""){
         $user = User::where('name', '=', utf8_encode(trim($datos[4])))->
                       where('nroAdh', '=', utf8_encode(trim($datos[1])))->get()->first();
+        if (trim($datos[6])) {
+          $user = User::where('nroDoc', '=', intval(trim($datos[6])))->
+                        where('name', '=', utf8_encode(trim($datos[4])))->
+                        where('nroAdh', '=', utf8_encode(trim($datos[1])))->get()->first();
+        }
         if (isset($user)) {
           if($user->group->nroSocio==utf8_encode(trim($datos[0]))){
             $layer = Layer::where('nombre', '=', utf8_encode(trim($datos[2])))->
                           where('user_id', '=', $user->id)->get()->first();
-            if (is_null($layer)) {
-              $layer = new Layer();
-              $layer->user_id=$user->id;
-            }
-            $layer->nombre = Str::title(utf8_encode(trim($datos[2])));
-            $layer->monto = intval(trim($datos[3]));
-            $layer->activo = intval(trim($datos[5]));
 
-            $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[2])))
-                          ->get()->first();
-            if (isset($subscription)) {
-              $layer->subscription_id=$subscription->id;
+            // Si viene activo el plan
+            if (intval(trim($datos[5]))==1) {
+              // Si es nuevo
+              if (is_null($layer)) {
+                $layer = new Layer();
+                $layer->user_id=$user->id;
+              }
+              // Si se modifica
+              $layer->nombre = Str::title(utf8_encode(trim($datos[2])));
+              $layer->monto = intval(trim($datos[3]));
+              $layer->activo = intval(trim($datos[5]));
+              $subscription = Subscription::where('description', '=', utf8_encode(trim($datos[2])))
+                            ->get()->first();
+              if (isset($subscription)) {
+                $layer->subscription_id=$subscription->id;
+              }
+              $layer->save();
+              // Si viene para desactivar
+            }elseif (isset($layer)) {
+              $layer->delete();
             }
-
-            $layer->save();
           }
         }
       }
@@ -493,7 +511,14 @@ class UserController extends Controller
 
   public function pagos()
   {
-    return view('admin.pagos');
+    $sales = Sale::where('group_id',Auth::user()->group_id)->orderBy('fechaEmision','desc')->take(4)->get();
+    return view('admin.pagos',compact('sales'));
+  }
+
+  public function pagoConTarjeta(Request $request)
+  {
+    $total = $request->input('total');
+    return view('admin.pagoConTarjeta',compact('total'));
   }
 
 }

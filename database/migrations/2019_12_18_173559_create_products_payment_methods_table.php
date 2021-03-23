@@ -14,11 +14,9 @@ class CreateProductsPaymentMethodsTable extends Migration
     public function up()
     {
         Schema::create('products_payment_methods', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->unsignedBigInteger('payment_methods_id');
-            $table->foreign('payment_methods_id')->references('id')->on('payment_methods')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('product_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('payment_methods_id')->unsigned()->references('id')->on('payment_methods')->onDelete('cascade');
             $table->timestamps();
         });
     }

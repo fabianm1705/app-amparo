@@ -7,64 +7,64 @@
         @auth
           <div class="row justify-content-center">
             @can('orders.crear')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button id="btnEmitir" class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button id="btnEmitir" class="btn btn-success m-1 btn-block btn-lg" name="button">
                   @foreach (Auth::user()->roles as $role)
                     @if(($role->slug=='dev') or ($role->slug=='admin'))
-                      <a style="text-decoration:none;" href="{{ route('usersSearch') }}">Emitir Orden</a>
+                      <a class="text-light text-decoration-none" href="{{ route('usersSearch') }}">Emitir Orden</a>
                     @else
-                      <a style="text-decoration:none;" href="{{ route('orders.create',['id' => 0]) }}">Emitir Orden</a>
+                      <a class="text-light text-decoration-none" href="{{ route('orders.create',['id' => 0]) }}">Emitir Orden</a>
                     @endif
                   @endforeach
                 </button>
               </div>
             @endcan
             @can('doctors.mostrar')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('doctors.mostrar') }}">Profesionales</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('doctors.mostrar') }}">Profesionales</a>
                 </button>
               </div>
             @endcan
             @can('products.shopping')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('products.shopping') }}">Shopping</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('products.shopping') }}">Shopping</a>
                 </button>
               </div>
             @endcan
             @can('otros')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('otros') }}">+Servicios</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('otros') }}">+Servicios</a>
                 </button>
               </div>
             @endcan
             @can('planes')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('planes') }}">Planes</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('planes') }}">Planes</a>
                 </button>
               </div>
             @endcan
             @can('users.panel')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('users.panel', ['id' => Auth::user()->id ]) }}">Mis Datos</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('users.panel', ['id' => Auth::user()->id ]) }}">Mis Datos</a>
                 </button>
               </div>
             @endcan
             @can('users.pagos')
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-success m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('users.pagos', ['id' => Auth::user()->id ]) }}">Pagos</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('users.pagos', ['id' => Auth::user()->id ]) }}">Pagos</a>
                 </button>
               </div>
             @endcan
             @if(Auth::user()->password_changed_at==null)
-              <div class="col-sm-6 col-md-4 col-lg-2 blanco">
-                <button class="btn btn-danger m-1 text-light btn-block btn-lg" name="button">
-                  <a style="text-decoration:none;" href="{{ route('password.edit') }}">Modif Contraseña</a>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-danger m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('password.edit') }}">Modif Contraseña</a>
                 </button>
               </div>
             @endif
@@ -78,13 +78,13 @@
             </div>
           @endif
 
-          {{-- @if(Auth::user()->darkMode_verified_at==null)
-            <div class="container alert alert-danger mt-1 col-sm-12 col-md-6">
-              <ul>
-                <li>Hemos implementado una función "modo oscuro" para hacer más agradable la visualización y consumir menos batería de su dispositivo, claro es optativo, para probarlo deben ir al menú superior donde encuentran su nombre personal, ahí disponen de un submenú donde pueden activar/desactivar el modo oscuro.</li>
-              </ul>
-            </div>
-          @endif --}}
+          {{-- @if(Auth::user()->darkMode_verified_at==null) --}}
+          <div class="container alert alert-danger mt-4 col-sm-12 col-md-6">
+            <ul>
+              <li>Esta semana del 22 hasta el 26 de marzo atenderemos en oficina en el horario de 8:30 a 13:00hs</li>
+            </ul>
+          </div>
+          {{-- @endif --}}
 
         @endauth
     </div>

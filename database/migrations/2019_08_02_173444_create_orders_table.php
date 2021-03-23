@@ -14,7 +14,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->date('fecha');
             $table->date('fechaImpresion');
             $table->bigInteger('monto_s');
@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->text('obs')->nullable();
             $table->string('estado');
             $table->string('lugarEmision');
+            $table->date('fechaPago')->nullable();
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

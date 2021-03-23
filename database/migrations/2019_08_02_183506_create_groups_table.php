@@ -14,7 +14,7 @@ class CreateGroupsTable extends Migration
     public function up()
     {
         Schema::create('groups', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('nroSocio');
             $table->date('fechaAlta');
             $table->string('email')->nullable();
@@ -25,6 +25,7 @@ class CreateGroupsTable extends Migration
             $table->string('horaCobro')->nullable();
             $table->bigInteger('total');
             $table->boolean('activo');
+            $table->boolean('suscripto')->default(false);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';
