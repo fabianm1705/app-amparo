@@ -22,6 +22,10 @@ Route::get('about', function () {
     return view('about');
 })->name('about');
 
+Route::get('mensaje', function () {
+    return view('mensaje_suelto');
+})->name('mensaje_suelto');
+
 Route::get('privacidad', function () {
     return view('privacidad');
 })->name('privacidad');
@@ -41,20 +45,28 @@ Route::get('/home', 'HomeController@index')
 
 Route::group(['prefix' => 'admin'], function() {
   Route::resource('specialties', 'SpecialtyController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('subscriptions', 'SubscriptionController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('doctors', 'DoctorController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('categories', 'CategoryController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('orders', 'OrderController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('products', 'ProductController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('roles', 'RoleController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('interests', 'InterestController')
+              ->except('show')
               ->middleware('auth');
   Route::resource('receipts', 'ReceiptController')
               ->except(['show','create','store','update','edit'])
@@ -65,7 +77,7 @@ Route::group(['prefix' => 'admin'], function() {
   Route::resource('payment_method_items', 'PaymentMethodItemsController')
               ->middleware('auth');
   Route::resource('users', 'UserController')
-              ->except(['store','create'])
+              ->except(['store','create','show'])
               ->middleware('auth');
 });
 
@@ -89,7 +101,7 @@ Route::post('/pagar', 'ShoppingCartController@iniciarProcesoCobro')
               ->middleware(['auth','can:carrito'])
               ->name('iniciar.pago');
 Route::get('/shoppingcart', 'ShoppingCartController@index')
-              ->middleware(['auth','can:shopping_cart.index'])
+              ->middleware(['auth','can:navegar shoppings'])
               ->name('shopping_cart.index');
 Route::delete('/shopping_cart_destroy/{id}', 'ShoppingCartController@destroy')
               ->middleware(['auth','can:carrito'])
@@ -110,21 +122,21 @@ Route::post('/in_shopping_cart/{product_id}', 'ProductInShoppingCartsController@
               ->name('in_shopping_cart.store');
 
 Route::get('/user_interest', 'InterestController@visor')
-              ->middleware(['auth','can:interests.index'])
+              ->middleware(['auth','can:ver accesos'])
               ->name('interests.visor');
 Route::delete('/out_user_interest/{id}', 'InterestController@borrar')
-              ->middleware(['auth','can:interests.destroy'])
+              ->middleware(['auth','can:eliminar zonas de interes'])
               ->name('user_interest.borrar');
 
 //Buscar socios
 Route::get('emergencia', 'UserController@emergencia')
-              ->middleware('auth')
+              ->middleware(['auth','can:padron sos'])
               ->name('emergencia');
 Route::get('odontologia', 'UserController@odontologia')
-              ->middleware('auth')
+              ->middleware(['auth','can:padron aop'])
               ->name('odontologia');
 Route::get('users/search', 'OrderController@search')
-                    ->middleware(['auth','can:orders.create'])
+                    ->middleware(['auth','can:emitir ordenes'])
                     ->name('usersSearch');
 Route::post('search/{name?}/{nroDoc?}/', 'UserController@getUsers')
               ->middleware('auth')
@@ -133,7 +145,7 @@ Route::post('search/{name?}/{nroDoc?}/', 'UserController@getUsers')
 
 
 Route::get('orders/search/{id}', 'OrderController@getOrdenes')
-                    ->middleware(['auth','can:orders.show'])
+                    ->middleware('auth')
                     ->name('orders.search');
 Route::post('/orders/pay/{id}', 'OrderController@pay')
               ->middleware('auth')
@@ -144,7 +156,7 @@ Route::get('uploadfiles', function () {
             })->middleware('auth')
               ->name('users.uploadfiles');
 Route::post('updatedb', 'UserController@upload')
-              ->middleware('auth')
+              ->middleware(['auth','can:actualizar padron'])
               ->name('users.updatedb');
 
 Route::post('activar/plan/{precio_grupo_salud}', 'PlanController@activarPlan')
@@ -179,7 +191,7 @@ Route::get('asignar/roles', 'UserController@asignarRoles')
 
 //Especialidades y médicos
 Route::get('doctors/mostrar', 'DoctorController@mostrar')
-                    ->middleware(['auth','can:doctors.mostrar'])
+                    ->middleware(['auth','can:mostrar profesionales'])
                     ->name('doctors.mostrar');
 Route::post('/getDoctors/{id}', 'DoctorController@getDoctors')
               ->middleware('auth')
@@ -200,10 +212,10 @@ Route::post('/getOrdenes/{id}', 'OrderController@getOrdenes')
 
 //Shopping y productos
 Route::get('/admin/products/{productId}', 'ProductController@show')
-              ->middleware(['auth'])
+              ->middleware('auth')
               ->name('products.show');
 Route::get('products/shopping', 'ProductController@shopping')
-              ->middleware(['auth','can:products.shopping'])
+              ->middleware(['auth','can:shopping'])
               ->name('products.shopping');
 Route::get('getCategories', 'CategoryController@getCategories')
               ->middleware('auth')
@@ -217,17 +229,17 @@ Route::post('/process_payment', 'MercadoPagoController@process_payment')
 
 //Ordenes
 Route::get('orders/indice', 'OrderController@indice')
-              ->middleware(['auth','can:orders.indice'])
+              ->middleware(['auth','can:navegar ordenes'])
               ->name('orders.indice');
 
 Route::get('users/panel/{id}', 'UserController@panel')
-              ->middleware(['auth','can:users.panel'])
+              ->middleware(['auth','can:ver panel socios'])
               ->name('users.panel');
 Route::get('users/suscripcion', 'UserController@suscripcion')
               ->middleware('auth')
               ->name('users.suscripcion');
 Route::get('users/pagos', 'UserController@pagos')
-              ->middleware('auth')
+              ->middleware('auth','can:modulo pagos')
               ->name('users.pagos');
 Route::post('users/pago/tarjeta/', 'UserController@pagoConTarjeta')
               ->middleware('auth')
@@ -247,10 +259,10 @@ Route::post('getLayers/{id}', 'LayerController@getLayers')
 
 
 Route::get('otros', function () {return view('admin.otros');})
-              ->middleware(['auth','can:otros'])
+              ->middleware(['auth','can:otros servicios'])
               ->name('otros');
 Route::get('planes', 'UserController@planes')
-              ->middleware(['auth','can:planes'])
+              ->middleware(['auth','can:ver planes'])
               ->name('planes');
 Route::post('darkmode', 'UserController@darkMode')
               ->middleware(['auth'])

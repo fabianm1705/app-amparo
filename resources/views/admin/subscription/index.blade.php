@@ -5,11 +5,11 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="fresh-table full-color-orange d-flex shadow-sm">
-          <h5 class="card-title text-white mt-3 mb-3 ml-3">Plans/Subscriptions</h5>
+          <h5 class="card-title text-white mt-3 mb-3 ml-3">Planes</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('subscriptions.create')
+            @can('crear planes')
             <a href="{{ route('subscriptions.create') }}" title="Nueva">
-              Agregar Nueva
+              Agregar Nuevo
             </a>
             @endcan
            </div>
@@ -58,21 +58,14 @@
                   <td class="text-center">${{ $subscription->precio_individual }}</td>
                   <td class="text-center">${{ $subscription->precio_adherente }}</td>
                   <td class="text-right d-flex">
-                    @can('subscriptions.show')
-                    <a href="{{ route('subscriptions.show', ['subscription' => $subscription ]) }}" title="Ver" class="">
-                      <div class="">
-                        <i class="material-icons">search</i>
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('subscriptions.edit')
+                    @can('editar planes')
                     <a href="{{ route('subscriptions.edit', ['subscription' => $subscription ]) }}" title="Editar" class="">
                       <div class="">
                         <i class="material-icons">edit</i>
                       </div>
                     </a>&nbsp;
                     @endcan
-                    @can('subscriptions.destroy')
+                    @can('eliminar planes')
                     <form id="formEliminar{{ $subscription->id }}" action="{{ route('subscriptions.destroy', ['subscription' => $subscription ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

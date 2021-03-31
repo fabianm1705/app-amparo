@@ -8,10 +8,8 @@ use Config;
 use Auth;
 use Illuminate\Support\Carbon;
 use App\ShoppingCart;
-use App\UserInterest;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
 use Mail;
 
 class ShoppingCartController extends Controller

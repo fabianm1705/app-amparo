@@ -5,17 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Interest;
 use App\UserInterest;
-use Illuminate\Support\Facades\DB;
 
 class InterestController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:interests.index')->only('index');
-    $this->middleware('can:interests.show')->only('show');
-    $this->middleware('can:interests.destroy')->only('destroy');
-    $this->middleware('can:interests.edit')->only(['edit','update']);
-    $this->middleware('can:interests.create')->only(['create','store']);
+    $this->middleware('can:navegar zonas de interes')->only('index');
+    $this->middleware('can:eliminar zonas de interes')->only('destroy');
+    $this->middleware('can:editar zonas de interes')->only(['edit','update']);
+    $this->middleware('can:crear zonas de interes')->only(['create','store']);
   }
     /**
      * Display a listing of the resource.
@@ -56,17 +54,6 @@ class InterestController extends Controller
         ->route('interests.show',['interest' => $interest])
         ->with('message','Zona de Interés Registrada');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-   public function show(Interest $interest)
-   {
-     return view('admin.interest.show', compact("interest"));
-   }
 
     /**
      * Show the form for editing the specified resource.

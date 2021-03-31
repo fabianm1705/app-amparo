@@ -147,6 +147,13 @@ class Validator implements ValidatorContract
     public $customValues = [];
 
     /**
+     * Indicates if the validator should stop on the first rule failure.
+     *
+     * @var bool
+     */
+    protected $stopOnFirstFailure = false;
+
+    /**
      * All of the custom validator extensions.
      *
      * @var array
@@ -163,7 +170,7 @@ class Validator implements ValidatorContract
     /**
      * The validation rules that may be applied to files.
      *
-     * @var array
+     * @var string[]
      */
     protected $fileRules = [
         'Between',
@@ -180,7 +187,7 @@ class Validator implements ValidatorContract
     /**
      * The validation rules that imply the field is required.
      *
-     * @var array
+     * @var string[]
      */
     protected $implicitRules = [
         'Accepted',
@@ -198,7 +205,7 @@ class Validator implements ValidatorContract
     /**
      * The validation rules which depend on other fields as parameters.
      *
-     * @var array
+     * @var string[]
      */
     protected $dependentRules = [
         'After',
@@ -220,6 +227,9 @@ class Validator implements ValidatorContract
         'RequiredWithAll',
         'RequiredWithout',
         'RequiredWithoutAll',
+        'Prohibited',
+        'ProhibitedIf',
+        'ProhibitedUnless',
         'Same',
         'Unique',
     ];
@@ -227,21 +237,21 @@ class Validator implements ValidatorContract
     /**
      * The validation rules that can exclude an attribute.
      *
-     * @var array
+     * @var string[]
      */
     protected $excludeRules = ['ExcludeIf', 'ExcludeUnless', 'ExcludeWithout'];
 
     /**
      * The size related validation rules.
      *
-     * @var array
+     * @var string[]
      */
     protected $sizeRules = ['Size', 'Between', 'Min', 'Max', 'Gt', 'Lt', 'Gte', 'Lte'];
 
     /**
      * The numeric related validation rules.
      *
-     * @var array
+     * @var string[]
      */
     protected $numericRules = ['Numeric', 'Integer'];
 
@@ -371,6 +381,10 @@ class Validator implements ValidatorContract
                 $this->removeAttribute($attribute);
 
                 continue;
+            }
+
+            if ($this->stopOnFirstFailure && $this->messages->isNotEmpty()) {
+                break;
             }
 
             foreach ($rules as $rule) {
@@ -515,7 +529,7 @@ class Validator implements ValidatorContract
 
         [$rule, $parameters] = ValidationRuleParser::parse($rule);
 
-        if ($rule == '') {
+        if ($rule === '') {
             return;
         }
 
@@ -1075,6 +1089,19 @@ class Validator implements ValidatorContract
     }
 
     /**
+     * Instruct the validator to stop validating after the first rule failure.
+     *
+     * @param  bool  $stopOnFirstFailure
+     * @return $this
+     */
+    public function stopOnFirstFailure($stopOnFirstFailure = true)
+    {
+        $this->stopOnFirstFailure = $stopOnFirstFailure;
+
+        return $this;
+    }
+
+    /**
      * Register an array of custom validator extensions.
      *
      * @param  array  $extensions
@@ -1230,7 +1257,7 @@ class Validator implements ValidatorContract
     }
 
     /**
-     * Set the callback that used to format an implicit attribute..
+     * Set the callback that used to format an implicit attribute.
      *
      * @param  callable|null  $formatter
      * @return $this

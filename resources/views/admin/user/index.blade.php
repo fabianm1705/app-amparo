@@ -68,7 +68,7 @@
                     <input type="checkbox" class="form-check-input" id="no_aop" name="no_aop" disabled value="1" {{ $user->no_aop ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('users.edit')
+                    @can('crear recibos')
                       <a href="{{ route('receipts.create', ['id' => $user->id ]) }}" title="Generar Recibo" class="">
                         <div class="">
                           @if(Auth::user()->darkMode)
@@ -79,7 +79,7 @@
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('users.show')
+                    @can('ver panel socios')
                       <a href="{{ route('users.panel', ['id' => $user->id ]) }}" title="Ver Socio" class="">
                         <div class="">
                           @if(Auth::user()->darkMode)
@@ -90,7 +90,7 @@
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('users.edit')
+                    @can('editar socios')
                       <a href="{{ route('users.edit', ['user' => $user ]) }}" title="Editar Socio" class="">
                         <div class="">
                           @if(Auth::user()->darkMode)
@@ -101,7 +101,7 @@
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('users.destroy')
+                    @can('eliminar socios')
                       <form id="formEliminar{{ $user->id }}" action="{{ route('users.destroy', ['user' => $user ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf

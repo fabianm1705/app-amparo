@@ -1,21 +1,37 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use App\Model;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Product;
 
-$factory->define(App\Models\Product::class, function (Faker $faker) {
-    return [
-      'modelo' => $faker->firstname,
-      'category_id' => $faker->numberBetween(1,5),
-      'descripcion' => $faker->text($maxNbChars = 100),
-      'montoCuota' => $faker->numberBetween(1200,2900),
-      'costo' => $faker->numberBetween(1200,2900),
-      'cantidadCuotas' => 6,
-      'image_url' => 'imagen.jpg',
-      'image_url2' => 'imagen.jpg',
-      'image_url3' => 'imagen.jpg',
-      'vigente' => true
-    ];
-});
+class ProductFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Product::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+      return [
+        'modelo' => $this->faker->firstname,
+        'category_id' => $this->faker->numberBetween(1,5),
+        'descripcion' => $this->faker->text($maxNbChars = 100),
+        'montoCuota' => $this->faker->numberBetween(1200,2900),
+        'costo' => $this->faker->numberBetween(1200,2900),
+        'cantidadCuotas' => 6,
+        'image_url' => 'imagen.jpg',
+        'image_url2' => 'imagen.jpg',
+        'image_url3' => 'imagen.jpg',
+        'vigente' => true
+      ];
+    }
+}

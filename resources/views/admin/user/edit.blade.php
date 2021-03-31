@@ -91,11 +91,10 @@
                         <li>
                           <label>
                               <input type="checkbox" name="roles[]" value="{{ $role->id }}"
-                                  @if($user->roles->contains($role->id))
+                                  @if($user->hasRole($role->name))
                                     checked=checked
                                   @endif>
                             {{ $role->name }}
-                            <em>{{ $role->description ?: 'N/A' }}</em>
                           </label>
                         </li>
                       @endforeach

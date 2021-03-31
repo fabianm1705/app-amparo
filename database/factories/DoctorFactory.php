@@ -1,21 +1,37 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use App\Model;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Doctor;
 use App\Models\Specialty;
 
-$factory->define(App\Models\Doctor::class, function (Faker $faker) {
-    $count = Specialty::count();
-    return [
-      'apeynom' => $faker->name,
-      'direccion' => $faker->address,
-      'email' => $faker->email,
-      'telefono' => $faker->phoneNumber,
-      'vigente' => true,
-      'ordenWeb' => true,
-      'coseguroConsultorio' => false,
-      'specialty_id' => $faker->numberBetween(1,$count)
-    ];
-});
+class DoctorFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Doctor::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+      $count = Specialty::count();
+      return [
+        'apeynom' => $this->faker->name,
+        'direccion' => $this->faker->address,
+        'email' => $this->faker->email,
+        'telefono' => $this->faker->phoneNumber,
+        'vigente' => true,
+        'ordenWeb' => true,
+        'coseguroConsultorio' => false,
+        'specialty_id' => $this->faker->numberBetween(1,$count)
+      ];
+    }
+}

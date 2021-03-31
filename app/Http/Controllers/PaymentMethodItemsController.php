@@ -10,11 +10,10 @@ class PaymentMethodItemsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:payment_method_items.index')->only('index');
-    $this->middleware('can:payment_method_items.show')->only('show');
-    $this->middleware('can:payment_method_items.destroy')->only('destroy');
-    $this->middleware('can:payment_method_items.edit')->only(['edit','update']);
-    $this->middleware('can:payment_method_items.create')->only(['create','store']);
+    $this->middleware('can:navegar items de listas de precios')->only('index');
+    $this->middleware('can:eliminar items de listas de precios')->only('destroy');
+    $this->middleware('can:editar items de listas de precios')->only(['edit','update']);
+    $this->middleware('can:crear items de listas de precios')->only(['create','store']);
   }
 
     /**
@@ -61,18 +60,6 @@ class PaymentMethodItemsController extends Controller
       return redirect()
         ->route('payment_method_items.index',['payment_method_item' => $payment_method_item])
         ->with('message','Item Registrado');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaymentMethodItems  $paymentMethodItems
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PaymentMethodItem $payment_method_item)
-    {
-      $payment_methods = PaymentMethod::orderBy('name','asc')->get();
-      return view('admin.payment_method_item.show', compact("payment_method_item","payment_methods"));
     }
 
     /**

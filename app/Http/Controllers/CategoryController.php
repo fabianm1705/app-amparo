@@ -12,11 +12,10 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('can:categories.index')->only('index');
-      $this->middleware('can:categories.show')->only('show');
-      $this->middleware('can:categories.destroy')->only('destroy');
-      $this->middleware('can:categories.edit')->only(['edit','update']);
-      $this->middleware('can:categories.create')->only(['create','store']);
+      $this->middleware('can:navegar categorias')->only('index');
+      $this->middleware('can:eliminar categorias')->only('destroy');
+      $this->middleware('can:editar categorias')->only(['edit','update']);
+      $this->middleware('can:crear categorias')->only(['create','store']);
     }
     /**
      * Display a listing of the resource.
@@ -61,17 +60,6 @@ class CategoryController extends Controller
       return redirect()
         ->route('categories.index')
         ->with('message','Categoría Registrada');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-      return view('admin.category.show', compact("category"));
     }
 
     /**

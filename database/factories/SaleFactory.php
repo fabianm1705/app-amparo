@@ -1,23 +1,39 @@
 <?php
 
-/* @var $factory \Illuminate\Database\Eloquent\Factory */
+namespace Database\Factories;
 
-use App\Model;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Group;
+use App\Models\Sale;
 
-$factory->define(App\Models\Sale::class, function (Faker $faker) {
-  $count = Group::count();
-  return [
-    'puntoContable' => 3,
-    'cae' => '12345678987654',
-    'fechaCae' => $faker->date($format = 'Y-m-d', $max = 'now'),
-    'fechaEmision' => $faker->date($format = 'Y-m-d', $max = 'now'),
-    'fechaPago' => $faker->date($format = 'Y-m-d', $max = 'now'),
-    'nroFactura' => $faker->numberBetween(1,10000),
-    'total' => $faker->numberBetween(120,1400),
-    'obs' => '-',
-    'group_id' => $faker->numberBetween(1,$count),
-    'comprob_id' => $faker->numberBetween(1,1000000)
-  ];
-});
+class SaleFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Sale::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+      $count = Group::count();
+      return [
+        'puntoContable' => 3,
+        'cae' => '12345678987654',
+        'fechaCae' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+        'fechaEmision' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+        'fechaPago' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+        'nroFactura' => $this->faker->numberBetween(1,10000),
+        'total' => $this->faker->numberBetween(120,1400),
+        'obs' => '-',
+        'group_id' => $this->faker->numberBetween(1,$count),
+        'comprob_id' => $this->faker->numberBetween(1,1000000)
+      ];
+    }
+}

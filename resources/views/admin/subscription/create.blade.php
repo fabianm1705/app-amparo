@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card shadow-sm"><br>
           <header class="centrado">
-            <h4>Nuevo Plan/Subscripción</h4>
+            <h4>Nuevo Plan</h4>
           </header>
           <div class="card-body">
             <form action="{{ route('subscriptions.store') }}" method="post">

@@ -12,7 +12,7 @@ use App\Models\Sale;
 use App\Concept;
 use App\UserInterest;
 use App\Subscription;
-use Caffeinated\Shinobi\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\DB;
@@ -27,31 +27,15 @@ class UserController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:sos.emergencias')->only('emergencia');
-    $this->middleware('can:aop')->only('odontologia');
-    $this->middleware('can:users.index')->only('index');
-    $this->middleware('can:users.show')->only('show');
-    $this->middleware('can:users.destroy')->only('destroy');
-    $this->middleware('can:users.edit')->only(['edit','update']);
-    $this->middleware('can:users.upload')->only('upload');
+    $this->middleware('can:navegar socios')->only('index');
+    $this->middleware('can:eliminar socios')->only('destroy');
+    $this->middleware('can:editar socios')->only(['edit','update']);
   }
 
   public function index()
   {
     $users = User::orderBy('name')->where('activo','=','1')->paginate();
     return view('admin.user.index',compact("users"));
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\Product  $product
-   * @return \Illuminate\Http\Response
-   */
-  public function show(User $user)
-  {
-    $roles = Role::get();
-    return view('admin.user.show', compact("user","roles"));
   }
 
   /**
@@ -91,7 +75,7 @@ class UserController extends Controller
     $group->direccion = $request->input('direccion');
     $group->save();
 
-    $user->roles()->sync($request->input('roles'));
+    $user->syncRoles($request->input('roles'));
 
     return redirect()
       ->route('users.edit',['user' => $user])
@@ -217,18 +201,16 @@ class UserController extends Controller
   public function planes()
   {
     registro_acceso(13,'');
-    foreach (Auth::user()->roles as $role){
-      if(($role->slug=='dev') or ($role->slug=='admin')){
-        $users = User::where('id',Auth::user()->id)->get();
-      }else{
-        $group_id = Auth::user()->group_id;
-        $users = User::where('group_id',$group_id)->where('activo',1)->get();
-      }
+    $users = collect([]);
+    if(Auth::user()->hasAnyRole('desarrollador', 'admin')){
+      $users = User::where('id',Auth::user()->id)->get();
+    }else{
+      $group_id = Auth::user()->group_id;
+      $users = User::where('group_id',$group_id)->where('activo',1)->get();
     }
     $usersCount = $users->count();
-    $user = Auth::user();
-    $salud = necesita_salud($user);
-    $odontologia = necesita_odontologia($user);
+    $salud = necesita_salud(Auth::user());
+    $odontologia = necesita_odontologia(Auth::user());
     return view('admin.planes',compact("usersCount","salud","odontologia"));
   }
 
@@ -433,11 +415,6 @@ class UserController extends Controller
 
   public function updateUsers($lineas)
   {
-    $confRoleAdmin = array(["role_id" => "1"]);
-    $confRoleSocio = array(["role_id" => "2"]);
-    $confRoleDev = array(["role_id" => "3"]);
-    $confPerSocio = array(["0" => "10","1" => "27","2" => "33","3" => "34",
-                  "4" => "38","5" => "39"]);
     foreach ($lineas as $linea)
     {
       $datos = explode("|", $linea);
@@ -473,10 +450,12 @@ class UserController extends Controller
         }
 
         $user->save();
-        if((utf8_encode(trim($datos[5]))=='1232') or (utf8_encode(trim($datos[5]))=='1231')){
-          $user->roles()->sync($confRoleDev);
+        if(utf8_encode(trim($datos[5]))=='1232'){
+          $user->assignRole('desarrollador');
+        }elseif ((utf8_encode(trim($datos[5]))=='1231')) {
+          $user->assignRole('admin');
         }else{
-          $user->roles()->sync($confRoleSocio);
+          $user->assignRole('socio');
         }
       }
     }

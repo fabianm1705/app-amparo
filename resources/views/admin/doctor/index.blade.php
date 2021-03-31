@@ -8,7 +8,7 @@
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Profesionales</h5>
           <ul class="nav justify-content-end ml-auto mr-2 mt-2">
               <li class="nav-item ml-2 blanco">
-                @can('doctors.create')
+                @can('crear profesionales')
                 <a href="{{ route('doctors.create') }}" title="Nuevo">Agregar Nuevo</a>
                 @endcan
               </li>
@@ -48,21 +48,14 @@
                     <input type="checkbox" class="form-check-input" id="coseguroConsultorio" name="coseguroConsultorio" disabled value="1" {{ $doctor->coseguroConsultorio ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('doctors.show')
-                    <a href="{{ route('doctors.show', ['doctor' => $doctor ]) }}" title="Ver" class="">
-                      <div class="">
-                        <i class="material-icons">search</i>
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('doctors.edit')
+                    @can('editar profesionales')
                     <a href="{{ route('doctors.edit', ['doctor' => $doctor ]) }}" title="Editar" class="">
                       <div class="">
                         <i class="material-icons">edit</i>
                       </div>
                     </a>&nbsp;
                     @endcan
-                    @can('doctors.destroy')
+                    @can('eliminar profesionales')
                     <form id="formEliminar{{ $doctor->id }}" action="{{ route('doctors.destroy', ['doctor' => $doctor ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

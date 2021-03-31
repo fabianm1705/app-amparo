@@ -25,17 +25,18 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.min.js') }}" defer></script>
     @auth
-      @foreach (Auth::user()->roles as $role)
-        @if($role->slug=='dev')
-          <script src="{{ asset('js/darkModeDev.js') }}" defer></script>
-        @elseif($role->slug=='admin')
-          <script src="{{ asset('js/darkModeAdmin.js') }}" defer></script>
-        @elseif($role->slug=='socio')
-          <script src="{{ asset('js/darkModeSocio.js') }}" defer></script>
-        @elseif(($role->slug=='aop.aop') or ($role->slug=='SOS.sos'))
-          <script src="{{ asset('js/darkModeAOPSOS.js') }}" defer></script>
-        @endif
-      @endforeach
+      @if(Auth::user()->hasRole('desarrollador'))
+        <script src="{{ asset('js/darkModeDev.js') }}" defer></script>
+      @endif
+      @if(Auth::user()->hasRole('admin'))
+        <script src="{{ asset('js/darkModeAdmin.js') }}" defer></script>
+      @endif
+      @if(Auth::user()->hasRole('socio'))
+        <script src="{{ asset('js/darkModeSocio.js') }}" defer></script>
+      @endif
+      @if(Auth::user()->hasAnyRole('aop','sos'))
+        <script src="{{ asset('js/darkModeAOPSOS.js') }}" defer></script>
+      @endif
     @endauth
     <!-- Fonts -->
     <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
@@ -71,53 +72,53 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       @auth
-                        @can('orders.index')
+                        @can('menu admin')
                           <div class="dropdown">
                             <button class="btn dropdown-toggle text-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Admin
                             </button>
                             <div id="menuAdmin" class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
-                              @can('interests.index')
+                              @can('ver accesos')
                                 <a id="visorAccesos" class="dropdown-item" href="{{ route('interests.visor') }}">Visor de Accesos</a>
                               @endcan
                               <div class="dropdown-divider"></div>
-                              @can('users.index')
+                              @can('navegar socios')
                                 <a id="busquedaSocios" class="dropdown-item" href="{{ route('users.index') }}">Búsqueda Socios</a>
                               @endcan
-                              @can('users.upload')
+                              @can('actualizar padron')
                                 <a id="actualizacionPadron" class="dropdown-item" href="{{ route('users.uploadfiles') }}">Actualización Padrón</a>
                               @endcan
                               <div class="dropdown-divider"></div>
-                              @can('products.index')
+                              @can('navegar productos')
                                 <a id="productos" class="dropdown-item" href="{{ route('products.index') }}">Productos</a>
                               @endcan
-                              @can('shopping_cart.index')
+                              @can('navegar shoppings')
                                 <a id="shoppingCarts" class="dropdown-item" href="{{ route('shopping_cart.index') }}">Shopping Carts</a>
                               @endcan
                               <div class="dropdown-divider"></div>
-                              @can('specialties.index')
+                              @can('navegar especialidades')
                                 <a id="especialidades" class="dropdown-item" href="{{ route('specialties.index') }}">Especialidades</a>
                               @endcan
-                              @can('doctors.index')
+                              @can('navegar profesionales')
                                 <a id="profesionales" class="dropdown-item" href="{{ route('doctors.index') }}">Profesionales</a>
                               @endcan
-                              @can('categories.index')
+                              @can('navegar categorias')
                                 <a id="categorias" class="dropdown-item" href="{{ route('categories.index') }}">Categorías</a>
                               @endcan
-                              @can('roles.index')
+                              @can('navegar roles')
                                 <a id="roles" class="dropdown-item" href="{{ route('roles.index') }}">Roles</a>
                               @endcan
-                              @can('payment_methods.index')
+                              @can('navegar listas de precios')
                                 <a id="metodosPago" class="dropdown-item" href="{{ route('payment_methods.index') }}">Listas de Precios</a>
                                 <a id="metodosPagoItem" class="dropdown-item" href="{{ route('payment_method_items.index') }}">Ítems Listas de Precios</a>
                               @endcan
-                              @can('interests.index')
+                              @can('navegar zonas de interes')
                                 <a id="zonasInteres" class="dropdown-item" href="{{ route('interests.index') }}">Zonas de Interés</a>
                               @endcan
-                              @can('subscriptions.index')
-                                <a id="planes" class="dropdown-item" href="{{ route('subscriptions.index') }}">Planes/Subscriptions</a>
+                              @can('navegar planes')
+                                <a id="planes" class="dropdown-item" href="{{ route('subscriptions.index') }}">Planes</a>
                               @endcan
-                              @can('receipts.index')
+                              @can('navegar recibos')
                                 <a id="recibos" class="dropdown-item" href="{{ route('receipts.index') }}">Recibos</a>
                               @endcan
                             </div>
@@ -129,23 +130,21 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                       @auth
-                        @can('orders.indice')
+                        @can('navegar ordenes')
                           <li class="nav-item active">
-                            @foreach (Auth::user()->roles as $role)
-                              @if(($role->slug=='dev') or ($role->slug=='admin'))
+                            @if(Auth::user()->hasRole('desarrollador'))
                                 <a class="nav-link" href="{{ route('orders.index') }}">Ordenes</a>
-                              @else
+                            @else
                                 <a class="nav-link" href="{{ route('orders.indice') }}">Ordenes</a>
-                              @endif
-                            @endforeach
+                            @endif
                           </li>
                         @endcan
-                        @can('doctors.mostrar')
+                        @can('mostrar profesionales')
                           <li class="nav-item active">
                             <a class="nav-link" href="{{ route('doctors.mostrar') }}">Profesionales</a>
                           </li>
                         @endcan
-                        @can('products.shopping')
+                        @can('shopping')
                           <li class="nav-item active">
                             <a class="nav-link" href="{{ route('products.shopping') }}">Shopping</a>
                           </li>
@@ -160,17 +159,17 @@
                             </a>
                           </li>
                         @endcan
-                        @can('aop')
+                        @can('padron aop')
                         <li class="nav-item active">
                           <a class="nav-link" href="{{ route('odontologia') }}">Odontológico</a>
                         </li>
                         @endcan
-                        @can('sos.emergencias')
+                        @can('padron sos')
                         <li class="nav-item active">
                           <a class="nav-link" href="{{ route('emergencia') }}">Padrón</a>
                         </li>
                         @endcan
-                        @can('planes')
+                        @can('ver planes')
                           <li class="nav-item active">
                             <a class="nav-link" href="{{ route('planes') }}">Planes</a>
                           </li>
@@ -209,7 +208,7 @@
                                     <form id="darkmode-form" action="{{ route('users.darkMode') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                    @can('users.panel')
+                                    @can('ver panel socios')
                                         <a id="misDatos" class="dropdown-item" href="{{ route('users.panel', ['id' => Auth::user()->id ]) }}">Mis Datos</a>
                                     @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"

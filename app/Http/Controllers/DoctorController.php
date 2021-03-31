@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\Specialty;
-use App\UserInterest;
 use Illuminate\Http\Request;
 use App\Http\Requests\DoctorFormRequest;
-use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,11 +13,10 @@ class DoctorController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('can:doctors.index')->only('index');
-      $this->middleware('can:doctors.show')->only('show');
-      $this->middleware('can:doctors.destroy')->only('destroy');
-      $this->middleware('can:doctors.edit')->only(['edit','update']);
-      $this->middleware('can:doctors.create')->only(['create','store']);
+      $this->middleware('can:navegar profesionales')->only('index');
+      $this->middleware('can:eliminar profesionales')->only('destroy');
+      $this->middleware('can:editar profesionales')->only(['edit','update']);
+      $this->middleware('can:crear profesionales')->only(['create','store']);
     }
 
     /**
@@ -69,18 +66,6 @@ class DoctorController extends Controller
       return redirect()
         ->route('doctors.show',['doctor' => $doctor])
         ->with('message','Profesional Registrado');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Doctor $doctor)
-    {
-      $specialties = Specialty::orderBy('descripcion','asc')->get();
-      return view('admin.doctor.show', compact("doctor","specialties"));
     }
 
     /**

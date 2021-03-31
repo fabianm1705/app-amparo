@@ -9,10 +9,10 @@ class PaymentMethodController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:payment_methods.index')->only('index');
-    $this->middleware('can:payment_methods.destroy')->only('destroy');
-    $this->middleware('can:payment_methods.edit')->only(['edit','update']);
-    $this->middleware('can:payment_methods.create')->only(['create','store']);
+    $this->middleware('can:navegar listas de precios')->only('index');
+    $this->middleware('can:eliminar listas de precios')->only('destroy');
+    $this->middleware('can:editar listas de precios')->only(['edit','update']);
+    $this->middleware('can:crear listas de precios')->only(['create','store']);
   }
   /**
    * Display a listing of the resource.

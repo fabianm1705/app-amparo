@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
         <h5 class="card-title text-white mt-3 mb-3 ml-3">Órdenes Médicas</h5>
         <div class="ml-auto blanco mr-2 mt-2">
-          @can('orders.crear')
+          @can('emitir ordenes')
             <a href="{{ route('orders.create',['id' => 0]) }}" title="Nueva">
               Nueva Orden
             </a>

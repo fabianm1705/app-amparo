@@ -1,17 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Concept;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Sale;
-use Faker\Generator as Faker;
+use App\Concept;
 
-$factory->define(Concept::class, function (Faker $faker) {
-    $count = Sale::count();
-    return [
-      'descripcion' => $faker->name,
-      'obs' => $faker->name,
-      'monto' => $faker->numberBetween(120,1400),
-      'sale_id' => $faker->numberBetween(1,$count)
-    ];
-});
+class ConceptFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Concept::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+      $count = Sale::count();
+      return [
+        'descripcion' => $this->faker->name,
+        'obs' => $this->faker->name,
+        'monto' => $this->faker->numberBetween(120,1400),
+        'sale_id' => $this->faker->numberBetween(1,$count)
+      ];
+    }
+}

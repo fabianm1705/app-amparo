@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card shadow-sm"><br>
           <header class="centrado">
-            <h4>Actualizar Plan/Subscripción</h4>
+            <h4>Actualizar Plan</h4>
           </header>
           <div class="card-body">
             <form action="{{ route('subscriptions.update', ['subscription' => $subscription]) }}" method="post">

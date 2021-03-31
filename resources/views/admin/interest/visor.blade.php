@@ -35,7 +35,7 @@
                   <td>{{ $user_interest->obs }}</td>
                   <td>{{ $user_interest->created_at }}</td>
                   <td>
-                    @can('interests.destroy')
+                    @can('eliminar zonas de interes')
                     <form action="{{ route('user_interest.borrar', ['id' => $user_interest->id ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

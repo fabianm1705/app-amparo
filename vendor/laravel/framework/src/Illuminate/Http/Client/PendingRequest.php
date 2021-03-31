@@ -9,6 +9,7 @@ use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Macroable;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PendingRequest
 {
@@ -181,14 +182,22 @@ class PendingRequest
     /**
      * Attach a file to the request.
      *
-     * @param  string  $name
+     * @param  string|array  $name
      * @param  string  $contents
      * @param  string|null  $filename
      * @param  array  $headers
      * @return $this
      */
-    public function attach($name, $contents, $filename = null, array $headers = [])
+    public function attach($name, $contents = '', $filename = null, array $headers = [])
     {
+        if (is_array($name)) {
+            foreach ($name as $file) {
+                $this->attach(...$file);
+            }
+
+            return $this;
+        }
+
         $this->asMultipart();
 
         $this->pendingFiles[] = array_filter([
@@ -314,6 +323,17 @@ class PendingRequest
     }
 
     /**
+     * Specify the user agent for the request.
+     *
+     * @param  string  $userAgent
+     * @return $this
+     */
+    public function withUserAgent($userAgent)
+    {
+        return $this->withHeaders(['User-Agent' => $userAgent]);
+    }
+
+    /**
      * Specify the cookies that should be included with the request.
      *
      * @param  array  $cookies
@@ -430,6 +450,40 @@ class PendingRequest
     {
         return tap($this, function () use ($callback) {
             $this->beforeSendingCallbacks[] = $callback;
+        });
+    }
+
+    /**
+     * Dump the request before sending.
+     *
+     * @return $this
+     */
+    public function dump()
+    {
+        $values = func_get_args();
+
+        return $this->beforeSending(function (Request $request, array $options) use ($values) {
+            foreach (array_merge($values, [$request, $options]) as $value) {
+                VarDumper::dump($value);
+            }
+        });
+    }
+
+    /**
+     * Dump the request before sending and end the script.
+     *
+     * @return $this
+     */
+    public function dd()
+    {
+        $values = func_get_args();
+
+        return $this->beforeSending(function (Request $request, array $options) use ($values) {
+            foreach (array_merge($values, [$request, $options]) as $value) {
+                VarDumper::dump($value);
+            }
+
+            exit(1);
         });
     }
 

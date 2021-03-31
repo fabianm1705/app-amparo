@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Specialty;
 use App\Models\Doctor;
 use App\User;
-use App\UserInterest;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -16,11 +14,10 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('can:orders.index')->only('index');
-      $this->middleware('can:orders.show')->only('show');
-      $this->middleware('can:orders.destroy')->only('destroy');
-      $this->middleware('can:orders.edit')->only(['edit','update']);
-      $this->middleware('can:orders.create')->only(['create']);
+      $this->middleware('can:navegar ordenes')->only(['index','indice']);
+      $this->middleware('can:eliminar ordenes')->only('destroy');
+      $this->middleware('can:editar ordenes')->only(['edit','update']);
+      $this->middleware('can:crear ordenes')->only(['create']);
     }
     /**
      * Display a listing of the resource.
@@ -54,7 +51,7 @@ class OrderController extends Controller
       registro_acceso(3,'');
       $emiteOficina = true;
       foreach (Auth::user()->roles as $role){
-        if(($role->slug=='dev') or ($role->slug=='admin')){
+        if(($role->name=='desarrollador') or ($role->name=='admin')){
           $users = User::where('id', $request->input('id'))->get();
         }else{
           $emiteOficina = false;
@@ -108,7 +105,7 @@ class OrderController extends Controller
         $order->pacient_id = $request->input('user_id');
         $order->doctor_id = $request->input('doctor_id');
         foreach (Auth::user()->roles as $role){
-          if(($role->slug=='dev') or ($role->slug=='admin')){
+          if(($role->name=='desarrollador') or ($role->name=='admin')){
             $order->lugarEmision = 'Sede Amparo';
           }else{
             $order->lugarEmision = 'Autogestión';
@@ -121,17 +118,6 @@ class OrderController extends Controller
           ->route('pdf',['id' => $order->id])
           ->with('message','Orden Registrada');
       }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Order $order)
-    {
-      return view('admin.order.show', compact("order"));
     }
 
     /**
@@ -189,17 +175,6 @@ class OrderController extends Controller
       $users = User::where('group_id',-1)->paginate();
       return view('admin.order.search',compact("users"));
     }
-
-    // public function cantOrders($id)
-    // {
-    //   $cantOrders = DB::table('orders')
-    //                  ->select(DB::raw('count(*) as order_count'))
-    //                  ->where('pacient_id', '=', $id)
-    //                  ->whereMonth('fecha','=',now()->month)
-    //                  ->whereYear('fecha','=',now()->year)
-    //                  ->get();
-    //   return $cantOrders->pluck('order_count');
-    // }
 
     public function getOrdenes($id)
     {

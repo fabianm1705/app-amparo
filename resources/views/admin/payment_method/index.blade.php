@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Listas de Precios</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('payment_methods.create')
+            @can('crear listas de precios')
               <a href="{{ route('payment_methods.create') }}" title="Nuevo">
                 Agregar Nuevo
               </a>
@@ -36,14 +36,14 @@
                     <input type="checkbox" class="form-check-input" id="activo" name="activo" disabled value="1" {{ $payment_method->activo ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('payment_methods.edit')
+                    @can('editar listas de precios')
                       <a href="{{ route('payment_methods.edit', ['payment_method' => $payment_method ]) }}" title="Editar" class="">
                         <div class="">
                           <i class="material-icons">edit</i>
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('payment_methods.destroy')
+                    @can('eliminar listas de precios')
                       <form id="formEliminar{{ $payment_method->id }}" action="{{ route('payment_methods.destroy', ['payment_method' => $payment_method ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf

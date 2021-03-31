@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('content')
 <div class="container mt-2">
   @if(Auth::user()->darkMode)
     <div class="text-center text-white">
@@ -7,7 +8,7 @@
     <div class="text-center">
   @endif
       <div class="container alert alert-success">
-        Momentáneamente la emisión de órdenes se realiza sólo en oficina o solicitándolas por whatsapp al 155-508247.
+        {{ phpinfo() }}
       </div>
     </div>
 </div>

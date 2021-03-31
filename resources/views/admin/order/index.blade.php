@@ -25,7 +25,7 @@
           </div>
           <div class="col-lg-2 col-md-2 col-sm-12 mt-2 blanco d-flex">
             <div class="ml-auto mr-2">
-              @can('orders.create')
+              @can('emitir ordenes')
                 <a href="{{ route('usersSearch') }}" title="Nueva">
                   Nueva Orden
                 </a>
@@ -80,17 +80,6 @@
                   @endif
                   <td>{{ $order->obs }}</td>
                   <td class="text-right d-flex">
-                    @can('orders.edit')
-                    <a href="{{ route('orders.edit', ['order' => $order ]) }}" title="Editar" class="">
-                      <div class="">
-                        @if(Auth::user()->darkMode)
-                          <i class="material-icons" style="color:white">edit</i>
-                        @else
-                          <i class="material-icons">edit</i>
-                        @endif
-                      </div>
-                    </a>&nbsp;
-                    @endcan
                     <a href="{{ route('pdf', ['id' => $order->id ]) }}" title="Descargar">
                       <div class="">
                         @if(Auth::user()->darkMode)
@@ -121,7 +110,7 @@
                         </button>
                       </form>
                     @endif
-                    @can('orders.destroy')
+                    @can('eliminar ordenes')
                       <form id="formEliminar{{ $order->id }}" action="{{ route('orders.destroy', ['order' => $order ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf

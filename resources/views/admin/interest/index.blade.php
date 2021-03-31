@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Zonas de Interés</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('interests.create')
+            @can('crear zonas de interes')
             <a href="{{ route('interests.create') }}" title="Nueva">
               Agregar Nueva
             </a>
@@ -32,21 +32,14 @@
                     <input type="checkbox" class="form-check-input" id="activo" name="activo" disabled value="1" {{ $interest->activo ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('interests.show')
-                    <a href="{{ route('interests.show', ['interest' => $interest ]) }}" title="Ver" class="">
-                      <div class="">
-                        <i class="material-icons">search</i>
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('interests.edit')
+                    @can('editar zonas de interes')
                     <a href="{{ route('interests.edit', ['interest' => $interest ]) }}" title="Editar" class="">
                       <div class="">
                         <i class="material-icons">edit</i>
                       </div>
                     </a>&nbsp;
                     @endcan
-                    @can('interests.destroy')
+                    @can('eliminar zonas de interes')
                     <form id="formEliminar{{ $interest->id }}" action="{{ route('interests.destroy', ['interest' => $interest ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

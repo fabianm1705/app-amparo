@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Categorías</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('categories.create')
+            @can('crear categorias')
             <a href="{{ route('categories.create') }}" title="Nueva">
               Agregar Nueva
             </a>
@@ -30,21 +30,14 @@
                     <input type="checkbox" class="form-check-input" id="activa" name="activa" disabled value="1" {{ $category->activa ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('categories.show')
-                    <a href="{{ route('categories.show', ['category' => $category ]) }}" title="Ver" class="">
-                      <div class="">
-                        <i class="material-icons">search</i>
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('categories.edit')
+                    @can('editar categorias')
                     <a href="{{ route('categories.edit', ['category' => $category ]) }}" title="Editar" class="">
                       <div class="">
                         <i class="material-icons">edit</i>
                       </div>
                     </a>&nbsp;
                     @endcan
-                    @can('categories.destroy')
+                    @can('eliminar categorias')
                     <form id="formEliminar{{ $category->id }}" action="{{ route('categories.destroy', ['category' => $category ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

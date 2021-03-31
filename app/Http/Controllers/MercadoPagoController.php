@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ShoppingCart;
 use MercadoPago\SDK;
 use MercadoPago\Payment;
 use MercadoPago\Payer;

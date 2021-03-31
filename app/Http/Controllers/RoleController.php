@@ -3,36 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Caffeinated\Shinobi\Models\Permission;
-use Caffeinated\Shinobi\Models\Role;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:roles.index')->only('index');
-    $this->middleware('can:roles.show')->only('show');
-    $this->middleware('can:roles.destroy')->only('destroy');
-    $this->middleware('can:roles.edit')->only(['edit','update']);
-    $this->middleware('can:roles.create')->only(['create','store']);
+    $this->middleware('can:navegar roles')->only('index');
+    $this->middleware('can:eliminar roles')->only('destroy');
+    $this->middleware('can:editar roles')->only(['edit','update']);
+    $this->middleware('can:crear roles')->only(['create','store']);
   }
 
   public function index()
   {
     $roles = Role::paginate();
     return view('admin.role.index',compact("roles"));
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\Product  $product
-   * @return \Illuminate\Http\Response
-   */
-  public function show(Role $role)
-  {
-    $permissions = Permission::get();
-    return view('admin.role.show', compact("role","permissions"));
   }
 
   /**
@@ -56,12 +43,12 @@ class RoleController extends Controller
    */
   public function store(Request $request, Role $role)
   {
-    $role->create($request->all());
+    $role = Role::create(['name' => $request->input('name')]);
 
-    $role->permissions()->sync($request->input('permissions'));
+    $role->syncPermissions($request->input('permissions'));
 
     return redirect()
-      ->route('roles.edit',['role' => $role])
+      ->route('roles.index',['role' => $role])
       ->with('message','Role Cargado');
   }
 
@@ -86,12 +73,12 @@ class RoleController extends Controller
    */
   public function update(Request $request, Role $role)
   {
-    $role->update($request->all());
+    $role->name = $request->input('name');
 
-    $role->permissions()->sync($request->input('permissions'));
+    $role->syncPermissions($request->input('permissions'));
 
     return redirect()
-      ->route('roles.edit',['role' => $role])
+      ->route('roles.index',['role' => $role])
       ->with('message','Role Actualizado');
   }
 

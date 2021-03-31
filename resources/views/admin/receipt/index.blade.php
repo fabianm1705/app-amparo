@@ -34,18 +34,7 @@
                   <td>${{ $receipt->concepto }}</td>
                   <td class="text-right d-flex">
                     <input type="hidden" class="form-control" id="num_en_letras" name="num_en_letras">
-                    @can('receipts.show')
-                    <a href="{{ route('receipts.show',['id' => $receipt->id]) }}" title="Ver">
-                      <div>
-                        @if(Auth::user()->darkMode)
-                          <i class="material-icons" style="color:white">search</i>
-                        @else
-                          <i class="material-icons">search</i>
-                        @endif
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('receipts.destroy')
+                    @can('eliminar recibos')
                     <form id="formEliminar{{ $receipt->id }}" action="{{ route('receipts.destroy', ['receipt' => $receipt ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

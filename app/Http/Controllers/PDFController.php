@@ -8,7 +8,6 @@ use App\Concept;
 use App\Receipt;
 use PDF;
 use App\NumerosEnLetras;
-use App\Services\GitHub;
 
 class PDFController extends Controller
 {

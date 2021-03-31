@@ -13,11 +13,10 @@ class SpecialtyController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('can:specialties.index')->only('index');
-      $this->middleware('can:specialties.show')->only('show');
-      $this->middleware('can:specialties.destroy')->only('destroy');
-      $this->middleware('can:specialties.edit')->only(['edit','update']);
-      $this->middleware('can:specialties.create')->only(['create','store']);
+      $this->middleware('can:navegar especialidades')->only('index');
+      $this->middleware('can:eliminar especialidades')->only('destroy');
+      $this->middleware('can:editar especialidades')->only(['edit','update']);
+      $this->middleware('can:crear especialidades')->only(['create','store']);
     }
     /**
      * Display a listing of the resource.
@@ -67,17 +66,6 @@ class SpecialtyController extends Controller
       return redirect()
         ->route('specialties.show',['specialty' => $specialty])
         ->with('message','Especialidad Registrada');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Specialty  $specialty
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Specialty $specialty)
-    {
-      return view('admin.specialty.show', compact("specialty"));
     }
 
     /**

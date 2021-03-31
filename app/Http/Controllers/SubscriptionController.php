@@ -9,11 +9,10 @@ class SubscriptionController extends Controller
 {
   public function __construct()
   {
-    $this->middleware('can:subscriptions.index')->only('index');
-    $this->middleware('can:subscriptions.show')->only('show');
-    $this->middleware('can:subscriptions.destroy')->only('destroy');
-    $this->middleware('can:subscriptions.edit')->only(['edit','update']);
-    $this->middleware('can:subscriptions.create')->only(['create','store']);
+    $this->middleware('can:navegar planes')->only('index');
+    $this->middleware('can:eliminar planes')->only('destroy');
+    $this->middleware('can:editar planes')->only(['edit','update']);
+    $this->middleware('can:crear planes')->only(['create','store']);
   }
     /**
      * Display a listing of the resource.
@@ -61,17 +60,6 @@ class SubscriptionController extends Controller
       return redirect()
         ->route('subscriptions.show',['subscription' => $subscription])
         ->with('message','Plan/Subscripción Registrada');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subscription  $subscription
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subscription $subscription)
-    {
-      return view('admin.subscription.show', compact("subscription"));
     }
 
     /**

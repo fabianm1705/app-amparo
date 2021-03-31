@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Especialidades</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('specialties.create')
+            @can('crear especialidades')
               <a href="{{ route('specialties.create') }}" title="Nueva">
                 Agregar Nueva
               </a>
@@ -54,21 +54,14 @@
                   </td>
                   <td class="text-center">{{ $specialty->cantLimitOrders }}</td>
                   <td class="text-right d-flex">
-                    @can('specialties.show')
-                      <a href="{{ route('specialties.show', ['specialty' => $specialty ]) }}" title="Ver" class="">
-                        <div class="">
-                          <i class="material-icons">search</i>
-                        </div>
-                      </a>&nbsp;
-                    @endcan
-                    @can('specialties.edit')
+                    @can('editar especialidades')
                       <a href="{{ route('specialties.edit', ['specialty' => $specialty ]) }}" title="Editar" class="">
                         <div class="">
                           <i class="material-icons">edit</i>
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('specialties.destroy')
+                    @can('eliminar especialidades')
                       <form id="formEliminar{{ $specialty->id }}" action="{{ route('specialties.destroy', ['specialty' => $specialty ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf

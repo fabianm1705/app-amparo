@@ -8,7 +8,7 @@
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Item Lista de Precios</h5>
           <ul class="nav justify-content-end ml-auto mr-2 mt-2">
               <li class="nav-item ml-2 blanco">
-                @can('payment_method_items.create')
+                @can('crear items de listas de precios')
                 <a href="{{ route('payment_method_items.create') }}" title="Nuevo">Agregar Nuevo</a>
                 @endcan
               </li>
@@ -38,21 +38,14 @@
                     <input type="checkbox" class="form-check-input" id="activo" name="activo" disabled value="1" {{ $payment_method_item->activo ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('payment_method_items.show')
-                    <a href="{{ route('payment_method_items.show', ['payment_method_item' => $payment_method_item ]) }}" title="Ver" class="">
-                      <div class="">
-                        <i class="material-icons">search</i>
-                      </div>
-                    </a>&nbsp;
-                    @endcan
-                    @can('payment_method_items.edit')
+                    @can('editar items de listas de precios')
                     <a href="{{ route('payment_method_items.edit', ['payment_method_item' => $payment_method_item ]) }}" title="Editar" class="">
                       <div class="">
                         <i class="material-icons">edit</i>
                       </div>
                     </a>&nbsp;
                     @endcan
-                    @can('payment_method_items.destroy')
+                    @can('eliminar items de listas de precios')
                     <form id="formEliminar{{ $payment_method_item->id }}" action="{{ route('payment_method_items.destroy', ['payment_method_item' => $payment_method_item ]) }}" method="post" style="background-color: transparent;">
                       @method('DELETE')
                       @csrf

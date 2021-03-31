@@ -7,7 +7,7 @@
       <div class="fresh-table full-color-orange d-flex shadow-sm">
           <h5 class="card-title text-white mt-3 mb-3 ml-3">Productos</h5>
           <div class="ml-auto blanco mr-2 mt-2">
-            @can('products.create')
+            @can('crear productos')
               <a href="{{ route('products.create') }}" title="Nuevo">
                 Agregar Nuevo
               </a>
@@ -46,7 +46,7 @@
                     <input type="checkbox" class="form-check-input" id="vigente" name="vigente" disabled value="1" {{ $product->vigente ? 'checked="checked"' : '' }}>
                   </td>
                   <td class="text-right d-flex">
-                    @can('products.edit')
+                    @can('editar productos')
                       <a href="{{ route('products.edit', ['product' => $product ]) }}" title="Editar" class="">
                         <div class="">
                           @if(Auth::user()->darkMode)
@@ -57,7 +57,7 @@
                         </div>
                       </a>&nbsp;
                     @endcan
-                    @can('products.destroy')
+                    @can('eliminar productos')
                       <form id="formEliminar{{ $product->id }}" action="{{ route('products.destroy', ['product' => $product ]) }}" method="post" style="background-color: transparent;">
                         @method('DELETE')
                         @csrf

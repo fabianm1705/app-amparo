@@ -17,30 +17,7 @@
                 <div class="form-group">
                   <label for="name">Nombre</label>
                   <input type="text" class="form-control" name="name" value="{{ $role->name }}">
-                  <label for="slug">URL amigable</label>
-                  <input type="text" class="form-control" name="slug" value="{{ $role->slug }}">
-                  <label for="description">Descripción</label>
-                  <input type="text" class="form-control" name="description" value="{{ $role->description }}">
-                  <hr>
-                  <h5>Permiso Especial</h5>
-                  <div class="form-group">
-                    <label>
-                        <input type="radio" name="special" value="all-access"
-                            @if($role->special=='all-access')
-                              checked=checked
-                            @endif>
-                            Acceso Total
-                    </label>
-                    <label>
-                        <input type="radio" name="special" value="no-access"
-                            @if($role->special=='no-access')
-                              checked=checked
-                            @endif>
-                            No Acceso
-                    </label>
-                  </div>
-                  <hr>
-                  <h5>Lista de Permisos</h5>
+                  <h5 class="mt-2">Lista de Permisos</h5>
                   <div class="form-group">
                     <ul class="list-unstyled">
                       @foreach($permissions as $permission)
@@ -54,7 +31,6 @@
                                   @endisset
                                   >
                             {{ $permission->name }}
-                            <small><em>{{ $permission->description ?: 'N/A' }}</em></small>
                           </label>
                         </li>
                       @endforeach

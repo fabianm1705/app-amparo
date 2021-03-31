@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
-use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -14,11 +13,10 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-      $this->middleware('can:products.index')->only('index');
-      $this->middleware('can:products.show')->only('show');
-      $this->middleware('can:products.destroy')->only('destroy');
-      $this->middleware('can:products.edit')->only(['edit','update']);
-      $this->middleware('can:products.create')->only(['create','store']);
+      $this->middleware('can:navegar productos')->only('index');
+      $this->middleware('can:eliminar productos')->only('destroy');
+      $this->middleware('can:editar productos')->only(['edit','update']);
+      $this->middleware('can:crear productos')->only(['create','store']);
     }
     /**
      * Display a listing of the resource.
