@@ -92,11 +92,10 @@ function checkSocio(socio){
       monto_s = document.getElementById("monto_s");
       coseguro = document.getElementById("coseguro");
       if(socio){
+        // es socio logueado
         obs.style.display = "none";
         monto_s.style.display = "none";
         monto_a.style.display = "none";
-        // msg_monto_s.style.display = "none";
-        // msg_monto_a.style.display = "none";
         if(resp.data.necesita_odonto && resp.data.necesita_salud){
           btnGenerarOrden.style.display = "none";
           needOdontologia.style.display = "block";
@@ -129,6 +128,7 @@ function checkSocio(socio){
           btnGenerarOrden.style.display = "block";
         }
       }else{
+        // es admin o dev
         btnGenerarOrden.style.display = "block";
         if(resp.data.necesita_odonto){
           needOdontologia.style.display = "block";

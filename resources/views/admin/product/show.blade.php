@@ -62,8 +62,7 @@
                   </div></center>
                   <div class="row">
                     <div class="col-md-12 mb-1">
-                      <add-to-cart-component :product="{{$product}}">
-                      </add-to-cart-component>
+                      @livewire('btn-add-prod', [ "product_id" => "$product->id" ])
                     </div>
                     <div class="col-md-12 mb-1">
                       <form action="{{ route('shopping_cart.cart') }}" method="get" enctype="multipart/form-data">

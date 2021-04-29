@@ -58,8 +58,8 @@ class SubscriptionController extends Controller
       $subscription->save();
 
       return redirect()
-        ->route('subscriptions.show',['subscription' => $subscription])
-        ->with('message','Plan/Subscripción Registrada');
+        ->route('subscriptions.index')
+        ->with('message','Plan registrado');
     }
 
     /**
@@ -96,8 +96,8 @@ class SubscriptionController extends Controller
       $subscription->save();
 
       return redirect()
-        ->route('subscriptions.show',['subscription' => $subscription])
-        ->with('message','Plan/Subscripción Registrada');
+        ->route('subscriptions.index')
+        ->with('message','Plan actualizado');
     }
 
     /**

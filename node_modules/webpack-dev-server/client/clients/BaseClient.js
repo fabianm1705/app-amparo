@@ -13,8 +13,8 @@ module.exports = /*#__PURE__*/function () {
 
   _createClass(BaseClient, null, [{
     key: "getClientPath",
-    // eslint-disable-next-line no-unused-vars
-    value: function getClientPath(options) {
+    value: // eslint-disable-next-line no-unused-vars
+    function getClientPath(options) {
       throw new Error('Client needs implementation');
     }
   }]);

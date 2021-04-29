@@ -21,8 +21,6 @@ function darkMode(valor){
   var el19 = document.getElementById("zonasInteres");
   var el20 = document.getElementById("planes");
   var el24 = document.getElementById("recibos");
-  var el21 = document.getElementById("carrito");
-  var el22 = document.getElementById("iconCarrito");
   var el23 = document.getElementById("cuerpo");
   el3.checked = valor;
   if(valor){
@@ -48,8 +46,6 @@ function darkMode(valor){
     el18.classList.add('text-white');
     el19.classList.add('text-white');
     el20.classList.add('text-white');
-    el21.classList.add('text-white');
-    el22.style.color = "white";
     el23.style.backgroundImage = null;
     el23.classList.add('bg-dark');
     el24.classList.add('text-white');
@@ -77,10 +73,13 @@ function darkMode(valor){
     el18.classList.remove('text-white');
     el19.classList.remove('text-white');
     el20.classList.remove('text-white');
-    el21.classList.remove('text-white');
-    el22.style.color = "black";
     el23.style.backgroundImage = "url('https://amparosrl.com.ar/images/01.webp')";
     el24.classList.remove('text-white');
     el25.classList.remove('text-white');
   }
+}
+
+function activeDarkMode(valor){
+  event.preventDefault();
+  document.getElementById('darkmode-form').submit();
 }

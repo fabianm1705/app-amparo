@@ -2,6 +2,7 @@
 
 use App\UserInterest;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 function necesita_salud($user)
 {
@@ -58,13 +59,11 @@ function carencia_salud($user)
 
 function registro_acceso($interest_id,$obs)
 {
-  foreach (Auth::user()->roles as $role){
-    if(($role->slug<>'dev') and ($role->slug<>'admin')){
+    if(Auth::user()->hasAnyRole('socio', 'aop','sos')){
       UserInterest::create(['user_id' => Auth::user()->id,
                             'interest_id' => $interest_id,
                             'obs' => $obs]);
     }
-  }
 }
 
 function cantOrdersSalud($user)

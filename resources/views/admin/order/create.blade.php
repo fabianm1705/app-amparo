@@ -16,13 +16,11 @@
             </div>
             <div class="col-md-12">
               @auth
-                @foreach (Auth::user()->roles as $role)
-                  @if($role->slug=='socio')
-                    <select class="custom-select mb-1" name="user_id" id="user_id" onchange="checkSocio(true)">
-                  @else
-                    <select class="custom-select mb-1" name="user_id" id="user_id" onchange="checkSocio(false)">
-                  @endif
-                @endforeach
+                @if(Auth::user()->hasRole('socio'))
+                  <select class="custom-select mb-1" name="user_id" id="user_id" onchange="checkSocio(true)">
+                @else
+                  <select class="custom-select mb-1" name="user_id" id="user_id" onchange="checkSocio(false)">
+                @endif
               @endauth
                 <option value="0" selected>Seleccione Paciente</option>
                 @foreach($users as $user)
@@ -32,13 +30,11 @@
                 @endforeach
               </select>
               @auth
-                @foreach (Auth::user()->roles as $role)
-                  @if($role->slug=='socio')
-                    <select class="custom-select mb-1" name="specialty_id" id="specialty_id" onchange="getDoctors(true)">
-                  @else
-                    <select class="custom-select mb-1" name="specialty_id" id="specialty_id" onchange="getDoctors(false)">
-                  @endif
-                @endforeach
+                @if(Auth::user()->hasRole('socio'))
+                  <select class="custom-select mb-1" name="specialty_id" id="specialty_id" onchange="getDoctors(true)">
+                @else
+                  <select class="custom-select mb-1" name="specialty_id" id="specialty_id" onchange="getDoctors(false)">
+                @endif
               @endauth
                 <option value="0" selected>Seleccione Especialidad</option>
                 @foreach($specialties as $specialty)
@@ -71,13 +67,11 @@
             </div>
           </center>
           @auth
-            @foreach (Auth::user()->roles as $role)
-              @if($role->slug=='socio')
-                <textarea class="form-control mt-2 mb-2" style="display:none" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
-              @else
-                <textarea class="form-control mt-2 mb-2" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
-              @endif
-            @endforeach
+            @if(Auth::user()->hasRole('socio'))
+              <textarea class="form-control mt-2 mb-2" style="display:none" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
+            @else
+              <textarea class="form-control mt-2 mb-2" id="obs" name="obs" rows="2" placeholder="Observaciones" autocomplete="off"></textarea>
+            @endif
           @endauth
 
           @if($emiteOficina)

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "bacon/bacon-qr-code": "1.0.3",
         "barryvdh/laravel-dompdf": "^0.8.6",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -17,7 +18,9 @@
         "laravel/ui": "^3.0",
         "laraveles/spanish": "^1.4",
         "league/flysystem-aws-s3-v3": "~1.0",
+        "livewire/livewire": "^2.4",
         "mercadopago/dx-php": "2.2.1",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "spatie/laravel-permission": "^4.0",
         "tightenco/ziggy": "^0.9.4"
     },
@@ -36,6 +39,12 @@
     },
     "extra": {
         "laravel": {
+            "providers": [
+                "Livewire\\LivewireServiceProvider"
+            ],
+            "aliases": {
+                "Livewire": "Livewire\\Livewire"
+            },
             "dont-discover": []
         }
     },
@@ -43,7 +52,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Livewire\\": "src/"
         },
         "files": [
             "app/Http/helpers.php"

@@ -42,7 +42,7 @@
     @if (\Request::is('products/shopping'))
       <link rel="stylesheet" href="{{ asset('swiper/css/swiper.min.css') }}">
     @else
-      <script src="{{ asset('js/app.min.js') }}" defer></script>
+      <script src="{{ asset('js/app.js') }}" defer></script>
     @endif
     @auth
         <script src="{{ asset('js/darkModeClean.js') }}" defer></script>
@@ -53,7 +53,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app-amparo.css') }}" rel="stylesheet">
    @yield('myLinks')
 </head>

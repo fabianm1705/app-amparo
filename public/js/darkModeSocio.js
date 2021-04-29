@@ -5,8 +5,6 @@ function darkMode(valor){
   var el6 = document.getElementById("labelDarkMode");
   var el7 = document.getElementById("misDatos");
   var el8 = document.getElementById("divLogout");
-  var el21 = document.getElementById("carrito");
-  var el22 = document.getElementById("iconCarrito");
   var el23 = document.getElementById("cuerpo");
   el3.checked = valor;
   if(valor){
@@ -18,8 +16,6 @@ function darkMode(valor){
     el6.classList.add('text-secondary');
     el7.classList.add('text-secondary');
     el8.classList.add('text-secondary');
-    el21.classList.add('text-white');
-    el22.style.color = "white";
     el23.classList.add('bg-dark');
   }else{
     el1.classList.remove('navbar-dark');
@@ -30,8 +26,11 @@ function darkMode(valor){
     el6.classList.remove('text-secondary');
     el7.classList.remove('text-secondary');
     el8.classList.remove('text-secondary');
-    el21.classList.remove('text-white');
-    el22.style.color = "black";
     el23.style.backgroundImage = "url('https://amparosrl.com.ar/images/01.webp')";
   }
+}
+
+function activeDarkMode(valor){
+  event.preventDefault();
+  document.getElementById('darkmode-form').submit();
 }

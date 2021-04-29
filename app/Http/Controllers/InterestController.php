@@ -51,7 +51,7 @@ class InterestController extends Controller
       $interest->save();
 
       return redirect()
-        ->route('interests.show',['interest' => $interest])
+        ->route('interests.index')
         ->with('message','Zona de Interés Registrada');
     }
 
@@ -81,7 +81,7 @@ class InterestController extends Controller
      $interest->save();
 
      return redirect()
-       ->route('interests.show',['interest' => $interest])
+       ->route('interests.index')
        ->with('message','Zona de Interés Actualizada');
    }
 

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#fff">
+    <meta http-equiv="Cache-Control" content="max-age=31536000">
 
     <meta property="og:title" content="App | amparosrl.com.ar"/>
     <meta property="og:description" content="Aplicación disponible en Google Play, con toda la información de los servicios, productos y la posibilidad de emitir órdenes médicas." />
@@ -34,18 +35,16 @@
       @if(Auth::user()->hasRole('socio'))
         <script src="{{ asset('js/darkModeSocio.js') }}" defer></script>
       @endif
-      @if(Auth::user()->hasAnyRole('aop','sos'))
+      @if(Auth::user()->hasAnyRole('aop','sos','profesional'))
         <script src="{{ asset('js/darkModeAOPSOS.js') }}" defer></script>
       @endif
     @endauth
-    <!-- Fonts -->
-    <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <!-- Styles -->
+    <link href="{{ asset('css/fresh-bootstrap-table.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
    @yield('myLinks')
+   @livewireStyles
 </head>
 
 @auth
@@ -60,7 +59,7 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                   <div class="d-flex justify-content-end">
                     <div class="mr-2">
-                      <img src="{{ asset('images/logoSinSSSmall.webp') }}" height="35" alt="Amparo">
+                      <img src="{{ asset('images/logoSinSSSmall.webp') }}" width="153" height="35" alt="Amparo">
                     </div>
                   </div>
                 </a>
@@ -73,6 +72,7 @@
                     <ul class="navbar-nav mr-auto">
                       @auth
                         @can('menu admin')
+                          <li>
                           <div class="dropdown">
                             <button class="btn dropdown-toggle text-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Admin
@@ -123,6 +123,7 @@
                               @endcan
                             </div>
                           </div>
+                        </li>
                         @endcan
                       @endauth
                     </ul>
@@ -132,7 +133,7 @@
                       @auth
                         @can('navegar ordenes')
                           <li class="nav-item active">
-                            @if(Auth::user()->hasRole('desarrollador'))
+                            @if(Auth::user()->hasAnyRole('desarrollador','admin'))
                                 <a class="nav-link" href="{{ route('orders.index') }}">Ordenes</a>
                             @else
                                 <a class="nav-link" href="{{ route('orders.indice') }}">Ordenes</a>
@@ -154,8 +155,7 @@
                             <a class="nav-link"
                               href="{{ route('shopping_cart.cart') }}"
                               title="Carrito de Compras">
-                              <cart-counter-component :count="{{ $productsCount }}">
-                              </cart-counter-component>
+                              <livewire:cart-counter />
                             </a>
                           </li>
                         @endcan
@@ -198,8 +198,7 @@
 
                                 <div id="menuLogin" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('users.darkMode') }}"
-                                       onclick="event.preventDefault();
-                                                      document.getElementById('darkmode-form').submit();">
+                                       onclick="activeDarkMode({{ Auth::user()->darkMode }});">
                                       <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="switchDarkMode">
                                         <label id="labelDarkMode" class="custom-control-label" for="switchDarkMode">Modo Oscuro</label>
@@ -239,6 +238,11 @@
                     {{ Session::get('message') }}
                   </div>
                 @endif
+                @if(Session::has('error'))
+                  <div class="container alert alert-danger">
+                    {{ Session::get('error') }}
+                  </div>
+                @endif
 
                 @if($errors->any())
                   <div class="container alert alert-danger">
@@ -257,6 +261,7 @@
         </main>
     </div>
     @yield('myScripts')
+    @livewireScripts
 </body>
 <script>
   // Nos aseguramos que el navegador implementa la api 'serviceWorker'

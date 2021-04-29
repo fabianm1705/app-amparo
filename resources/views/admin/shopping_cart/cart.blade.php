@@ -46,7 +46,7 @@
                         <form action="{{ route('out_shopping_cart.destroy', ['id' => $product->id ]) }}" method="post" style="background-color: transparent;">
                           @method('DELETE')
                           @csrf
-                          <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el registro?')">
+                          <button class="btn btn-sm" onclick="return confirm('Está seguro de eliminar el producto?')">
                             <i class="material-icons">close</i>
                           </button>
                         </form>

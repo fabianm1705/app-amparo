@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use App\ShoppingCart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,9 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-      $this->app->bind('path.public',function(){
-      		return'/home/fabianm/public_html';
-    	});
+      // $this->app->bind('path.public',function(){
+      // 		return'/home/fabianm/public_html';
+    	// });
     }
 
     /**
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+      Paginator::useBootstrap();
       setlocale(LC_ALL, 'es_ES');
       Schema::defaultStringLength(120);
       View::composer('*',function($view){

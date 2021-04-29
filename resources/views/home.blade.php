@@ -8,14 +8,24 @@
           <div class="row justify-content-center">
             @can('emitir ordenes')
               <div class="col-sm-6 col-md-4 col-lg-2">
-                <button id="btnEmitir" class="btn btn-success m-1 btn-block btn-lg" name="button">
-                  @foreach (Auth::user()->roles as $role)
-                    @if(($role->name=='desarrollador') or ($role->name=='admin'))
+                <button wire:click="$emitTo('cart-counter','addProd')" id="btnEmitir" class="btn btn-success m-1 btn-block btn-lg" name="button">
+                    @if(Auth::user()->hasAnyRole('desarrollador', 'admin'))
                       <a class="text-light text-decoration-none" href="{{ route('usersSearch') }}">Emitir Orden</a>
                     @else
                       <a class="text-light text-decoration-none" href="{{ route('orders.create',['id' => 0]) }}">Emitir Orden</a>
                     @endif
-                  @endforeach
+                </button>
+              </div>
+            @endcan
+            @can('validar qr orden')
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('lector.qr') }}">Validar Orden</a>
+                </button>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-2">
+                <button class="btn btn-success m-1 btn-block btn-lg" name="button">
+                  <a class="text-light text-decoration-none" href="{{ route('orders.indice.profesional') }}">Listado</a>
                 </button>
               </div>
             @endcan

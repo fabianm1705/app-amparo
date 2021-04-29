@@ -9,6 +9,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Session;
 
 class OrderController extends Controller
 {
@@ -17,7 +19,7 @@ class OrderController extends Controller
       $this->middleware('can:navegar ordenes')->only(['index','indice']);
       $this->middleware('can:eliminar ordenes')->only('destroy');
       $this->middleware('can:editar ordenes')->only(['edit','update']);
-      $this->middleware('can:crear ordenes')->only(['create']);
+      $this->middleware('can:emitir ordenes')->only(['create']);
     }
     /**
      * Display a listing of the resource.
@@ -41,6 +43,15 @@ class OrderController extends Controller
       return view('admin.order.indice',compact("orders"));
     }
 
+    public function indice_profesional()
+    {
+      $orders = Order::where('user_id',Auth::user()->id)
+                      ->where('estado','Consumida')
+                      ->orderBy('id', 'desc')
+                      ->paginate();
+      return view('admin.order.indiceProfesional',compact("orders"));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -50,14 +61,12 @@ class OrderController extends Controller
     {
       registro_acceso(3,'');
       $emiteOficina = true;
-      foreach (Auth::user()->roles as $role){
-        if(($role->name=='desarrollador') or ($role->name=='admin')){
-          $users = User::where('id', $request->input('id'))->get();
-        }else{
-          $emiteOficina = false;
-          $group_id = Auth::user()->group_id;
-          $users = User::where('group_id',$group_id)->where('activo',1)->get();
-        }
+      if(Auth::user()->hasAnyRole('desarrollador', 'admin')){
+        $users = User::where('id', $request->input('id'))->get();
+      }else{
+        $emiteOficina = false;
+        $group_id = Auth::user()->group_id;
+        $users = User::where('group_id',$group_id)->where('activo',1)->get();
       }
       $usersCount = $users->count();
       $specialties = DB::table('specialties')->where('id', '=', 0)->get();
@@ -104,12 +113,15 @@ class OrderController extends Controller
         $order->estado = 'Impresa';
         $order->pacient_id = $request->input('user_id');
         $order->doctor_id = $request->input('doctor_id');
-        foreach (Auth::user()->roles as $role){
-          if(($role->name=='desarrollador') or ($role->name=='admin')){
-            $order->lugarEmision = 'Sede Amparo';
-          }else{
-            $order->lugarEmision = 'Autogestión';
-          }
+        if($request->input('doctor_id')==44){
+          $order->user_id = 1647;
+        }else{
+          $order->user_id = 0;
+        }
+        if(Auth::user()->hasAnyRole('desarrollador', 'admin')){
+          $order->lugarEmision = 'Sede Amparo';
+        }else{
+          $order->lugarEmision = 'Autogestión';
         }
 
         $order->save();
@@ -195,5 +207,30 @@ class OrderController extends Controller
 
       return redirect()
         ->route('orders.index');
+    }
+
+    public function lector()
+    {
+      return view('admin.order.lectorQr');
+    }
+
+    public function validar($id)
+    {
+      $order = Order::find($id);
+      if($order){
+        if($order->estado=="Impresa"){
+          Session::flash('message', '¡Perfecto! Orden Registrada');
+          $order->estado = "Consumida";
+          $order->save();
+        }elseif ($order->estado=="Pagada") {
+          Session::flash('error', '¡Error! Esta órden ha sido utilizada anteriormente');
+        }elseif ($order->estado=="Consumida"){
+          Session::flash('error', '¡Error! Esta órden ha sido utilizada anteriormente');
+        }
+      }else{
+        Session::flash('error', '¡Error! No se puede localizar la órden');
+      }
+
+      return true;
     }
 }

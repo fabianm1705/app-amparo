@@ -64,7 +64,7 @@ class SpecialtyController extends Controller
       $specialty->save();
 
       return redirect()
-        ->route('specialties.show',['specialty' => $specialty])
+        ->route('specialties.index')
         ->with('message','Especialidad Registrada');
     }
 
@@ -118,42 +118,40 @@ class SpecialtyController extends Controller
 
     public function cargarSpecialties($user)
     {
-      foreach (Auth::user()->roles as $role){
-        if(($role->slug=='dev') or ($role->slug=='admin')){
-          if(necesita_odontologia($user) and necesita_salud($user)){
-            $specialties = DB::table('specialties')->where('id', '=', 0)
-                                                   ->orderBy('descripcion','asc')->get();
-          }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
-                                                            ['id', '=', 19]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
-                                                            ['id', '<>', 19]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }else{
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }
+      if(Auth::user()->hasAnyRole('desarrollador', 'admin')){
+        if(necesita_odontologia($user) and necesita_salud($user)){
+          $specialties = DB::table('specialties')->where('id', '=', 0)
+                                                 ->orderBy('descripcion','asc')->get();
+        }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                          ['id', '=', 19]])
+                                                 ->orderBy('descripcion','asc')->get();
+        }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                          ['id', '<>', 19]])
+                                                 ->orderBy('descripcion','asc')->get();
         }else{
-          if(necesita_odontologia($user) and necesita_salud($user)){
-            $specialties = DB::table('specialties')->where('id', '=', 0)
-                                                   ->orderBy('descripcion','asc')->get();
-          }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
-                                                            ['vigenteOrden', '=', 1],
-                                                            ['id', '=', 19]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
-                                                            ['vigenteOrden', '=', 1],
-                                                            ['id', '<>', 19]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }else{
-            $specialties = DB::table('specialties')->where([['vigente', '=', 1],
-                                                            ['vigenteOrden', '=', 1]])
-                                                   ->orderBy('descripcion','asc')->get();
-          }
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1]])
+                                                 ->orderBy('descripcion','asc')->get();
+        }
+      }else{
+        if(necesita_odontologia($user) and necesita_salud($user)){
+          $specialties = DB::table('specialties')->where('id', '=', 0)
+                                                 ->orderBy('descripcion','asc')->get();
+        }elseif(necesita_odontologia($user)==false and necesita_salud($user)){
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                          ['vigenteOrden', '=', 1],
+                                                          ['id', '=', 19]])
+                                                 ->orderBy('descripcion','asc')->get();
+        }elseif(necesita_odontologia($user) and necesita_salud($user)==false){
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                          ['vigenteOrden', '=', 1],
+                                                          ['id', '<>', 19]])
+                                                 ->orderBy('descripcion','asc')->get();
+        }else{
+          $specialties = DB::table('specialties')->where([['vigente', '=', 1],
+                                                          ['vigenteOrden', '=', 1]])
+                                                 ->orderBy('descripcion','asc')->get();
         }
       }
       return $specialties;

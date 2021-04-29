@@ -10,6 +10,10 @@
       <div class="container alert alert-success">
         {{ phpinfo() }}
       </div>
+      <hr>
+      <div class="container alert alert-success">
+        {{ var_dump(gd_info()) }}
+      </div>
     </div>
 </div>
 @endsection

@@ -6,9 +6,7 @@
 const ws = require('ws');
 const BaseServer = require('./BaseServer');
 
-module.exports = class WebsocketServer extends (
-  BaseServer
-) {
+module.exports = class WebsocketServer extends BaseServer {
   constructor(server) {
     super(server);
 
@@ -17,7 +15,7 @@ module.exports = class WebsocketServer extends (
       path: this.server.options.client.path,
     });
 
-    this.server.listeningApp.on('upgrade', (req, sock, head) => {
+    this.server.server.on('upgrade', (req, sock, head) => {
       if (!this.wsServer.shouldHandle(req)) {
         return;
       }

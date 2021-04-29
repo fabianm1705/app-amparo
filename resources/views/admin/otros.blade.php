@@ -3,20 +3,20 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        @if(Auth::user()->darkMode)
-          <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1 bg-secondary">
+      @if(Auth::user()->darkMode)
+        <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1 bg-secondary">
           <div class="title text-center text-white"><br>
-        @else
-          <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
+      @else
+        <div class="col-sm-5 col-md-5 col-lg-4 card shadow-sm m-1">
           <div class="title text-center"><br>
-        @endif
+      @endif
           <div>
-            <b>Formas de Pago Amparo</b><hr>
+            <b>Administración</b><hr>
           </div>
-          * Débito automático vía CBU (15% de descuento por 6 meses).<br>
-          * Transferencia bancaria.<br>
-          CBU Cta Bco Bica: 4260003300100023798015
-          <br><br>
+          Oficina Cura Alvarez 615, Paraná<br>
+          Horario: Lun. a Vie. 8:30 a 18:00hs<br>
+          Sepelio: 4235108 / 154-057991<br>
+          SOS Emerg.: 4222322 / 4233333<br><br>
         </div>
       </div>
       @if(Auth::user()->darkMode)
@@ -34,10 +34,10 @@
         </div>
       </div>
       @if(Auth::user()->darkMode)
-        <div class="col-sm-10 col-md-7 col-lg-8 card shadow-sm m-1 bg-secondary">
+        <div class="col-sm-11 col-md-10 col-lg-8 card shadow-sm m-1 bg-secondary">
           <div class="title text-center text-white"><br>
       @else
-        <div class="col-sm-10 col-md-7 col-lg-8 card shadow-sm m-1">
+        <div class="col-sm-11 col-md-10 col-lg-8 card shadow-sm m-1">
           <div class="title text-center"><br>
       @endif
           <div>
@@ -48,22 +48,6 @@
           3 cuotas sin interés con tarjeta de crédito.
           10% desc. en lentes de contacto (esféricas, tóricas, anuales y de color).
           5% desc. pagando con tarjeta de débito o crédito en 1 pago.<br><br>
-        </div>
-      </div>
-      @if(Auth::user()->darkMode)
-        <div class="col-sm-6 col-md-4 col-lg-3 card shadow-sm m-1 bg-secondary">
-          <div class="title text-center text-white"><br>
-      @else
-        <div class="col-sm-6 col-md-4 col-lg-3 card shadow-sm m-1">
-          <div class="title text-center"><br>
-      @endif
-          <div>
-            <b>Administración</b><hr>
-          </div>
-          Oficina Cura Alvarez 615, Paraná<br>
-          Horario: Lun. a Vie. 8:30 a 18:00hs<br>
-          Sepelio: 4235108 / 154-057991<br>
-          SOS Emerg.: 4222322 / 4233333<br><br>
         </div>
       </div>
     </div>

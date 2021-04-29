@@ -88,7 +88,7 @@ class CategoryController extends Controller
       $category->save();
 
       return redirect()
-        ->route('categories.show',['category' => $category])
+        ->route('categories.index')
         ->with('message','Categoría Actualizada');
     }
 

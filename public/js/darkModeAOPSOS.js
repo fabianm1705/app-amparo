@@ -26,3 +26,8 @@ function darkMode(valor){
     el23.style.backgroundImage = "url('https://amparosrl.com.ar/images/01.webp')";
   }
 }
+
+function activeDarkMode(valor){
+  event.preventDefault();
+  document.getElementById('darkmode-form').submit();
+}

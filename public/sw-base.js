@@ -1,5 +1,5 @@
 importScripts(
-	'https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js'
+	'https://storage.googleapis.com/workbox-cdn/releases/6.1.2/workbox-sw.js'
 );
 
 // if (workbox) { //workbox solo existe en el scope del serviceWorker
@@ -10,7 +10,7 @@ importScripts(
 
 workbox.core.setCacheNameDetails({
   prefix: 'app-amparo',
-  suffix: 'v7',
+  suffix: 'v8',
   precache: 'precache-cache',
   runtime: 'runtime-cache'
 });

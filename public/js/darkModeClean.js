@@ -12,3 +12,8 @@ function darkMode(valor){
     el3.style.color = "black";
   }
 }
+
+function activeDarkMode(valor){
+  event.preventDefault();
+  document.getElementById('darkmode-form').submit();
+}

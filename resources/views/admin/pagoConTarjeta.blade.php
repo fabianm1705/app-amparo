@@ -123,7 +123,7 @@
                   <select type="text" id="installments" name="installments" class="form-control"></select>
                 </div>
                 <div class="form-group col-sm-12">
-                  <input type="hidden" name="transactionAmount" id="amount" value="10" />
+                  <input type="hidden" name="transactionAmount" id="amount" value="{{ $total }}" />
                   <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
                   <input type="hidden" name="description" id="description" />
                   <br>

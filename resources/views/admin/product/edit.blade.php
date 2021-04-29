@@ -50,7 +50,11 @@
                   <label for="content">Lista de Precios</label>
                   <select class="custom-select" name="payment_method_id" id="payment_method_id">
                     @foreach($payment_methods as $payment_method)
-                      <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
+                      @if($payment_method->id==$product->payment_method_id)
+                        <option value="{{ $payment_method->id }}" selected>{{ $payment_method->name }}</option>
+                      @else
+                        <option value="{{ $payment_method->id }}">{{ $payment_method->name }}</option>
+                      @endif
                     @endforeach
                   </select>
                 </div>

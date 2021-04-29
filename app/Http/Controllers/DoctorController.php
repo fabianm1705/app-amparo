@@ -64,7 +64,7 @@ class DoctorController extends Controller
       $doctor->save();
 
       return redirect()
-        ->route('doctors.show',['doctor' => $doctor])
+        ->route('doctors.index',['doctor' => $doctor])
         ->with('message','Profesional Registrado');
     }
 

@@ -190,6 +190,12 @@ Route::get('asignar/roles', 'UserController@asignarRoles')
                     ->name('asignar.roles');
 
 //Especialidades y médicos
+Route::get('lector/qr', 'OrderController@lector')
+                    ->middleware(['auth','can:validar qr orden'])
+                    ->name('lector.qr');
+Route::post('validar/qr/{id}', 'OrderController@validar')
+                    ->middleware(['auth','can:validar qr orden'])
+                    ->name('validar.qr');
 Route::get('doctors/mostrar', 'DoctorController@mostrar')
                     ->middleware(['auth','can:mostrar profesionales'])
                     ->name('doctors.mostrar');
@@ -231,6 +237,9 @@ Route::post('/process_payment', 'MercadoPagoController@process_payment')
 Route::get('orders/indice', 'OrderController@indice')
               ->middleware(['auth','can:navegar ordenes'])
               ->name('orders.indice');
+Route::get('orders/indice/profesional', 'OrderController@indice_profesional')
+              ->middleware(['auth','can:validar qr orden'])
+              ->name('orders.indice.profesional');
 
 Route::get('users/panel/{id}', 'UserController@panel')
               ->middleware(['auth','can:ver panel socios'])
