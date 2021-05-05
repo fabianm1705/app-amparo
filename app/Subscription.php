@@ -13,11 +13,11 @@ class Subscription extends Model
 
   public function users()
   {
-    return $this->belongsToMany('App\User','layers');
+    return $this->belongsToMany('App\User','layers', 'subscription_id', 'user_id');
   }
 
   public function groups()
   {
-    return $this->belongsToMany('App\Models\Group','plans');
+    return $this->belongsToMany('App\Models\Group','plans', 'subscription_id', 'group_id');
   }
 }

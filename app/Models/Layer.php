@@ -15,14 +15,4 @@ class Layer extends Model
       'nombre', 'monto', 'user_id', 'subscription_id',
   ];
 
-  public function user()
-  {
-    return $this->belongsTo('App\User');
-  }
-
-  public function subscription()
-  {
-    return $this->belongsTo('App\Subscription');
-  }
-
 }

@@ -23,13 +23,13 @@ class Group extends Model
 
   public function subscriptions()
   {
-    return $this->belongsToMany('App\Subscription','plans');
+    return $this->belongsToMany('App\Subscription','plans', 'group_id', 'subscription_id');
   }
 
-  public function plans()
-  {
-    return $this->hasMany('App\Models\Plan','group_id');
-  }
+  // public function plans()
+  // {
+  //   return $this->hasMany('App\Models\Plan','group_id');
+  // }
 
   public function sales()
   {

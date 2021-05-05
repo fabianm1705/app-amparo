@@ -64,6 +64,7 @@ class UserController extends Controller
     $user->fechaNac = $request->input('fechaNac');
     $user->email = $request->input('email');
     $user->no_aop = $request->input('no_aop');
+    $user->activo = $request->input('activo');
     $user->carencia_salud = $request->input('carencia_salud');
     $user->carencia_odonto = $request->input('carencia_odonto');
     if($request->input('restablecerPassword')){
@@ -147,11 +148,18 @@ class UserController extends Controller
   {
     registro_acceso(12,'Odontología');
     $subscriptions = Subscription::where('odontologia',1)->get();
-    $users = $subscriptions->flatMap->users->where('no_aop',0)->where('activo',1)->sortBy('name');
-    $usersCount = $subscriptions->flatMap->users->where('no_aop',0)->where('activo',1)->count();
+
+    $users = collect([]);
+    foreach ($subscriptions->flatMap->users->where('activo',1)->where('no_aop',0)->sortBy('name') as $user) {
+      if($user->group->activo==1){
+        if($user->carencia_odonto==null or $user->carencia_odonto<Carbon::now()){
+          $users->push($user);
+        }
+      }
+    }
     return view('admin.user.odontologia',[
       'users' => $users,
-      'usersCount' => $usersCount
+      'usersCount' => $users->count()
     ]);
   }
 
@@ -160,20 +168,23 @@ class UserController extends Controller
     registro_acceso(12,'Emergencia');
     $subscriptions = Subscription::where('salud',1)->get();
     $users = collect([]);
-    $usersCount = 0;
     foreach ($subscriptions->flatMap->groups->where('activo',1) as $group) {
-      $usersCount = $usersCount + $group->users->count();
       foreach ($group->users->where('activo',1) as $user) {
-        $users->push($user);
+        if($user->carencia_salud==null or $user->carencia_salud<Carbon::now()){
+          $users->push($user);
+        }
       }
     }
     foreach ($subscriptions->flatMap->users->where('activo',1) as $user) {
-      $usersCount = $usersCount + 1;
-      $users->push($user);
+      if($user->group->activo==1){
+        if($user->carencia_salud==null or $user->carencia_salud<Carbon::now()){
+          $users->push($user);
+        }
+      }
     }
     return view('admin.user.emergencia',[
       'users' => $users->sortBy('name'),
-      'usersCount' => $usersCount
+      'usersCount' => $users->count()
     ]);
   }
 

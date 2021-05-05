@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -31,6 +32,9 @@ class User extends Authenticatable
         'password', 'remember_token', 'darkMode_verified_at',
     ];
 
+    protected $dates = [
+        'carencia_odonto','carencia_salud',
+    ];
     /**
      * The attributes that should be cast to native types.
      *
@@ -39,6 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setCarenciaSaludAttribute($date)
+    {
+        $this->attributes['carencia_salud'] = empty($date) ? null : Carbon::parse($date);
+    }
+
+    public function setCarenciaOdontoAttribute($date)
+    {
+        $this->attributes['carencia_odonto'] = empty($date) ? null : Carbon::parse($date);
+    }
 
     public function group()
     {
@@ -52,7 +66,7 @@ class User extends Authenticatable
 
     public function subscriptions()
     {
-      return $this->belongsToMany('App\Subscription','layers');
+      return $this->belongsToMany('App\Subscription','layers', 'user_id', 'subscription_id');
     }
 
     public function shopping_carts()

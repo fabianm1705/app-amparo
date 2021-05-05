@@ -113,10 +113,9 @@ class OrderController extends Controller
         $order->estado = 'Impresa';
         $order->pacient_id = $request->input('user_id');
         $order->doctor_id = $request->input('doctor_id');
+        $order->user_id = 1;
         if($request->input('doctor_id')==44){
           $order->user_id = 1647;
-        }else{
-          $order->user_id = 0;
         }
         if(Auth::user()->hasAnyRole('desarrollador', 'admin')){
           $order->lugarEmision = 'Sede Amparo';

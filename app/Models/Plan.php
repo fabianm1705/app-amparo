@@ -15,14 +15,4 @@ class Plan extends Model
       'nombre', 'monto', 'group_id', 'subscription_id',
   ];
 
-  public function group()
-  {
-    return $this->belongsTo('App\Models\Group');
-  }
-
-  public function subscription()
-  {
-    return $this->belongsTo('App\Subscription');
-  }
-
 }

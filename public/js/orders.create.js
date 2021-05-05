@@ -22,6 +22,7 @@ function getDoctors(socio){
           document.getElementById("oftalmologiaOptions").style.display = "block";
           document.getElementById("obs").style.display = "block";
           document.getElementById("obs").value = "";
+          console.log("pinta obs");
         }else{
           document.getElementById("oftalmologiaOptions").style.display = "none";
           document.getElementById("obs").value = "";
